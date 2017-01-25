@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html >
+
+<head>
+
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>R Deep-dive</title>
+  <meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+  <meta name="description" content="This is a minimal example of using the bookdown package to write a book. The output format for this example is bookdown::gitbook.">
+  <meta name="generator" content="bookdown 0.3 and GitBook 2.6.7">
+
+  <meta property="og:title" content="R Deep-dive" />
+  <meta property="og:type" content="book" />
+  
+  
+  <meta property="og:description" content="This is a minimal example of using the bookdown package to write a book. The output format for this example is bookdown::gitbook." />
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="R Deep-dive" />
+  
+  <meta name="twitter:description" content="This is a minimal example of using the bookdown package to write a book. The output format for this example is bookdown::gitbook." />
+  
+
+<meta name="author" content="Seth Mottaghinejad">
+
+
+<meta name="date" content="2017-01-25">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  
+  
+<link rel="prev" href="data-summary-and-analysis.html">
+
+
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+
+<style type="text/css">
+div.sourceCode { overflow-x: auto; }
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+code > span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code > span.dt { color: #902000; } /* DataType */
+code > span.dv { color: #40a070; } /* DecVal */
+code > span.bn { color: #40a070; } /* BaseN */
+code > span.fl { color: #40a070; } /* Float */
+code > span.ch { color: #4070a0; } /* Char */
+code > span.st { color: #4070a0; } /* String */
+code > span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code > span.ot { color: #007020; } /* Other */
+code > span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code > span.fu { color: #06287e; } /* Function */
+code > span.er { color: #ff0000; font-weight: bold; } /* Error */
+code > span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+code > span.cn { color: #880000; } /* Constant */
+code > span.sc { color: #4070a0; } /* SpecialChar */
+code > span.vs { color: #4070a0; } /* VerbatimString */
+code > span.ss { color: #bb6688; } /* SpecialString */
+code > span.im { } /* Import */
+code > span.va { color: #19177c; } /* Variable */
+code > span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code > span.op { color: #666666; } /* Operator */
+code > span.bu { } /* BuiltIn */
+code > span.ex { } /* Extension */
+code > span.pp { color: #bc7a00; } /* Preprocessor */
+code > span.at { color: #7d9029; } /* Attribute */
+code > span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code > span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code > span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+</style>
+
+</head>
+
+<body>
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li class="chapter" data-level="1" data-path="getting-started.html"><a href="getting-started.html"><i class="fa fa-check"></i><b>1</b> Getting started</a><ul>
+<li class="chapter" data-level="1.1" data-path="getting-started.html"><a href="getting-started.html#loading-packages"><i class="fa fa-check"></i><b>1.1</b> Loading packages</a></li>
+<li class="chapter" data-level="1.2" data-path="getting-started.html"><a href="getting-started.html#loading-data-into-r"><i class="fa fa-check"></i><b>1.2</b> Loading data into R</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="inspecting-the-data.html"><a href="inspecting-the-data.html"><i class="fa fa-check"></i><b>2</b> Inspecting the data</a><ul>
+<li class="chapter" data-level="2.1" data-path="inspecting-the-data.html"><a href="inspecting-the-data.html#basic-queries"><i class="fa fa-check"></i><b>2.1</b> Basic queries</a></li>
+<li class="chapter" data-level="2.2" data-path="inspecting-the-data.html"><a href="inspecting-the-data.html#more-on-querying-data"><i class="fa fa-check"></i><b>2.2</b> More on querying data</a><ul>
+<li class="chapter" data-level="2.2.1" data-path="inspecting-the-data.html"><a href="inspecting-the-data.html#exercises"><i class="fa fa-check"></i><b>2.2.1</b> Exercises</a></li>
+<li class="chapter" data-level="2.2.2" data-path="inspecting-the-data.html"><a href="inspecting-the-data.html#solutions"><i class="fa fa-check"></i><b>2.2.2</b> Solutions</a></li>
+</ul></li>
+<li class="chapter" data-level="2.3" data-path="inspecting-the-data.html"><a href="inspecting-the-data.html#basic-summaries"><i class="fa fa-check"></i><b>2.3</b> Basic summaries</a><ul>
+<li class="chapter" data-level="2.3.1" data-path="inspecting-the-data.html"><a href="inspecting-the-data.html#exercises-1"><i class="fa fa-check"></i><b>2.3.1</b> Exercises</a></li>
+<li class="chapter" data-level="2.3.2" data-path="inspecting-the-data.html"><a href="inspecting-the-data.html#solutions-1"><i class="fa fa-check"></i><b>2.3.2</b> Solutions</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="cleaning-the-data.html"><a href="cleaning-the-data.html"><i class="fa fa-check"></i><b>3</b> Cleaning the data</a><ul>
+<li class="chapter" data-level="3.0.1" data-path="cleaning-the-data.html"><a href="cleaning-the-data.html#exercises-2"><i class="fa fa-check"></i><b>3.0.1</b> Exercises</a></li>
+<li class="chapter" data-level="3.0.2" data-path="cleaning-the-data.html"><a href="cleaning-the-data.html#solutions-2"><i class="fa fa-check"></i><b>3.0.2</b> Solutions</a></li>
+<li class="chapter" data-level="3.1" data-path="cleaning-the-data.html"><a href="cleaning-the-data.html#dealing-with-datetimes"><i class="fa fa-check"></i><b>3.1</b> Dealing with datetimes</a></li>
+<li class="chapter" data-level="3.2" data-path="cleaning-the-data.html"><a href="cleaning-the-data.html#dealing-with-factors"><i class="fa fa-check"></i><b>3.2</b> Dealing with factors</a><ul>
+<li class="chapter" data-level="3.2.1" data-path="cleaning-the-data.html"><a href="cleaning-the-data.html#exercises-3"><i class="fa fa-check"></i><b>3.2.1</b> Exercises</a></li>
+<li class="chapter" data-level="3.2.2" data-path="cleaning-the-data.html"><a href="cleaning-the-data.html#solutions-3"><i class="fa fa-check"></i><b>3.2.2</b> Solutions</a></li>
+</ul></li>
+<li class="chapter" data-level="3.3" data-path="cleaning-the-data.html"><a href="cleaning-the-data.html#being-more-efficient"><i class="fa fa-check"></i><b>3.3</b> Being more efficient</a><ul>
+<li class="chapter" data-level="3.3.1" data-path="cleaning-the-data.html"><a href="cleaning-the-data.html#exercises-4"><i class="fa fa-check"></i><b>3.3.1</b> Exercises</a></li>
+<li class="chapter" data-level="3.3.2" data-path="cleaning-the-data.html"><a href="cleaning-the-data.html#solutions-4"><i class="fa fa-check"></i><b>3.3.2</b> Solutions</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="creating-new-features.html"><a href="creating-new-features.html"><i class="fa fa-check"></i><b>4</b> Creating new features</a><ul>
+<li class="chapter" data-level="4.0.1" data-path="creating-new-features.html"><a href="creating-new-features.html#exercises-5"><i class="fa fa-check"></i><b>4.0.1</b> Exercises</a></li>
+<li class="chapter" data-level="4.1" data-path="creating-new-features.html"><a href="creating-new-features.html#date-and-time-features"><i class="fa fa-check"></i><b>4.1</b> Date and time features</a></li>
+<li class="chapter" data-level="4.2" data-path="creating-new-features.html"><a href="creating-new-features.html#geographical-features"><i class="fa fa-check"></i><b>4.2</b> Geographical features</a><ul>
+<li class="chapter" data-level="4.2.1" data-path="creating-new-features.html"><a href="creating-new-features.html#exercises-6"><i class="fa fa-check"></i><b>4.2.1</b> Exercises</a></li>
+<li class="chapter" data-level="4.2.2" data-path="creating-new-features.html"><a href="creating-new-features.html#solutions-5"><i class="fa fa-check"></i><b>4.2.2</b> Solutions</a></li>
+</ul></li>
+<li class="chapter" data-level="4.3" data-path="creating-new-features.html"><a href="creating-new-features.html#creating-a-function"><i class="fa fa-check"></i><b>4.3</b> Creating a function</a><ul>
+<li class="chapter" data-level="4.3.1" data-path="creating-new-features.html"><a href="creating-new-features.html#exercises-7"><i class="fa fa-check"></i><b>4.3.1</b> Exercises</a></li>
+<li class="chapter" data-level="4.3.2" data-path="creating-new-features.html"><a href="creating-new-features.html#solution"><i class="fa fa-check"></i><b>4.3.2</b> Solution</a></li>
+<li class="chapter" data-level="4.3.3" data-path="creating-new-features.html"><a href="creating-new-features.html#exercises-8"><i class="fa fa-check"></i><b>4.3.3</b> Exercises</a></li>
+<li class="chapter" data-level="4.3.4" data-path="creating-new-features.html"><a href="creating-new-features.html#solutions-6"><i class="fa fa-check"></i><b>4.3.4</b> Solutions</a></li>
+</ul></li>
+<li class="chapter" data-level="4.4" data-path="creating-new-features.html"><a href="creating-new-features.html#tipping-behavior"><i class="fa fa-check"></i><b>4.4</b> Tipping behavior</a><ul>
+<li class="chapter" data-level="4.4.1" data-path="creating-new-features.html"><a href="creating-new-features.html#exercises-9"><i class="fa fa-check"></i><b>4.4.1</b> Exercises</a></li>
+<li class="chapter" data-level="4.4.2" data-path="creating-new-features.html"><a href="creating-new-features.html#solutions-7"><i class="fa fa-check"></i><b>4.4.2</b> Solutions</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="data-summary-and-analysis.html"><a href="data-summary-and-analysis.html"><i class="fa fa-check"></i><b>5</b> Data summary and analysis</a><ul>
+<li class="chapter" data-level="5.1" data-path="data-summary-and-analysis.html"><a href="data-summary-and-analysis.html#summary-functions"><i class="fa fa-check"></i><b>5.1</b> Summary functions</a><ul>
+<li class="chapter" data-level="5.1.1" data-path="data-summary-and-analysis.html"><a href="data-summary-and-analysis.html#exercises-10"><i class="fa fa-check"></i><b>5.1.1</b> Exercises</a></li>
+<li class="chapter" data-level="5.1.2" data-path="data-summary-and-analysis.html"><a href="data-summary-and-analysis.html#solutions-8"><i class="fa fa-check"></i><b>5.1.2</b> Solutions</a></li>
+</ul></li>
+<li class="chapter" data-level="5.2" data-path="data-summary-and-analysis.html"><a href="data-summary-and-analysis.html#data-summary-in-base-r"><i class="fa fa-check"></i><b>5.2</b> Data summary in <code>base</code> R</a><ul>
+<li class="chapter" data-level="5.2.1" data-path="data-summary-and-analysis.html"><a href="data-summary-and-analysis.html#exercises-11"><i class="fa fa-check"></i><b>5.2.1</b> Exercises</a></li>
+<li class="chapter" data-level="5.2.2" data-path="data-summary-and-analysis.html"><a href="data-summary-and-analysis.html#solutions-9"><i class="fa fa-check"></i><b>5.2.2</b> Solutions</a></li>
+</ul></li>
+<li class="chapter" data-level="5.3" data-path="data-summary-and-analysis.html"><a href="data-summary-and-analysis.html#writing-summary-functions"><i class="fa fa-check"></i><b>5.3</b> Writing summary functions</a><ul>
+<li class="chapter" data-level="5.3.1" data-path="data-summary-and-analysis.html"><a href="data-summary-and-analysis.html#exercises-12"><i class="fa fa-check"></i><b>5.3.1</b> Exercises</a></li>
+<li class="chapter" data-level="5.3.2" data-path="data-summary-and-analysis.html"><a href="data-summary-and-analysis.html#solutions-10"><i class="fa fa-check"></i><b>5.3.2</b> Solutions</a></li>
+</ul></li>
+<li class="chapter" data-level="5.4" data-path="data-summary-and-analysis.html"><a href="data-summary-and-analysis.html#data-summary-with-dplyr"><i class="fa fa-check"></i><b>5.4</b> Data summary with <code>dplyr</code></a><ul>
+<li class="chapter" data-level="5.4.1" data-path="data-summary-and-analysis.html"><a href="data-summary-and-analysis.html#exercises-13"><i class="fa fa-check"></i><b>5.4.1</b> Exercises</a></li>
+<li class="chapter" data-level="5.4.2" data-path="data-summary-and-analysis.html"><a href="data-summary-and-analysis.html#solutions-11"><i class="fa fa-check"></i><b>5.4.2</b> Solutions</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="review.html"><a href="review.html"><i class="fa fa-check"></i><b>6</b> Review</a></li>
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">R Deep-dive</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="review" class="section level1">
+<h1><span class="header-section-number">6</span> Review</h1>
+<p>There are many important themes that are worth highlighting as this course comes to an end:</p>
+<ul>
+<li><strong>Learn your basic data types:</strong> We saw many examples of how different functions can sometimes return more or less the same results but in different formats. Knowing which data types we are dealing with helps us understand how to query and drill into different objects, and over time we develop a better intuition of the pros and cons of each data type, for example the flexibility of a <code>list</code> versus the structured layout of an <code>array</code>.</li>
+<li><strong>Build upon existing tools:</strong> R is a flexible language and one that is easy to build upon. This is the reason so many R packages exist and continue to grow. We covered many examples of how we can modify or tweak an existing function, or put together many functions to create our own summary functions. What is true about almost every programming language is true about R as well: we start small, make changes incrementally and test the code along the way. -<strong>Learn about different packages:</strong> As R users, in addition to specialized packages, we should be familiar with the most popular packages. Learning to use them can often save us a lot of time and the trouble of having to “reinvent the wheel”.</li>
+</ul>
+<p>In the next series of lectures, we will revisit the NYC Taxi dataset, and use the Microsoft R Server’s <code>RevoScaleR</code> package to process and analyze a much larger dataset size. When dataset sizes get very large, we run into two problems:</p>
+<ol style="list-style-type: decimal">
+<li>Since a <code>data.frame</code> is memory-bound, we may not have enough memory to process the dataset. <code>RevoScaleR</code> provides a framework to store data on disk and only load it into memory a small chunk at a time (so that we never use too much memory).</li>
+<li>Even with enough memory, it may take too long to process the dataset or run an analytics function on it, such as a statistical model. <code>RevoScaleR</code> offers a set of distributed algorithms that scale linearly with data size, so we can run analytical models on large datasets in a reasonable time.</li>
+</ol>
+<p>We hope to see you there.</p>
+
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="data-summary-and-analysis.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+
+
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script>
+require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"google": false,
+"weibo": false,
+"instapper": false,
+"vk": false,
+"all": ["facebook", "google", "twitter", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"download": null,
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+</body>
+
+</html>

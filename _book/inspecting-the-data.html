@@ -1,0 +1,873 @@
+<!DOCTYPE html>
+<html >
+
+<head>
+
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>R Deep-dive</title>
+  <meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+  <meta name="description" content="This is a minimal example of using the bookdown package to write a book. The output format for this example is bookdown::gitbook.">
+  <meta name="generator" content="bookdown 0.3 and GitBook 2.6.7">
+
+  <meta property="og:title" content="R Deep-dive" />
+  <meta property="og:type" content="book" />
+  
+  
+  <meta property="og:description" content="This is a minimal example of using the bookdown package to write a book. The output format for this example is bookdown::gitbook." />
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="R Deep-dive" />
+  
+  <meta name="twitter:description" content="This is a minimal example of using the bookdown package to write a book. The output format for this example is bookdown::gitbook." />
+  
+
+<meta name="author" content="Seth Mottaghinejad">
+
+
+<meta name="date" content="2017-01-25">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  
+  
+<link rel="prev" href="getting-started.html">
+<link rel="next" href="cleaning-the-data.html">
+
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+
+<style type="text/css">
+div.sourceCode { overflow-x: auto; }
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+code > span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code > span.dt { color: #902000; } /* DataType */
+code > span.dv { color: #40a070; } /* DecVal */
+code > span.bn { color: #40a070; } /* BaseN */
+code > span.fl { color: #40a070; } /* Float */
+code > span.ch { color: #4070a0; } /* Char */
+code > span.st { color: #4070a0; } /* String */
+code > span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code > span.ot { color: #007020; } /* Other */
+code > span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code > span.fu { color: #06287e; } /* Function */
+code > span.er { color: #ff0000; font-weight: bold; } /* Error */
+code > span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+code > span.cn { color: #880000; } /* Constant */
+code > span.sc { color: #4070a0; } /* SpecialChar */
+code > span.vs { color: #4070a0; } /* VerbatimString */
+code > span.ss { color: #bb6688; } /* SpecialString */
+code > span.im { } /* Import */
+code > span.va { color: #19177c; } /* Variable */
+code > span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code > span.op { color: #666666; } /* Operator */
+code > span.bu { } /* BuiltIn */
+code > span.ex { } /* Extension */
+code > span.pp { color: #bc7a00; } /* Preprocessor */
+code > span.at { color: #7d9029; } /* Attribute */
+code > span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code > span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code > span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+</style>
+
+</head>
+
+<body>
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li class="chapter" data-level="1" data-path="getting-started.html"><a href="getting-started.html"><i class="fa fa-check"></i><b>1</b> Getting started</a><ul>
+<li class="chapter" data-level="1.1" data-path="getting-started.html"><a href="getting-started.html#loading-packages"><i class="fa fa-check"></i><b>1.1</b> Loading packages</a></li>
+<li class="chapter" data-level="1.2" data-path="getting-started.html"><a href="getting-started.html#loading-data-into-r"><i class="fa fa-check"></i><b>1.2</b> Loading data into R</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="inspecting-the-data.html"><a href="inspecting-the-data.html"><i class="fa fa-check"></i><b>2</b> Inspecting the data</a><ul>
+<li class="chapter" data-level="2.1" data-path="inspecting-the-data.html"><a href="inspecting-the-data.html#basic-queries"><i class="fa fa-check"></i><b>2.1</b> Basic queries</a></li>
+<li class="chapter" data-level="2.2" data-path="inspecting-the-data.html"><a href="inspecting-the-data.html#more-on-querying-data"><i class="fa fa-check"></i><b>2.2</b> More on querying data</a><ul>
+<li class="chapter" data-level="2.2.1" data-path="inspecting-the-data.html"><a href="inspecting-the-data.html#exercises"><i class="fa fa-check"></i><b>2.2.1</b> Exercises</a></li>
+<li class="chapter" data-level="2.2.2" data-path="inspecting-the-data.html"><a href="inspecting-the-data.html#solutions"><i class="fa fa-check"></i><b>2.2.2</b> Solutions</a></li>
+</ul></li>
+<li class="chapter" data-level="2.3" data-path="inspecting-the-data.html"><a href="inspecting-the-data.html#basic-summaries"><i class="fa fa-check"></i><b>2.3</b> Basic summaries</a><ul>
+<li class="chapter" data-level="2.3.1" data-path="inspecting-the-data.html"><a href="inspecting-the-data.html#exercises-1"><i class="fa fa-check"></i><b>2.3.1</b> Exercises</a></li>
+<li class="chapter" data-level="2.3.2" data-path="inspecting-the-data.html"><a href="inspecting-the-data.html#solutions-1"><i class="fa fa-check"></i><b>2.3.2</b> Solutions</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="cleaning-the-data.html"><a href="cleaning-the-data.html"><i class="fa fa-check"></i><b>3</b> Cleaning the data</a><ul>
+<li class="chapter" data-level="3.0.1" data-path="cleaning-the-data.html"><a href="cleaning-the-data.html#exercises-2"><i class="fa fa-check"></i><b>3.0.1</b> Exercises</a></li>
+<li class="chapter" data-level="3.0.2" data-path="cleaning-the-data.html"><a href="cleaning-the-data.html#solutions-2"><i class="fa fa-check"></i><b>3.0.2</b> Solutions</a></li>
+<li class="chapter" data-level="3.1" data-path="cleaning-the-data.html"><a href="cleaning-the-data.html#dealing-with-datetimes"><i class="fa fa-check"></i><b>3.1</b> Dealing with datetimes</a></li>
+<li class="chapter" data-level="3.2" data-path="cleaning-the-data.html"><a href="cleaning-the-data.html#dealing-with-factors"><i class="fa fa-check"></i><b>3.2</b> Dealing with factors</a><ul>
+<li class="chapter" data-level="3.2.1" data-path="cleaning-the-data.html"><a href="cleaning-the-data.html#exercises-3"><i class="fa fa-check"></i><b>3.2.1</b> Exercises</a></li>
+<li class="chapter" data-level="3.2.2" data-path="cleaning-the-data.html"><a href="cleaning-the-data.html#solutions-3"><i class="fa fa-check"></i><b>3.2.2</b> Solutions</a></li>
+</ul></li>
+<li class="chapter" data-level="3.3" data-path="cleaning-the-data.html"><a href="cleaning-the-data.html#being-more-efficient"><i class="fa fa-check"></i><b>3.3</b> Being more efficient</a><ul>
+<li class="chapter" data-level="3.3.1" data-path="cleaning-the-data.html"><a href="cleaning-the-data.html#exercises-4"><i class="fa fa-check"></i><b>3.3.1</b> Exercises</a></li>
+<li class="chapter" data-level="3.3.2" data-path="cleaning-the-data.html"><a href="cleaning-the-data.html#solutions-4"><i class="fa fa-check"></i><b>3.3.2</b> Solutions</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="creating-new-features.html"><a href="creating-new-features.html"><i class="fa fa-check"></i><b>4</b> Creating new features</a><ul>
+<li class="chapter" data-level="4.0.1" data-path="creating-new-features.html"><a href="creating-new-features.html#exercises-5"><i class="fa fa-check"></i><b>4.0.1</b> Exercises</a></li>
+<li class="chapter" data-level="4.1" data-path="creating-new-features.html"><a href="creating-new-features.html#date-and-time-features"><i class="fa fa-check"></i><b>4.1</b> Date and time features</a></li>
+<li class="chapter" data-level="4.2" data-path="creating-new-features.html"><a href="creating-new-features.html#geographical-features"><i class="fa fa-check"></i><b>4.2</b> Geographical features</a><ul>
+<li class="chapter" data-level="4.2.1" data-path="creating-new-features.html"><a href="creating-new-features.html#exercises-6"><i class="fa fa-check"></i><b>4.2.1</b> Exercises</a></li>
+<li class="chapter" data-level="4.2.2" data-path="creating-new-features.html"><a href="creating-new-features.html#solutions-5"><i class="fa fa-check"></i><b>4.2.2</b> Solutions</a></li>
+</ul></li>
+<li class="chapter" data-level="4.3" data-path="creating-new-features.html"><a href="creating-new-features.html#creating-a-function"><i class="fa fa-check"></i><b>4.3</b> Creating a function</a><ul>
+<li class="chapter" data-level="4.3.1" data-path="creating-new-features.html"><a href="creating-new-features.html#exercises-7"><i class="fa fa-check"></i><b>4.3.1</b> Exercises</a></li>
+<li class="chapter" data-level="4.3.2" data-path="creating-new-features.html"><a href="creating-new-features.html#solution"><i class="fa fa-check"></i><b>4.3.2</b> Solution</a></li>
+<li class="chapter" data-level="4.3.3" data-path="creating-new-features.html"><a href="creating-new-features.html#exercises-8"><i class="fa fa-check"></i><b>4.3.3</b> Exercises</a></li>
+<li class="chapter" data-level="4.3.4" data-path="creating-new-features.html"><a href="creating-new-features.html#solutions-6"><i class="fa fa-check"></i><b>4.3.4</b> Solutions</a></li>
+</ul></li>
+<li class="chapter" data-level="4.4" data-path="creating-new-features.html"><a href="creating-new-features.html#tipping-behavior"><i class="fa fa-check"></i><b>4.4</b> Tipping behavior</a><ul>
+<li class="chapter" data-level="4.4.1" data-path="creating-new-features.html"><a href="creating-new-features.html#exercises-9"><i class="fa fa-check"></i><b>4.4.1</b> Exercises</a></li>
+<li class="chapter" data-level="4.4.2" data-path="creating-new-features.html"><a href="creating-new-features.html#solutions-7"><i class="fa fa-check"></i><b>4.4.2</b> Solutions</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="data-summary-and-analysis.html"><a href="data-summary-and-analysis.html"><i class="fa fa-check"></i><b>5</b> Data summary and analysis</a><ul>
+<li class="chapter" data-level="5.1" data-path="data-summary-and-analysis.html"><a href="data-summary-and-analysis.html#summary-functions"><i class="fa fa-check"></i><b>5.1</b> Summary functions</a><ul>
+<li class="chapter" data-level="5.1.1" data-path="data-summary-and-analysis.html"><a href="data-summary-and-analysis.html#exercises-10"><i class="fa fa-check"></i><b>5.1.1</b> Exercises</a></li>
+<li class="chapter" data-level="5.1.2" data-path="data-summary-and-analysis.html"><a href="data-summary-and-analysis.html#solutions-8"><i class="fa fa-check"></i><b>5.1.2</b> Solutions</a></li>
+</ul></li>
+<li class="chapter" data-level="5.2" data-path="data-summary-and-analysis.html"><a href="data-summary-and-analysis.html#data-summary-in-base-r"><i class="fa fa-check"></i><b>5.2</b> Data summary in <code>base</code> R</a><ul>
+<li class="chapter" data-level="5.2.1" data-path="data-summary-and-analysis.html"><a href="data-summary-and-analysis.html#exercises-11"><i class="fa fa-check"></i><b>5.2.1</b> Exercises</a></li>
+<li class="chapter" data-level="5.2.2" data-path="data-summary-and-analysis.html"><a href="data-summary-and-analysis.html#solutions-9"><i class="fa fa-check"></i><b>5.2.2</b> Solutions</a></li>
+</ul></li>
+<li class="chapter" data-level="5.3" data-path="data-summary-and-analysis.html"><a href="data-summary-and-analysis.html#writing-summary-functions"><i class="fa fa-check"></i><b>5.3</b> Writing summary functions</a><ul>
+<li class="chapter" data-level="5.3.1" data-path="data-summary-and-analysis.html"><a href="data-summary-and-analysis.html#exercises-12"><i class="fa fa-check"></i><b>5.3.1</b> Exercises</a></li>
+<li class="chapter" data-level="5.3.2" data-path="data-summary-and-analysis.html"><a href="data-summary-and-analysis.html#solutions-10"><i class="fa fa-check"></i><b>5.3.2</b> Solutions</a></li>
+</ul></li>
+<li class="chapter" data-level="5.4" data-path="data-summary-and-analysis.html"><a href="data-summary-and-analysis.html#data-summary-with-dplyr"><i class="fa fa-check"></i><b>5.4</b> Data summary with <code>dplyr</code></a><ul>
+<li class="chapter" data-level="5.4.1" data-path="data-summary-and-analysis.html"><a href="data-summary-and-analysis.html#exercises-13"><i class="fa fa-check"></i><b>5.4.1</b> Exercises</a></li>
+<li class="chapter" data-level="5.4.2" data-path="data-summary-and-analysis.html"><a href="data-summary-and-analysis.html#solutions-11"><i class="fa fa-check"></i><b>5.4.2</b> Solutions</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="review.html"><a href="review.html"><i class="fa fa-check"></i><b>6</b> Review</a></li>
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">R Deep-dive</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="inspecting-the-data" class="section level1">
+<h1><span class="header-section-number">2</span> Inspecting the data</h1>
+<p>With the data loaded in the R session, we are ready to inspect the data and write some basic queries against it. The goal of this chapter is to get a feel for the data. Any exploratory analysis often consists of the following steps:</p>
+<ol style="list-style-type: decimal">
+<li>load all the data (and combine them if necessary)</li>
+<li><strong>inspect the data in preparation cleaning it</strong></li>
+<li>clean the data in preparation for analysis</li>
+<li>add any interesting features or columns as far as they pertain to the analysis</li>
+<li>find ways to analyze or summarize the data and report your findings</li>
+</ol>
+<p>We are now in step 2, where we intend to introduce some helpful R functions for inspecting the data and write some of our own.</p>
+<p>Most of the time, the above steps are not clearly delineated from each other. For example, one could inspect certain columns of the data, clean them, build new features out of them, and then move on to other columns, thereby iterating on steps 2 through 4 until all the columns are dealt with. This approach is completely valid, but for the sake of teaching the course we prefer to show each step as distinct. Moreover, going over results and findings can often guide how data should be collected and processed in the future, so it is more accurate to present the above workflow as being circular, but once again for simplicity we assume a linear workflow.</p>
+<div id="basic-queries" class="section level2">
+<h2><span class="header-section-number">2.1</span> Basic queries</h2>
+<p>Let’s begin the data exploration. Each of the functions below return some useful information about the data.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">head</span>(nyc_taxi) <span class="co"># show me the first few rows</span></code></pre></div>
+<pre><code>## # A tibble: 6 × 17
+##       pickup_datetime    dropoff_datetime passenger_count trip_distance pickup_longitude
+##                 &lt;chr&gt;               &lt;chr&gt;           &lt;int&gt;         &lt;dbl&gt;            &lt;dbl&gt;
+## 1 2016-06-21 21:33:52 2016-06-21 21:34:40               5          0.40              -74
+## 2 2016-06-08 09:52:19 2016-06-08 10:19:55               1          5.20              -74
+## 3 2016-06-14 23:27:22 2016-06-14 23:35:05               1          2.10              -74
+## 4 2016-06-12 20:13:12 2016-06-12 20:18:53               5          2.23              -74
+## 5 2016-06-10 23:40:21 2016-06-11 00:05:14               3          2.72              -74
+## 6 2016-06-28 16:46:23 2016-06-28 16:54:57               1          1.30              -74
+##   pickup_latitude rate_code_id dropoff_longitude dropoff_latitude payment_type
+##             &lt;dbl&gt;        &lt;int&gt;             &lt;dbl&gt;            &lt;dbl&gt;        &lt;int&gt;
+## 1            40.7            1               -74             40.7            1
+## 2            40.8            1               -74             40.8            2
+## 3            40.7            1               -74             40.7            1
+## 4            40.8            1               -74             40.8            1
+## 5            40.7            1               -74             40.7            1
+## 6            40.7            1               -74             40.7            2
+##   fare_amount extra mta_tax tip_amount tolls_amount improvement_surcharge total_amount
+##         &lt;dbl&gt; &lt;dbl&gt;   &lt;dbl&gt;      &lt;dbl&gt;        &lt;dbl&gt;                 &lt;dbl&gt;        &lt;dbl&gt;
+## 1         3.0   0.5     0.5       0.86            0                   0.3         5.16
+## 2        21.5   0.0     0.5       0.00            0                   0.3        22.30
+## 3         9.0   0.5     0.5       1.50            0                   0.3        11.80
+## 4         8.0   0.5     0.5       2.79            0                   0.3        12.09
+## 5        17.0   0.5     0.5       3.66            0                   0.3        21.96
+## 6         7.5   1.0     0.5       0.00            0                   0.3         9.30</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">head</span>(nyc_taxi, <span class="dt">n =</span> <span class="dv">3</span>) <span class="co"># show me the first 10 rows</span></code></pre></div>
+<pre><code>## # A tibble: 3 × 17
+##       pickup_datetime    dropoff_datetime passenger_count trip_distance pickup_longitude
+##                 &lt;chr&gt;               &lt;chr&gt;           &lt;int&gt;         &lt;dbl&gt;            &lt;dbl&gt;
+## 1 2016-06-21 21:33:52 2016-06-21 21:34:40               5           0.4              -74
+## 2 2016-06-08 09:52:19 2016-06-08 10:19:55               1           5.2              -74
+## 3 2016-06-14 23:27:22 2016-06-14 23:35:05               1           2.1              -74
+##   pickup_latitude rate_code_id dropoff_longitude dropoff_latitude payment_type
+##             &lt;dbl&gt;        &lt;int&gt;             &lt;dbl&gt;            &lt;dbl&gt;        &lt;int&gt;
+## 1            40.7            1               -74             40.7            1
+## 2            40.8            1               -74             40.8            2
+## 3            40.7            1               -74             40.7            1
+##   fare_amount extra mta_tax tip_amount tolls_amount improvement_surcharge total_amount
+##         &lt;dbl&gt; &lt;dbl&gt;   &lt;dbl&gt;      &lt;dbl&gt;        &lt;dbl&gt;                 &lt;dbl&gt;        &lt;dbl&gt;
+## 1         3.0   0.5     0.5       0.86            0                   0.3         5.16
+## 2        21.5   0.0     0.5       0.00            0                   0.3        22.30
+## 3         9.0   0.5     0.5       1.50            0                   0.3        11.80</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">tail</span>(nyc_taxi) <span class="co"># show me the last few rows</span></code></pre></div>
+<pre><code>## # A tibble: 6 × 17
+##       pickup_datetime    dropoff_datetime passenger_count trip_distance pickup_longitude
+##                 &lt;chr&gt;               &lt;chr&gt;           &lt;int&gt;         &lt;dbl&gt;            &lt;dbl&gt;
+## 1 2016-01-14 12:02:58 2016-01-14 12:21:06               4          1.33            -74.0
+## 2 2016-01-03 11:19:24 2016-01-03 11:21:43               5          0.51            -74.0
+## 3 2016-01-14 18:19:00 2016-01-14 18:42:27               1          2.20            -74.0
+## 4 2016-01-08 09:08:05 2016-01-08 09:14:42               1          1.40            -74.0
+## 5 2016-01-08 15:00:53 2016-01-08 15:07:46               5          1.03            -74.0
+## 6 2016-01-01 02:09:32 2016-01-01 02:18:43               1          1.82            -73.9
+##   pickup_latitude rate_code_id dropoff_longitude dropoff_latitude payment_type
+##             &lt;dbl&gt;        &lt;int&gt;             &lt;dbl&gt;            &lt;dbl&gt;        &lt;int&gt;
+## 1            40.8            1             -74.0             40.8            2
+## 2            40.8            1             -74.0             40.8            1
+## 3            40.7            1             -74.0             40.8            2
+## 4            40.8            1             -74.0             40.8            1
+## 5            40.8            1             -74.0             40.8            2
+## 6            40.8            1             -73.9             40.8            2
+##   fare_amount extra mta_tax tip_amount tolls_amount improvement_surcharge total_amount
+##         &lt;dbl&gt; &lt;dbl&gt;   &lt;dbl&gt;      &lt;dbl&gt;        &lt;dbl&gt;                 &lt;dbl&gt;        &lt;dbl&gt;
+## 1        12.0   0.0     0.5       0.00            0                   0.3        12.80
+## 2         4.0   0.0     0.5       0.96            0                   0.3         5.76
+## 3        15.5   1.0     0.5       0.00            0                   0.3        17.30
+## 4         7.0   0.0     0.5       1.55            0                   0.3         9.35
+## 5         6.0   0.0     0.5       0.00            0                   0.3         6.80
+## 6         8.5   0.5     0.5       0.00            0                   0.3         9.80</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">basic_info &lt;-<span class="st"> </span><span class="kw">list</span>(
+  <span class="dt">class =</span> <span class="kw">class</span>(nyc_taxi), <span class="co"># shows the type of the data: `data.frame`</span>
+  <span class="dt">type =</span> <span class="kw">typeof</span>(nyc_taxi), <span class="co"># shows that a `data.frame` is fundamentally a `list` object</span>
+  <span class="dt">nrow =</span> <span class="kw">nrow</span>(nyc_taxi), <span class="co"># number of rows</span>
+  <span class="dt">ncol =</span> <span class="kw">ncol</span>(nyc_taxi), <span class="co"># number of columns</span>
+  <span class="dt">colnames =</span> <span class="kw">names</span>(nyc_taxi))
+
+basic_info</code></pre></div>
+<pre><code>## $class
+## [1] &quot;tbl_df&quot;     &quot;tbl&quot;        &quot;data.frame&quot;
+## 
+## $type
+## [1] &quot;list&quot;
+## 
+## $nrow
+## [1] 6000000
+## 
+## $ncol
+## [1] 17
+## 
+## $colnames
+##  [1] &quot;pickup_datetime&quot;       &quot;dropoff_datetime&quot;      &quot;passenger_count&quot;      
+##  [4] &quot;trip_distance&quot;         &quot;pickup_longitude&quot;      &quot;pickup_latitude&quot;      
+##  [7] &quot;rate_code_id&quot;          &quot;dropoff_longitude&quot;     &quot;dropoff_latitude&quot;     
+## [10] &quot;payment_type&quot;          &quot;fare_amount&quot;           &quot;extra&quot;                
+## [13] &quot;mta_tax&quot;               &quot;tip_amount&quot;            &quot;tolls_amount&quot;         
+## [16] &quot;improvement_surcharge&quot; &quot;total_amount&quot;</code></pre>
+<p>We use <code>str</code> to look at column types in the data: the most common column types are <code>integer</code>, <code>numeric</code> (for floats), <code>character</code> (for strings), <code>factor</code> (for categorical data). Less common column types exist, such as date, time, and datetime formats.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">str</span>(nyc_taxi)</code></pre></div>
+<pre><code>## Classes &#39;tbl_df&#39;, &#39;tbl&#39; and &#39;data.frame&#39;:    6000000 obs. of  17 variables:
+##  $ pickup_datetime      : chr  &quot;2016-06-21 21:33:52&quot; &quot;2016-06-08 09:52:19&quot; &quot;2016-06-14 23:27:22&quot; &quot;2016-06-12 20:13:12&quot; ...
+##  $ dropoff_datetime     : chr  &quot;2016-06-21 21:34:40&quot; &quot;2016-06-08 10:19:55&quot; &quot;2016-06-14 23:35:05&quot; &quot;2016-06-12 20:18:53&quot; ...
+##  $ passenger_count      : int  5 1 1 5 3 1 1 2 1 1 ...
+##  $ trip_distance        : num  0.4 5.2 2.1 2.23 2.72 1.3 8.94 0.87 1.6 2.43 ...
+##  $ pickup_longitude     : num  -74 -74 -74 -74 -74 ...
+##  $ pickup_latitude      : num  40.7 40.8 40.7 40.8 40.7 ...
+##  $ rate_code_id         : int  1 1 1 1 1 1 1 1 1 1 ...
+##  $ dropoff_longitude    : num  -74 -74 -74 -74 -74 ...
+##  $ dropoff_latitude     : num  40.7 40.8 40.7 40.8 40.7 ...
+##  $ payment_type         : int  1 2 1 1 1 2 1 1 2 2 ...
+##  $ fare_amount          : num  3 21.5 9 8 17 7.5 30.5 5 9.5 10.5 ...
+##  $ extra                : num  0.5 0 0.5 0.5 0.5 1 0 0.5 0 0.5 ...
+##  $ mta_tax              : num  0.5 0.5 0.5 0.5 0.5 0.5 0.5 0.5 0.5 0.5 ...
+##  $ tip_amount           : num  0.86 0 1.5 2.79 3.66 0 7.37 1.7 0 0 ...
+##  $ tolls_amount         : num  0 0 0 0 0 0 5.54 0 0 0 ...
+##  $ improvement_surcharge: num  0.3 0.3 0.3 0.3 0.3 0.3 0.3 0.3 0.3 0.3 ...
+##  $ total_amount         : num  5.16 22.3 11.8 12.09 21.96 ...</code></pre>
+<p>Now let’s see how we can subset or slice the data: in other words. Since a <code>data.frame</code> is a 2-dimensional object, we can slice by asking for specific rows or columns of the data. The notation we use here (which we refer to as the <strong>bracket notation</strong>) is as follows:</p>
+<pre><code>data[rows_to_slice, columns_to_slice]</code></pre>
+<p>As we will see, we can be very flexible in what we choose for <code>rows_to_slice</code> and <code>columns_to_slice</code>. For example,</p>
+<ul>
+<li>we can provide numeric indexes corresponding to row numbers or column positions</li>
+<li>we can (and should) specify the column names instead of column positions</li>
+<li>we can provide functions that return integers corresponding to the row indexes we want to return</li>
+<li>we can provide functions that return the column names we want to return</li>
+<li>we can have conditional statements or functions that return <code>TRUE</code> and <code>FALSE</code> for each row or column, so that only cases that are <code>TRUE</code> are returned</li>
+</ul>
+<p>We will encounter examples for each case.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">nyc_taxi[<span class="dv">1</span>:<span class="dv">5</span>, <span class="dv">1</span>:<span class="dv">4</span>] <span class="co"># rows 1 through 5, columns 1 through 4</span></code></pre></div>
+<pre><code>## # A tibble: 5 × 4
+##       pickup_datetime    dropoff_datetime passenger_count trip_distance
+##                 &lt;chr&gt;               &lt;chr&gt;           &lt;int&gt;         &lt;dbl&gt;
+## 1 2016-06-21 21:33:52 2016-06-21 21:34:40               5          0.40
+## 2 2016-06-08 09:52:19 2016-06-08 10:19:55               1          5.20
+## 3 2016-06-14 23:27:22 2016-06-14 23:35:05               1          2.10
+## 4 2016-06-12 20:13:12 2016-06-12 20:18:53               5          2.23
+## 5 2016-06-10 23:40:21 2016-06-11 00:05:14               3          2.72</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">nyc_taxi[<span class="dv">1</span>:<span class="dv">5</span>, -(<span class="dv">1</span>:<span class="dv">4</span>)] <span class="co"># rows 1 through 5, except columns 1 through 4</span></code></pre></div>
+<pre><code>## # A tibble: 5 × 13
+##   pickup_longitude pickup_latitude rate_code_id dropoff_longitude dropoff_latitude
+##              &lt;dbl&gt;           &lt;dbl&gt;        &lt;int&gt;             &lt;dbl&gt;            &lt;dbl&gt;
+## 1              -74            40.7            1               -74             40.7
+## 2              -74            40.8            1               -74             40.8
+## 3              -74            40.7            1               -74             40.7
+## 4              -74            40.8            1               -74             40.8
+## 5              -74            40.7            1               -74             40.7
+##   payment_type fare_amount extra mta_tax tip_amount tolls_amount improvement_surcharge
+##          &lt;int&gt;       &lt;dbl&gt; &lt;dbl&gt;   &lt;dbl&gt;      &lt;dbl&gt;        &lt;dbl&gt;                 &lt;dbl&gt;
+## 1            1         3.0   0.5     0.5       0.86            0                   0.3
+## 2            2        21.5   0.0     0.5       0.00            0                   0.3
+## 3            1         9.0   0.5     0.5       1.50            0                   0.3
+## 4            1         8.0   0.5     0.5       2.79            0                   0.3
+## 5            1        17.0   0.5     0.5       3.66            0                   0.3
+##   total_amount
+##          &lt;dbl&gt;
+## 1         5.16
+## 2        22.30
+## 3        11.80
+## 4        12.09
+## 5        21.96</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">nyc.first.ten &lt;-<span class="st"> </span>nyc_taxi[<span class="dv">1</span>:<span class="dv">10</span>, ] <span class="co"># store the first 10 rows and all columns in a new `data.frame` called `nyc.first.ten`</span></code></pre></div>
+<p>So far our data slices have been limited to adjacent rows and adjacent columns. Here’s an example of how to slice the data for non-adjacent rows. It is also far more common to select columns by their names instead of their position (also called numeric index), since this makes the code more readable and won’t break the code if column positions change.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">nyc_taxi[<span class="kw">c</span>(<span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">8</span>, <span class="dv">66</span>), <span class="kw">c</span>(<span class="st">&quot;fare_amount&quot;</span>, <span class="st">&quot;mta_tax&quot;</span>, <span class="st">&quot;tip_amount&quot;</span>, <span class="st">&quot;tolls_amount&quot;</span>)]</code></pre></div>
+<pre><code>## # A tibble: 4 × 4
+##   fare_amount mta_tax tip_amount tolls_amount
+##         &lt;dbl&gt;   &lt;dbl&gt;      &lt;dbl&gt;        &lt;dbl&gt;
+## 1        21.5     0.5        0.0            0
+## 2         9.0     0.5        1.5            0
+## 3         5.0     0.5        1.7            0
+## 4        29.5     0.5        0.0            0</code></pre>
+</div>
+<div id="more-on-querying-data" class="section level2">
+<h2><span class="header-section-number">2.2</span> More on querying data</h2>
+<p>To query a single column of the data, we have two options:</p>
+<ul>
+<li>we can still use the bracket notation, namely <code>data[ , col_name]</code></li>
+<li>we can use a list notation, namely <code>data$col_name</code></li>
+</ul>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">nyc_taxi[<span class="dv">1</span>:<span class="dv">10</span>, <span class="st">&quot;fare_amount&quot;</span>]</code></pre></div>
+<pre><code>## # A tibble: 10 × 1
+##    fare_amount
+##          &lt;dbl&gt;
+## 1          3.0
+## 2         21.5
+## 3          9.0
+## 4          8.0
+## 5         17.0
+## 6          7.5
+## 7         30.5
+## 8          5.0
+## 9          9.5
+## 10        10.5</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">nyc_taxi$fare_amount[<span class="dv">1</span>:<span class="dv">10</span>]</code></pre></div>
+<pre><code>##  [1]  3.0 21.5  9.0  8.0 17.0  7.5 30.5  5.0  9.5 10.5</code></pre>
+<p>Depending on the situation, one notation may be preferable to the other, as we will see.</p>
+<p>So far we sliced the data at particular rows using the index of the row. A more common situation is one where we query the data for rows that meet a given condition. Multiple conditions can be combined using the <code>&amp;</code> (and) and <code>|</code> (or) operators.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">head</span>(nyc_taxi[nyc_taxi$fare_amount &gt;<span class="st"> </span><span class="dv">350</span>, ]) <span class="co"># return the rows of the data where `fare_amount` exceeds 350</span></code></pre></div>
+<pre><code>## # A tibble: 6 × 17
+##       pickup_datetime    dropoff_datetime passenger_count trip_distance pickup_longitude
+##                 &lt;chr&gt;               &lt;chr&gt;           &lt;int&gt;         &lt;dbl&gt;            &lt;dbl&gt;
+## 1 2016-06-08 16:40:58 2016-06-08 16:43:46               1           0.0            -73.9
+## 2 2016-06-21 14:58:00 2016-06-21 14:58:06               1           0.0            -75.3
+## 3 2016-06-13 12:08:55 2016-06-13 12:09:45               1           0.4            -73.8
+## 4 2016-06-08 02:15:25 2016-06-08 02:16:06               2           0.0            -73.9
+## 5 2016-06-17 14:27:52 2016-06-17 14:29:06               1           0.0            -74.0
+## 6 2016-06-22 14:53:04 2016-06-22 15:04:21               5           0.0              0.0
+##   pickup_latitude rate_code_id dropoff_longitude dropoff_latitude payment_type
+##             &lt;dbl&gt;        &lt;int&gt;             &lt;dbl&gt;            &lt;dbl&gt;        &lt;int&gt;
+## 1            40.8            5             -73.9             40.8            2
+## 2            40.2            5             -75.3             40.2            1
+## 3            40.6            2             -73.8             40.6            3
+## 4            40.7            5             -73.9             40.7            1
+## 5            40.6            5             -74.0             40.6            1
+## 6             0.0            1               0.0              0.0            2
+##   fare_amount extra mta_tax tip_amount tolls_amount improvement_surcharge total_amount
+##         &lt;dbl&gt; &lt;dbl&gt;   &lt;dbl&gt;      &lt;dbl&gt;        &lt;dbl&gt;                 &lt;dbl&gt;        &lt;dbl&gt;
+## 1         550     0     0.0          0            0                   0.3          550
+## 2         450     0     0.0          0            0                   0.3          450
+## 3        8452     0     0.5          0            0                   0.3         8453
+## 4         380     0     0.0        114            0                   0.3          494
+## 5         500     0     0.0         10            0                   0.3          510
+## 6         726     0     0.5          0            0                   0.3          726</code></pre>
+<p>We can use a function like <code>grep</code> to grab only columns that match a certain pattern, such as columns that have the word ‘amount’ in them.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">amount_vars &lt;-<span class="st"> </span><span class="kw">grep</span>(<span class="st">&#39;amount&#39;</span>, <span class="kw">names</span>(nyc_taxi), <span class="dt">value =</span> <span class="ot">TRUE</span>)
+nyc_taxi[nyc_taxi$fare_amount &gt;<span class="st"> </span><span class="dv">350</span> &amp;<span class="st"> </span>nyc_taxi$tip_amount &lt;<span class="st"> </span><span class="dv">10</span>, amount_vars]</code></pre></div>
+<pre><code>## # A tibble: 58 × 4
+##    fare_amount tip_amount tolls_amount total_amount
+##          &lt;dbl&gt;      &lt;dbl&gt;        &lt;dbl&gt;        &lt;dbl&gt;
+## 1          550          0            0          550
+## 2          450          0            0          450
+## 3         8452          0            0         8453
+## 4          726          0            0          726
+## 5          499          0            0          500
+## 6          365          0           12          377
+## 7          400          0            0          400
+## 8          423          0            0          423
+## 9       628545          0            0       629034
+## 10         480          0            0          480
+## # ... with 48 more rows</code></pre>
+<p>As these conditional statements become longer, it becomes increasingly tedious to write <code>nyc_taxi$</code> proir to the column name every time we refer to a column in the data. Note how leaving out <code>nyc_taxi$</code> by accident can result in an error:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">nyc_taxi[nyc_taxi$fare_amount &gt;<span class="st"> </span><span class="dv">350</span> &amp;<span class="st"> </span>tip_amount &lt;<span class="st"> </span><span class="dv">10</span>, amount_vars]</code></pre></div>
+<pre><code>## Error in lapply(x, `[`, i): object &#39;tip_amount&#39; not found</code></pre>
+<p>As the error suggests, R expected to find a stand-alone object called <code>tip_amount</code>, which doesn’t exist. Instead, we meant to point to the column called <code>tip_amount</code> in the nyc_taxi dataset, in other words <code>nyc_taxi$tip_amount</code>. This error also suggests one dangerous pitfall: if we did have an object called <code>tip_amount</code> in our R session, we may have failed to notice the bug in the code.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">tip_amount &lt;-<span class="st"> </span><span class="dv">20</span> <span class="co"># this is the value that will be used to check the condition below</span>
+amount_vars &lt;-<span class="st"> </span><span class="kw">grep</span>(<span class="st">&#39;amount&#39;</span>, <span class="kw">names</span>(nyc_taxi), <span class="dt">value =</span> <span class="ot">TRUE</span>)
+nyc_taxi[nyc_taxi$fare_amount &gt;<span class="st"> </span><span class="dv">350</span> &amp;<span class="st"> </span>tip_amount &lt;<span class="st"> </span><span class="dv">10</span>, amount_vars] <span class="co"># since `20 &lt; 10` is FALSE, we return an empty data</span></code></pre></div>
+<pre><code>## # A tibble: 0 × 4
+## # ... with 4 variables: fare_amount &lt;dbl&gt;, tip_amount &lt;dbl&gt;, tolls_amount &lt;dbl&gt;,
+## #   total_amount &lt;dbl&gt;</code></pre>
+<p>There are three ways to avoid such errors: (1) avoid having objects with the same name as column names in the data, (2) use the <code>with</code> function. With <code>with</code> we are explicitly telling R that the columns we reference are in <code>nyc_taxi</code>, this way we don’t need to prefix the columns by <code>nyc_taxi$</code> anymore. Here’s the above query rewritten using <code>with</code>.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">with</span>(nyc_taxi, nyc_taxi[fare_amount &gt;<span class="st"> </span><span class="dv">350</span> &amp;<span class="st"> </span>tip_amount &lt;<span class="st"> </span><span class="dv">10</span>, amount_vars])</code></pre></div>
+<pre><code>## # A tibble: 58 × 4
+##    fare_amount tip_amount tolls_amount total_amount
+##          &lt;dbl&gt;      &lt;dbl&gt;        &lt;dbl&gt;        &lt;dbl&gt;
+## 1          550          0            0          550
+## 2          450          0            0          450
+## 3         8452          0            0         8453
+## 4          726          0            0          726
+## 5          499          0            0          500
+## 6          365          0           12          377
+## 7          400          0            0          400
+## 8          423          0            0          423
+## 9       628545          0            0       629034
+## 10         480          0            0          480
+## # ... with 48 more rows</code></pre>
+<p>We can use <code>with</code> any time we need to reference multiple columns in the data, not just for slicing the data. In the specific case where we slice the data, there is another option: using the <code>subset</code> function. Just like <code>with</code>, <code>subset</code> takes in the data as its first input so we don’t have to prefix column names with <code>nyc_taxi$</code>. We can also use the <code>select</code> argument to slice by columns. Let’s contrast slicing the data using <code>subset</code> with the bracket notation:</p>
+<ul>
+<li>bracket notation: <code>data[rows_to_slice, columns_to_slice]</code></li>
+<li>using <code>subset</code>: <code>subset(data, rows_to_slice, select = columns_to_slice)</code></li>
+</ul>
+<p>Here’s what the above query would look like using <code>subset</code>:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">subset</span>(nyc_taxi, fare_amount &gt;<span class="st"> </span><span class="dv">350</span> &amp;<span class="st"> </span>tip_amount &lt;<span class="st"> </span><span class="dv">10</span>, <span class="dt">select =</span> amount_vars)</code></pre></div>
+<pre><code>## # A tibble: 58 × 4
+##    fare_amount tip_amount tolls_amount total_amount
+##          &lt;dbl&gt;      &lt;dbl&gt;        &lt;dbl&gt;        &lt;dbl&gt;
+## 1          550          0            0          550
+## 2          450          0            0          450
+## 3         8452          0            0         8453
+## 4          726          0            0          726
+## 5          499          0            0          500
+## 6          365          0           12          377
+## 7          400          0            0          400
+## 8          423          0            0          423
+## 9       628545          0            0       629034
+## 10         480          0            0          480
+## # ... with 48 more rows</code></pre>
+<p>The <code>select</code> argument for <code>subset</code> allows us to select columns in a way that is not possible with the bracket notation:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">nyc_small &lt;-<span class="st"> </span><span class="kw">subset</span>(nyc_taxi, fare_amount &gt;<span class="st"> </span><span class="dv">350</span> &amp;<span class="st"> </span>tip_amount &lt;<span class="st"> </span><span class="dv">10</span>,
+  <span class="dt">select =</span> fare_amount:tip_amount) <span class="co"># return all columns between `fare_amount` and `tip_amount`</span>
+<span class="kw">dim</span>(nyc_small)</code></pre></div>
+<pre><code>## [1] 58  4</code></pre>
+<div id="exercises" class="section level3">
+<h3><span class="header-section-number">2.2.1</span> Exercises</h3>
+<p>Here is an example of a useful new function: <code>seq</code></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">seq</span>(<span class="dv">1</span>, <span class="dv">10</span>, <span class="dt">by =</span> <span class="dv">2</span>)</code></pre></div>
+<pre><code>## [1] 1 3 5 7 9</code></pre>
+<ol style="list-style-type: decimal">
+<li>Once you figure out what <code>seq</code> does, use it to take a sample of the data consisting of every 2500th rows. Such a sample is called a <strong>systematic sample</strong>.</li>
+</ol>
+<p>Here is another example of a useful function: <code>rep</code></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">rep</span>(<span class="dv">1</span>, <span class="dv">4</span>)</code></pre></div>
+<pre><code>## [1] 1 1 1 1</code></pre>
+<p>What happens if the first argument to <code>rep</code> is a vector?</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">rep</span>(<span class="dv">1</span>:<span class="dv">2</span>, <span class="dv">4</span>)</code></pre></div>
+<pre><code>## [1] 1 2 1 2 1 2 1 2</code></pre>
+<p>What happens if the second argument to <code>rep</code> is also a vector (of the same length)?</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">rep</span>(<span class="kw">c</span>(<span class="dv">3</span>, <span class="dv">6</span>), <span class="kw">c</span>(<span class="dv">2</span>, <span class="dv">5</span>))</code></pre></div>
+<pre><code>## [1] 3 3 6 6 6 6 6</code></pre>
+<ol start="2" style="list-style-type: decimal">
+<li><p>Create a new data object consisting of 5 copies of the first row of the data.</p></li>
+<li><p>Create a new data object consisting of 5 copies of each of the first 10 rows of the data.</p></li>
+<li><p>We learned to how to slice data using conditional statements. Note that in R, not all conditional statements have to involve columns in the data. Here’s an example:</p></li>
+</ol>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">subset</span>(nyc_small, fare_amount &gt;<span class="st"> </span><span class="dv">100</span> &amp;<span class="st"> </span><span class="dv">1</span>:<span class="dv">2</span> &gt;<span class="st"> </span><span class="dv">1</span>)</code></pre></div>
+<pre><code>## # A tibble: 29 × 4
+##    fare_amount extra mta_tax tip_amount
+##          &lt;dbl&gt; &lt;dbl&gt;   &lt;dbl&gt;      &lt;dbl&gt;
+## 1          450   0.0    0.00          0
+## 2          726   0.0    0.50          0
+## 3          365   0.0    0.00          0
+## 4          423   0.0    0.00          0
+## 5          480   0.0    0.00          0
+## 6          375   0.0    0.00          0
+## 7          688   0.0    0.50          0
+## 8          494   0.0    0.25          0
+## 9         4886   0.5    0.50          0
+## 10         400   0.0    0.00          0
+## # ... with 19 more rows</code></pre>
+<p>See if you can describe what the above statement returns. Of course, just because we can do something in R doesn’t mean that we should. Sometimes, we have to sacrifice a little bit of efficiency or conciseness for the sake of clarity. So reproduce the above subset in a way that makes the code more understandable. There is more than one way to do this, and you can break up the code in two steps instead of one if you want.</p>
+<p>Here’s another useful R function: <code>sample</code>. Run the below example multiple times to see the different samples being generated.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">sample</span>(<span class="dv">1</span>:<span class="dv">10</span>, <span class="dv">5</span>)</code></pre></div>
+<pre><code>## [1] 2 7 9 5 6</code></pre>
+<ol start="5" style="list-style-type: decimal">
+<li>Use <code>sample</code> to create random sample consisting of about 10 percent of the data. Store the result in a new data object called <code>nyc_sample</code>.</li>
+</ol>
+<p>There is another way to do what we just did (that does not involve the <code>sample</code> function). We start by creating a column <code>u</code> containing random uniform numbers between 0 and 1, which we can generate with the <code>runif</code> function.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">nyc_taxi$u &lt;-<span class="st"> </span><span class="kw">runif</span>(<span class="kw">nrow</span>(nyc_taxi))</code></pre></div>
+<ol start="6" style="list-style-type: decimal">
+<li><p>Recreate the same sample we had in the last exercise but use the column <code>u</code> instead.</p></li>
+<li><p>You would probably argue that the second solution is easier. There is however an advantage to using the <code>sample</code> function: we can also do sampling <strong>with replacement</strong> with the <code>sample</code> function. First find the argument that allows sampling with replacement. Then use it to take a sample of size 1000 <em>with replacement</em> from the <code>nyc_taxi</code> data.</p></li>
+</ol>
+</div>
+<div id="solutions" class="section level3">
+<h3><span class="header-section-number">2.2.2</span> Solutions</h3>
+<ol style="list-style-type: decimal">
+<li>We simply use the output of <code>seq</code> as indexes for selecting rows:</li>
+</ol>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">head</span>(nyc_taxi[<span class="kw">seq</span>(<span class="dv">1</span>, <span class="kw">nrow</span>(nyc_taxi), <span class="dv">2500</span>), ])</code></pre></div>
+<pre><code>## # A tibble: 6 × 18
+##       pickup_datetime    dropoff_datetime passenger_count trip_distance pickup_longitude
+##                 &lt;chr&gt;               &lt;chr&gt;           &lt;int&gt;         &lt;dbl&gt;            &lt;dbl&gt;
+## 1 2016-06-21 21:33:52 2016-06-21 21:34:40               5          0.40              -74
+## 2 2016-06-07 23:12:24 2016-06-07 23:40:01               1         11.50              -74
+## 3 2016-06-21 06:09:38 2016-06-21 06:10:59               1          0.36              -74
+## 4 2016-06-30 17:07:35 2016-06-30 17:23:14               2          1.99              -74
+## 5 2016-06-15 19:54:29 2016-06-15 20:08:02               1          2.31              -74
+## 6 2016-06-07 12:02:02 2016-06-07 12:18:36               6          0.76              -74
+##   pickup_latitude rate_code_id dropoff_longitude dropoff_latitude payment_type
+##             &lt;dbl&gt;        &lt;int&gt;             &lt;dbl&gt;            &lt;dbl&gt;        &lt;int&gt;
+## 1            40.7            1             -74.0             40.7            1
+## 2            40.7            1             -73.9             40.8            1
+## 3            40.8            1             -74.0             40.8            1
+## 4            40.8            1             -74.0             40.7            2
+## 5            40.8            1             -74.0             40.8            1
+## 6            40.8            1             -74.0             40.8            1
+##   fare_amount extra mta_tax tip_amount tolls_amount improvement_surcharge total_amount
+##         &lt;dbl&gt; &lt;dbl&gt;   &lt;dbl&gt;      &lt;dbl&gt;        &lt;dbl&gt;                 &lt;dbl&gt;        &lt;dbl&gt;
+## 1         3.0   0.5     0.5       0.86            0                   0.3         5.16
+## 2        34.5   0.5     0.5       7.15            0                   0.3        42.95
+## 3         3.5   0.0     0.5       0.86            0                   0.3         5.16
+## 4        12.0   1.0     0.5       0.00            0                   0.3        13.80
+## 5        11.0   1.0     0.5       2.56            0                   0.3        15.36
+## 6        11.0   0.0     0.5       2.36            0                   0.3        14.16
+##       u
+##   &lt;dbl&gt;
+## 1 0.241
+## 2 0.942
+## 3 0.333
+## 4 0.476
+## 5 0.446
+## 6 0.272</code></pre>
+<p>Another approach we can take is to use the <strong>modulo operator</strong> (<code>%%</code>) in R, but a this approach is less efficient.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">head</span>(nyc_taxi[<span class="dv">1</span>:<span class="kw">nrow</span>(nyc_taxi) %%<span class="st"> </span><span class="dv">2500</span> ==<span class="st"> </span><span class="dv">1</span>, ])</code></pre></div>
+<pre><code>## # A tibble: 6 × 18
+##       pickup_datetime    dropoff_datetime passenger_count trip_distance pickup_longitude
+##                 &lt;chr&gt;               &lt;chr&gt;           &lt;int&gt;         &lt;dbl&gt;            &lt;dbl&gt;
+## 1 2016-06-21 21:33:52 2016-06-21 21:34:40               5          0.40              -74
+## 2 2016-06-07 23:12:24 2016-06-07 23:40:01               1         11.50              -74
+## 3 2016-06-21 06:09:38 2016-06-21 06:10:59               1          0.36              -74
+## 4 2016-06-30 17:07:35 2016-06-30 17:23:14               2          1.99              -74
+## 5 2016-06-15 19:54:29 2016-06-15 20:08:02               1          2.31              -74
+## 6 2016-06-07 12:02:02 2016-06-07 12:18:36               6          0.76              -74
+##   pickup_latitude rate_code_id dropoff_longitude dropoff_latitude payment_type
+##             &lt;dbl&gt;        &lt;int&gt;             &lt;dbl&gt;            &lt;dbl&gt;        &lt;int&gt;
+## 1            40.7            1             -74.0             40.7            1
+## 2            40.7            1             -73.9             40.8            1
+## 3            40.8            1             -74.0             40.8            1
+## 4            40.8            1             -74.0             40.7            2
+## 5            40.8            1             -74.0             40.8            1
+## 6            40.8            1             -74.0             40.8            1
+##   fare_amount extra mta_tax tip_amount tolls_amount improvement_surcharge total_amount
+##         &lt;dbl&gt; &lt;dbl&gt;   &lt;dbl&gt;      &lt;dbl&gt;        &lt;dbl&gt;                 &lt;dbl&gt;        &lt;dbl&gt;
+## 1         3.0   0.5     0.5       0.86            0                   0.3         5.16
+## 2        34.5   0.5     0.5       7.15            0                   0.3        42.95
+## 3         3.5   0.0     0.5       0.86            0                   0.3         5.16
+## 4        12.0   1.0     0.5       0.00            0                   0.3        13.80
+## 5        11.0   1.0     0.5       2.56            0                   0.3        15.36
+## 6        11.0   0.0     0.5       2.36            0                   0.3        14.16
+##       u
+##   &lt;dbl&gt;
+## 1 0.241
+## 2 0.942
+## 3 0.333
+## 4 0.476
+## 5 0.446
+## 6 0.272</code></pre>
+<ol start="2" style="list-style-type: decimal">
+<li>In this case, we are still using the same bracket notation, but this time return the first rows 5 times.</li>
+</ol>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">nyc_taxi[<span class="kw">rep</span>(<span class="dv">1</span>, <span class="dv">5</span>), ]</code></pre></div>
+<pre><code>## # A tibble: 5 × 18
+##       pickup_datetime    dropoff_datetime passenger_count trip_distance pickup_longitude
+##                 &lt;chr&gt;               &lt;chr&gt;           &lt;int&gt;         &lt;dbl&gt;            &lt;dbl&gt;
+## 1 2016-06-21 21:33:52 2016-06-21 21:34:40               5           0.4              -74
+## 2 2016-06-21 21:33:52 2016-06-21 21:34:40               5           0.4              -74
+## 3 2016-06-21 21:33:52 2016-06-21 21:34:40               5           0.4              -74
+## 4 2016-06-21 21:33:52 2016-06-21 21:34:40               5           0.4              -74
+## 5 2016-06-21 21:33:52 2016-06-21 21:34:40               5           0.4              -74
+##   pickup_latitude rate_code_id dropoff_longitude dropoff_latitude payment_type
+##             &lt;dbl&gt;        &lt;int&gt;             &lt;dbl&gt;            &lt;dbl&gt;        &lt;int&gt;
+## 1            40.7            1               -74             40.7            1
+## 2            40.7            1               -74             40.7            1
+## 3            40.7            1               -74             40.7            1
+## 4            40.7            1               -74             40.7            1
+## 5            40.7            1               -74             40.7            1
+##   fare_amount extra mta_tax tip_amount tolls_amount improvement_surcharge total_amount
+##         &lt;dbl&gt; &lt;dbl&gt;   &lt;dbl&gt;      &lt;dbl&gt;        &lt;dbl&gt;                 &lt;dbl&gt;        &lt;dbl&gt;
+## 1           3   0.5     0.5       0.86            0                   0.3         5.16
+## 2           3   0.5     0.5       0.86            0                   0.3         5.16
+## 3           3   0.5     0.5       0.86            0                   0.3         5.16
+## 4           3   0.5     0.5       0.86            0                   0.3         5.16
+## 5           3   0.5     0.5       0.86            0                   0.3         5.16
+##       u
+##   &lt;dbl&gt;
+## 1 0.241
+## 2 0.241
+## 3 0.241
+## 4 0.241
+## 5 0.241</code></pre>
+<ol start="3" style="list-style-type: decimal">
+<li>This is akin to the last exercise, but this time we repeat <code>1:10</code> instead of just <code>1</code>. We use <code>head</code> here to only show the top 6 rows.</li>
+</ol>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">head</span>(nyc_taxi[<span class="kw">rep</span>(<span class="dv">1</span>:<span class="dv">10</span>, <span class="dv">5</span>), ])</code></pre></div>
+<pre><code>## # A tibble: 6 × 18
+##       pickup_datetime    dropoff_datetime passenger_count trip_distance pickup_longitude
+##                 &lt;chr&gt;               &lt;chr&gt;           &lt;int&gt;         &lt;dbl&gt;            &lt;dbl&gt;
+## 1 2016-06-21 21:33:52 2016-06-21 21:34:40               5          0.40              -74
+## 2 2016-06-08 09:52:19 2016-06-08 10:19:55               1          5.20              -74
+## 3 2016-06-14 23:27:22 2016-06-14 23:35:05               1          2.10              -74
+## 4 2016-06-12 20:13:12 2016-06-12 20:18:53               5          2.23              -74
+## 5 2016-06-10 23:40:21 2016-06-11 00:05:14               3          2.72              -74
+## 6 2016-06-28 16:46:23 2016-06-28 16:54:57               1          1.30              -74
+##   pickup_latitude rate_code_id dropoff_longitude dropoff_latitude payment_type
+##             &lt;dbl&gt;        &lt;int&gt;             &lt;dbl&gt;            &lt;dbl&gt;        &lt;int&gt;
+## 1            40.7            1               -74             40.7            1
+## 2            40.8            1               -74             40.8            2
+## 3            40.7            1               -74             40.7            1
+## 4            40.8            1               -74             40.8            1
+## 5            40.7            1               -74             40.7            1
+## 6            40.7            1               -74             40.7            2
+##   fare_amount extra mta_tax tip_amount tolls_amount improvement_surcharge total_amount
+##         &lt;dbl&gt; &lt;dbl&gt;   &lt;dbl&gt;      &lt;dbl&gt;        &lt;dbl&gt;                 &lt;dbl&gt;        &lt;dbl&gt;
+## 1         3.0   0.5     0.5       0.86            0                   0.3         5.16
+## 2        21.5   0.0     0.5       0.00            0                   0.3        22.30
+## 3         9.0   0.5     0.5       1.50            0                   0.3        11.80
+## 4         8.0   0.5     0.5       2.79            0                   0.3        12.09
+## 5        17.0   0.5     0.5       3.66            0                   0.3        21.96
+## 6         7.5   1.0     0.5       0.00            0                   0.3         9.30
+##        u
+##    &lt;dbl&gt;
+## 1 0.2406
+## 2 0.5684
+## 3 0.0196
+## 4 0.5237
+## 5 0.3363
+## 6 0.4444</code></pre>
+<p>Notice the way that the row indexes appear in the results in each case. This can sometimes be an indication of how the data was sampled.</p>
+<ol start="4" style="list-style-type: decimal">
+<li>As it turns out, the second condition makes it so that we skip every other row of the data, but we need to be familiar with vector operation in R to guess that and even then it is not immediately clear that is what’s happening. So here’s a better way of doing the same thing.</li>
+</ol>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">nyc_small &lt;-<span class="st"> </span>nyc_small[<span class="kw">seq</span>(<span class="dv">2</span>, <span class="kw">nrow</span>(nyc_small), <span class="dt">by =</span> <span class="dv">2</span>), ] <span class="co"># take even-numbered rows</span>
+<span class="kw">subset</span>(nyc_small, fare_amount &gt;<span class="st"> </span><span class="dv">100</span>)</code></pre></div>
+<pre><code>## # A tibble: 29 × 4
+##    fare_amount extra mta_tax tip_amount
+##          &lt;dbl&gt; &lt;dbl&gt;   &lt;dbl&gt;      &lt;dbl&gt;
+## 1          450   0.0    0.00          0
+## 2          726   0.0    0.50          0
+## 3          365   0.0    0.00          0
+## 4          423   0.0    0.00          0
+## 5          480   0.0    0.00          0
+## 6          375   0.0    0.00          0
+## 7          688   0.0    0.50          0
+## 8          494   0.0    0.25          0
+## 9         4886   0.5    0.50          0
+## 10         400   0.0    0.00          0
+## # ... with 19 more rows</code></pre>
+<ol start="5" style="list-style-type: decimal">
+<li>Here’s one way we can sample from the data.</li>
+</ol>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">nyc_sample &lt;-<span class="st"> </span>nyc_taxi[<span class="kw">sample</span>(<span class="dv">1</span>:<span class="kw">nrow</span>(nyc_taxi), <span class="kw">nrow</span>(nyc_taxi)/<span class="dv">10</span>) , ]</code></pre></div>
+<ol start="6" style="list-style-type: decimal">
+<li>Here’s a second way of doing it.</li>
+</ol>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">nyc_sample &lt;-<span class="st"> </span><span class="kw">subset</span>(nyc_taxi, u &lt;<span class="st"> </span>.<span class="dv">1</span>)
+nyc_taxi$u &lt;-<span class="st"> </span><span class="ot">NULL</span> <span class="co"># we can drop `u` now, since it is no longer needed</span></code></pre></div>
+<ol start="7" style="list-style-type: decimal">
+<li>We can sample with replacement using the <code>replace = TRUE</code> argument in the <code>sample</code> function.</li>
+</ol>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">nyc_sample &lt;-<span class="st"> </span>nyc_taxi[<span class="kw">sample</span>(<span class="dv">1</span>:<span class="kw">nrow</span>(nyc_taxi), <span class="dv">1000</span>, <span class="dt">replace =</span> <span class="ot">TRUE</span>) , ]</code></pre></div>
+</div>
+</div>
+<div id="basic-summaries" class="section level2">
+<h2><span class="header-section-number">2.3</span> Basic summaries</h2>
+<p>After <code>str</code>, <code>summary</code> is probably the most ubiquitous R function. It provides us with summary statistics of each of the columns in the data. The kind of summary statistics we see for a given column depends on the column type. Just like <code>str</code>, <code>summary</code> gives clues for how we need to clean the data. For example</p>
+<ul>
+<li><code>tpep_pickup_datetime</code> and <code>tpep_dropoff_datetime</code> should be <code>datetime</code> columns, not <code>character</code></li>
+<li><code>rate_code_id</code> and <code>payment_type</code> should be a <code>factor</code>, not <code>character</code></li>
+<li>the geographical coordinates for pick-up and drop-off occasionally fall outside a reasonable bound (probably due to error)</li>
+<li><code>fare_amount</code> is sometimes negative (could be refunds, could be errors, could be something else)</li>
+</ul>
+<p>Once we clean the data (next chapter), we will rerun summary and notice how we see the appropriate summary statistics once the column have been converted to the right classes.</p>
+<p>What if there are summaries we don’t see? We can just write our own summary function, and here’s an example. The <code>num.distinct</code> function will return the number of unique elements in a vector. Most of the work is done for us: the <code>unique</code> function returns the unique elements of a vector, and the <code>length</code> function counts how many there are. Notice how the function is commented with information about input types and output.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">num.distinct &lt;-<span class="st"> </span>function(x) {
+<span class="co"># returns the number of distinct values of a vector `x`</span>
+<span class="co"># `x` can be numeric (floats are not recommended) , character, logical, factor</span>
+<span class="co"># to see why floats are a bad idea try this:</span>
+<span class="co"># unique(c(.3, .4 - .1, .5 - .2, .6 - .3, .7 - .4))</span>
+  <span class="kw">length</span>(<span class="kw">unique</span>(x))
+}</code></pre></div>
+<p>It’s usually a good idea to test the function with some random inputs before we test it on the larger data. We should also test the function on ‘unusual’ inputs to see if it does what we expect from it.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">num.distinct</span>(<span class="kw">c</span>(<span class="dv">5</span>, <span class="dv">6</span>, <span class="dv">6</span>, <span class="dv">9</span>))</code></pre></div>
+<pre><code>## [1] 3</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">num.distinct</span>(<span class="dv">1</span>) <span class="co"># test the function on a singleton (a vector of length 1)</span></code></pre></div>
+<pre><code>## [1] 1</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">num.distinct</span>(<span class="kw">c</span>()) <span class="co"># test the function on an empty vector</span></code></pre></div>
+<pre><code>## [1] 0</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">num.distinct</span>(<span class="kw">c</span>(<span class="dv">23</span>, <span class="dv">45</span>, <span class="dv">45</span>, <span class="ot">NA</span>, <span class="dv">11</span>, <span class="dv">11</span>)) <span class="co"># test the function on a vector with NAs</span></code></pre></div>
+<pre><code>## [1] 4</code></pre>
+<p>Now we can test the function on the data, for example on <code>pickup_longitude</code>:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">num.distinct</span>(nyc_taxi$pickup_longitude) <span class="co"># check it on a single variable in our data</span></code></pre></div>
+<pre><code>## [1] 31159</code></pre>
+<p>But what if we wanted to run the function on all the columns in the data at once? We could write a loop, but instead we show you the <code>sapply</code> function, which accomplishes the same thing in a more succint and R-like manner. With <code>sapply</code>, we pass the data as the first argument, and some function (usually a summary function) as the second argument: <code>sapply</code> will run the function on each column of the data (or those columns of the data for which the summary function is relevant).</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">sapply</span>(nyc_taxi, num.distinct) <span class="co"># apply it to each variable in the data</span></code></pre></div>
+<pre><code>##       pickup_datetime      dropoff_datetime       passenger_count         trip_distance 
+##               4819099               4818764                    10                  4035 
+##      pickup_longitude       pickup_latitude          rate_code_id     dropoff_longitude 
+##                 31159                 56804                     7                 47211 
+##      dropoff_latitude          payment_type           fare_amount                 extra 
+##                 80240                     5                  1524                    40 
+##               mta_tax            tip_amount          tolls_amount improvement_surcharge 
+##                    15                  3100                   716                     8 
+##          total_amount 
+##                  9541</code></pre>
+<p>Any secondary argument to the summary function can be passed along to <code>sapply</code>. This feature makes <code>sapply</code> (and other similar functions) very powerful. For example, the <code>mean</code> function has an argument called <code>na.rm</code> for removing missing values. By default, <code>na.rm</code> is set to <code>FALSE</code> and unless <code>na.rm = TRUE</code> the function will return <code>NA</code> if there is any missing value in the data.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">sapply</span>(nyc_taxi, mean) <span class="co"># returns the average of all columns in the data</span></code></pre></div>
+<pre><code>##       pickup_datetime      dropoff_datetime       passenger_count         trip_distance 
+##                    NA                    NA                 1.661                 3.805 
+##      pickup_longitude       pickup_latitude          rate_code_id     dropoff_longitude 
+##               -72.918                40.169                    NA               -72.981 
+##      dropoff_latitude          payment_type           fare_amount                 extra 
+##                40.205                    NA                12.985                 0.333 
+##               mta_tax            tip_amount          tolls_amount improvement_surcharge 
+##                 0.497                 1.802                 0.315                 0.300 
+##          total_amount 
+##                16.233</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">sapply</span>(nyc_taxi, mean, <span class="dt">na.rm =</span> <span class="ot">TRUE</span>) <span class="co"># returns the average of all columns in the data after removing NAs</span></code></pre></div>
+<pre><code>##       pickup_datetime      dropoff_datetime       passenger_count         trip_distance 
+##                    NA                    NA                 1.661                 3.805 
+##      pickup_longitude       pickup_latitude          rate_code_id     dropoff_longitude 
+##               -72.918                40.169                 1.039               -72.981 
+##      dropoff_latitude          payment_type           fare_amount                 extra 
+##                40.205                 1.343                12.985                 0.333 
+##               mta_tax            tip_amount          tolls_amount improvement_surcharge 
+##                 0.497                 1.802                 0.315                 0.300 
+##          total_amount 
+##                16.233</code></pre>
+<div id="exercises-1" class="section level3">
+<h3><span class="header-section-number">2.3.1</span> Exercises</h3>
+<p>Let’s return to the <code>num.distinct</code> function we created earlier. The comment inside the function indicated that we should be careful about using it with a non-integer <code>numeric</code> input (a float). The problem lies with how <code>unique</code> handles such inputs. Here’s an example:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">unique</span>(<span class="kw">c</span>(.<span class="dv">3</span>, .<span class="dv">4</span> -<span class="st"> </span>.<span class="dv">1</span>, .<span class="dv">5</span> -<span class="st"> </span>.<span class="dv">2</span>, .<span class="dv">6</span> -<span class="st"> </span>.<span class="dv">3</span>, .<span class="dv">7</span> -<span class="st"> </span>.<span class="dv">4</span>)) <span class="co"># what happened?</span></code></pre></div>
+<pre><code>## [1] 0.3 0.3 0.3</code></pre>
+<p>Generally, to check for equality between two numeric value (or two numeric columns), we need to be more careful.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">.<span class="dv">3</span> ==<span class="st"> </span>.<span class="dv">4</span> -<span class="st"> </span>.<span class="dv">1</span> <span class="co"># returns unexpected result</span></code></pre></div>
+<pre><code>## [1] FALSE</code></pre>
+<p>The right way to check if two real numbers are equal is to see if their difference is below a certain threshold.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">abs</span>(.<span class="dv">3</span> -<span class="st"> </span>(.<span class="dv">4</span> -<span class="st"> </span>.<span class="dv">1</span>)) &lt;<span class="st"> </span>.<span class="dv">0000001</span> <span class="co"># the right way of doing it</span></code></pre></div>
+<pre><code>## [1] TRUE</code></pre>
+<p>Another more convenient way to check equality between two real numbers is by using the <code>all.equal</code> function.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">all.equal</span>(.<span class="dv">3</span>, .<span class="dv">4</span> -<span class="st"> </span>.<span class="dv">1</span>) <span class="co"># another way of doing it</span></code></pre></div>
+<pre><code>## [1] TRUE</code></pre>
+<ol style="list-style-type: decimal">
+<li><p>Use <code>all.equal</code> to determine if <code>total_amount</code> is equal to the sum of <code>fare_amount</code>, <code>extra</code>, <code>mta_tax</code>, <code>tip_amount</code>, <code>tolls_amount</code>, and <code>improvement_surcharge</code>.</p></li>
+<li><p>What are some other ways we could check (not necessarily exact) equality between two numeric variables?</p></li>
+</ol>
+</div>
+<div id="solutions-1" class="section level3">
+<h3><span class="header-section-number">2.3.2</span> Solutions</h3>
+<ol style="list-style-type: decimal">
+<li>We can pass the two columns (vectors) directly to <code>all.equal</code> to check if they are the same, but the second column needs to be computed on the fly.</li>
+</ol>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">with</span>(nyc_taxi,
+  <span class="kw">all.equal</span>(total_amount,
+    fare_amount +<span class="st"> </span>extra +<span class="st"> </span>mta_tax +<span class="st"> </span>tip_amount +<span class="st"> </span>tolls_amount +<span class="st"> </span>improvement_surcharge)
+  )</code></pre></div>
+<pre><code>## [1] &quot;Mean relative difference: 0.00024&quot;</code></pre>
+<ol start="2" style="list-style-type: decimal">
+<li>Another way to check for equality is by looking at correlation. Two identical columns of <code>numeric</code> type will have a correlation of 1.</li>
+</ol>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">with</span>(nyc_taxi,
+  <span class="kw">cor</span>(total_amount, <span class="co"># we could use correlation instead of `all.equal`</span>
+    fare_amount +<span class="st"> </span>extra +<span class="st"> </span>mta_tax +<span class="st"> </span>tip_amount +<span class="st"> </span>tolls_amount +<span class="st"> </span>improvement_surcharge)
+  )</code></pre></div>
+<pre><code>## [1] 1</code></pre>
+
+</div>
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="getting-started.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="cleaning-the-data.html" class="navigation navigation-next " aria-label="Next page""><i class="fa fa-angle-right"></i></a>
+
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script>
+require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"google": false,
+"weibo": false,
+"instapper": false,
+"vk": false,
+"all": ["facebook", "google", "twitter", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"download": null,
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+</body>
+
+</html>
