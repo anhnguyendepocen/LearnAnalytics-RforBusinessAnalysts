@@ -50,4 +50,4 @@ There are lots of lab exercises included in this course. We strongly encourage t
 
 The dataset we use for this course is a **sample** of the [NYC Taxi dataset](http://www.nyc.gov/html/tlc/html/about/trip_record_data.shtml). The dataset includes trip records from trips completed in yellow taxis in New York City for a given time period. **Each trip has information about pick-up and drop-off dates and times, pick-up and drop-off locations, trip distances, itemized fares, rate types, payment types, and passenger counts.** The sample covers a very small subset (1 million trips per months) of trips ranging from January 1 to June 30, 2016.
 
-[This is](https://github.com/Azure/LearnAnalytics-RforBusinessAnalysts/blob/master/00-Take-samples-of-data.md) how R was used to extract samples from the large NYC taxi CSV files.
+[This is](https://github.com/smott/NYC-taxi-dataset/blob/master/00-Take-samples-of-data.md) how R was used to extract samples from the large NYC taxi CSV files.
