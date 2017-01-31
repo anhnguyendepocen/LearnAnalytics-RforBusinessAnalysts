@@ -1,4 +1,13 @@
-# Data summary and analysis
+---
+title: "Data summary and analysis"
+author: "Seth Mottaghinejad"
+output: github_document
+date: "`r Sys.Date()`"
+---
+
+```{r, include=FALSE}
+source('setup.R')
+```
 
 Let's recap where we are in the process:
 
@@ -672,9 +681,9 @@ ave_duration = mean(trip_duration), ave_distance = mean(trip_distance))
 
 ```{r, eval=FALSE}
 nyc_taxi %>%
-filter(fare_amount > 500) %>% # (1)
-group_by(payment_type) %>% # (2)
-summarize(ave_duration = mean(trip_duration), ave_distance = mean(trip_distance)) # (3)
+  filter(fare_amount > 500) %>% # (1)
+  group_by(payment_type) %>% # (2)
+  summarize(ave_duration = mean(trip_duration), ave_distance = mean(trip_distance)) # (3)
 ```
 
 The remaining exercises are questions about the data that need to be translated into a `dplyr` pipeline. The goal of the exercise is two-fold: learn to break down a question into multiple pieces and learn to translate each piece into a line in `dplyr`, which together comprise the pipeline.

@@ -1,7 +1,2 @@
-*.metadata
+*.RData
 *.Rhistory
-*.Rproj
-_bookdown_files
-_main_cache
-_book/libs
-.Rproj.user

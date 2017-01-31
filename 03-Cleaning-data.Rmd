@@ -1,4 +1,13 @@
-# Cleaning the data
+---
+title: "Cleaning the data"
+author: "Seth Mottaghinejad"
+output: github_document
+date: "`r Sys.Date()`"
+---
+
+```{r, include=FALSE}
+source('setup.R')
+```
 
 In the last section, we proposed ways that we could clean the data. In this section, we actually clean the data. Let's review where we are in the EDA (exploratory data analysis) process:
 
@@ -323,7 +332,7 @@ Before we move to the next exciting section about feature creation, we need to t
 
 Our approach in the last few sections was to load the data, and process it by "cleaning" each column. But some of the steps we took could have been taken at the time we loaded the data. We sometime refer to this as **pre-processing**. Pre-processing can speed up reading the data and allow us to skip certain steps. It is useful to read data as we did in section 1 for the sake of exploring it, but in a production environment where efficiency matters these small steps can go a long way in optimizing the workflow.
 
-We are now going to read the CSV file again, but add a few additional steps so we can tell it which type each column needs to have (we can use `NULL` when we wish the column dropped) and the name we wish to give to each column. We store the column types and names in a `data.frame` called `vt` for ease of access.
+We are now going to read the CSV file again, but add a few additional steps so we can tell it which type each column needs to have (we can use `col_skip()` when we wish the column dropped) and the name we wish to give to each column. We store the column types and names in an object called `col_types` for ease of access.
 
 ```{r}
 col_types <- cols(
@@ -443,6 +452,7 @@ table(is.na(nyc_taxi$pickup_longitude), is.na(nyc_taxi$pickup_latitude)) # bette
 
 ```{r}
 with(nyc_taxi,
-table(is.na(pickup_longitude) & is.na(pickup_latitude), is.na(dropoff_longitude) & is.na(dropoff_latitude))
+  table(is.na(pickup_longitude) & is.na(pickup_latitude), is.na(dropoff_longitude) & is.na(dropoff_latitude))
 )
 ```
+

@@ -1,4 +1,13 @@
-# Review
+---
+title: "Review"
+author: "Seth Mottaghinejad"
+output: github_document
+date: "`r Sys.Date()`"
+---
+
+```{r, include=FALSE}
+source('setup.R')
+```
 
 There are many important themes that are worth highlighting as this course comes to an end:
 
@@ -12,3 +21,4 @@ In the next series of lectures, we will revisit the NYC Taxi dataset, and use th
 2. Even with enough memory, it may take too long to process the dataset or run an analytics function on it, such as a statistical model. `RevoScaleR` offers a set of distributed algorithms that scale linearly with data size, so we can run analytical models on large datasets in a reasonable time.
 
 We hope to see you there.
+

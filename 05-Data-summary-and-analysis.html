@@ -1,191 +1,35 @@
 <!DOCTYPE html>
-<html >
+
+<html xmlns="http://www.w3.org/1999/xhtml">
 
 <head>
 
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>R Deep-dive</title>
-  <meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
-  <meta name="description" content="This is a minimal example of using the bookdown package to write a book. The output format for this example is bookdown::gitbook.">
-  <meta name="generator" content="bookdown 0.3 and GitBook 2.6.7">
+<meta charset="utf-8">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="pandoc" />
+<meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <meta property="og:title" content="R Deep-dive" />
-  <meta property="og:type" content="book" />
-  
-  
-  <meta property="og:description" content="This is a minimal example of using the bookdown package to write a book. The output format for this example is bookdown::gitbook." />
-  
-
-  <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="R Deep-dive" />
-  
-  <meta name="twitter:description" content="This is a minimal example of using the bookdown package to write a book. The output format for this example is bookdown::gitbook." />
-  
-
-<meta name="author" content="Seth Mottaghinejad">
-
-
-<meta name="date" content="2017-01-25">
-
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="black">
-  
-  
-<link rel="prev" href="creating-new-features.html">
-<link rel="next" href="review.html">
-
-<script src="libs/jquery-2.2.3/jquery.min.js"></script>
-<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
-<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
-<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
-<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
-<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
-
-
-
-
-
-
-
-
-
-<style type="text/css">
-div.sourceCode { overflow-x: auto; }
-table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
-  margin: 0; padding: 0; vertical-align: baseline; border: none; }
-table.sourceCode { width: 100%; line-height: 100%; }
-td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
-td.sourceCode { padding-left: 5px; }
-code > span.kw { color: #007020; font-weight: bold; } /* Keyword */
-code > span.dt { color: #902000; } /* DataType */
-code > span.dv { color: #40a070; } /* DecVal */
-code > span.bn { color: #40a070; } /* BaseN */
-code > span.fl { color: #40a070; } /* Float */
-code > span.ch { color: #4070a0; } /* Char */
-code > span.st { color: #4070a0; } /* String */
-code > span.co { color: #60a0b0; font-style: italic; } /* Comment */
-code > span.ot { color: #007020; } /* Other */
-code > span.al { color: #ff0000; font-weight: bold; } /* Alert */
-code > span.fu { color: #06287e; } /* Function */
-code > span.er { color: #ff0000; font-weight: bold; } /* Error */
-code > span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
-code > span.cn { color: #880000; } /* Constant */
-code > span.sc { color: #4070a0; } /* SpecialChar */
-code > span.vs { color: #4070a0; } /* VerbatimString */
-code > span.ss { color: #bb6688; } /* SpecialString */
-code > span.im { } /* Import */
-code > span.va { color: #19177c; } /* Variable */
-code > span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
-code > span.op { color: #666666; } /* Operator */
-code > span.bu { } /* BuiltIn */
-code > span.ex { } /* Extension */
-code > span.pp { color: #bc7a00; } /* Preprocessor */
-code > span.at { color: #7d9029; } /* Attribute */
-code > span.do { color: #ba2121; font-style: italic; } /* Documentation */
-code > span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
-code > span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
-code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+<link href="data:text/css;charset=utf-8,%0A%40font%2Dface%20%7B%0Afont%2Dfamily%3A%20octicons%2Dlink%3B%0Asrc%3A%20url%28data%3Afont%2Fwoff%3Bcharset%3Dutf%2D8%3Bbase64%2Cd09GRgABAAAAAAZwABAAAAAACFQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABEU0lHAAAGaAAAAAgAAAAIAAAAAUdTVUIAAAZcAAAACgAAAAoAAQAAT1MvMgAAAyQAAABJAAAAYFYEU3RjbWFwAAADcAAAAEUAAACAAJThvmN2dCAAAATkAAAABAAAAAQAAAAAZnBnbQAAA7gAAACyAAABCUM%2B8IhnYXNwAAAGTAAAABAAAAAQABoAI2dseWYAAAFsAAABPAAAAZwcEq9taGVhZAAAAsgAAAA0AAAANgh4a91oaGVhAAADCAAAABoAAAAkCA8DRGhtdHgAAAL8AAAADAAAAAwGAACfbG9jYQAAAsAAAAAIAAAACABiATBtYXhwAAACqAAAABgAAAAgAA8ASm5hbWUAAAToAAABQgAAAlXu73sOcG9zdAAABiwAAAAeAAAAME3QpOBwcmVwAAAEbAAAAHYAAAB%2FaFGpk3jaTY6xa8JAGMW%2FO62BDi0tJLYQincXEypYIiGJjSgHniQ6umTsUEyLm5BV6NDBP8Tpts6F0v%2Bk%2F0an2i%2BitHDw3v2%2B9%2BDBKTzsJNnWJNTgHEy4BgG3EMI9DCEDOGEXzDADU5hBKMIgNPZqoD3SilVaXZCER3%2FI7AtxEJLtzzuZfI%2BVVkprxTlXShWKb3TBecG11rwoNlmmn1P2WYcJczl32etSpKnziC7lQyWe1smVPy%2FLt7Kc%2B0vWY%2FgAgIIEqAN9we0pwKXreiMasxvabDQMM4riO%2BqxM2ogwDGOZTXxwxDiycQIcoYFBLj5K3EIaSctAq2kTYiw%2Bymhce7vwM9jSqO8JyVd5RH9gyTt2%2BJ%2FyUmYlIR0s04n6%2B7Vm1ozezUeLEaUjhaDSuXHwVRgvLJn1tQ7xiuVv%2FocTRF42mNgZGBgYGbwZOBiAAFGJBIMAAizAFoAAABiAGIAznjaY2BkYGAA4in8zwXi%2BW2%2BMjCzMIDApSwvXzC97Z4Ig8N%2FBxYGZgcgl52BCSQKAA3jCV8CAABfAAAAAAQAAEB42mNgZGBg4f3vACQZQABIMjKgAmYAKEgBXgAAeNpjYGY6wTiBgZWBg2kmUxoDA4MPhGZMYzBi1AHygVLYQUCaawqDA4PChxhmh%2F8ODDEsvAwHgMKMIDnGL0x7gJQCAwMAJd4MFwAAAHjaY2BgYGaA4DAGRgYQkAHyGMF8NgYrIM3JIAGVYYDT%2BAEjAwuDFpBmA9KMDEwMCh9i%2Fv8H8sH0%2F4dQc1iAmAkALaUKLgAAAHjaTY9LDsIgEIbtgqHUPpDi3gPoBVyRTmTddOmqTXThEXqrob2gQ1FjwpDvfwCBdmdXC5AVKFu3e5MfNFJ29KTQT48Ob9%2FlqYwOGZxeUelN2U2R6%2BcArgtCJpauW7UQBqnFkUsjAY%2FkOU1cP%2BDAgvxwn1chZDwUbd6CFimGXwzwF6tPbFIcjEl%2BvvmM%2FbyA48e6tWrKArm4ZJlCbdsrxksL1AwWn%2FyBSJKpYbq8AXaaTb8AAHja28jAwOC00ZrBeQNDQOWO%2F%2FsdBBgYGRiYWYAEELEwMTE4uzo5Zzo5b2BxdnFOcALxNjA6b2ByTswC8jYwg0VlNuoCTWAMqNzMzsoK1rEhNqByEyerg5PMJlYuVueETKcd%2F89uBpnpvIEVomeHLoMsAAe1Id4AAAAAAAB42oWQT07CQBTGv0JBhagk7HQzKxca2sJCE1hDt4QF%2B9JOS0nbaaYDCQfwCJ7Au3AHj%2BLO13FMmm6cl7785vven0kBjHCBhfpYuNa5Ph1c0e2Xu3jEvWG7UdPDLZ4N92nOm%2BEBXuAbHmIMSRMs%2B4aUEd4Nd3CHD8NdvOLTsA2GL8M9PODbcL%2BhD7C1xoaHeLJSEao0FEW14ckxC%2BTU8TxvsY6X0eLPmRhry2WVioLpkrbp84LLQPGI7c6sOiUzpWIWS5GzlSgUzzLBSikOPFTOXqly7rqx0Z1Q5BAIoZBSFihQYQOOBEdkCOgXTOHA07HAGjGWiIjaPZNW13%2F%2Blm6S9FT7rLHFJ6fQbkATOG1j2OFMucKJJsxIVfQORl%2B9Jyda6Sl1dUYhSCm1dyClfoeDve4qMYdLEbfqHf3O%2FAdDumsjAAB42mNgYoAAZQYjBmyAGYQZmdhL8zLdDEydARfoAqIAAAABAAMABwAKABMAB%2F%2F%2FAA8AAQAAAAAAAAAAAAAAAAABAAAAAA%3D%3D%29%20format%28%27woff%27%29%3B%0A%7D%0Abody%20%7B%0A%2Dwebkit%2Dtext%2Dsize%2Dadjust%3A%20100%25%3B%0Atext%2Dsize%2Dadjust%3A%20100%25%3B%0Acolor%3A%20%23333%3B%0Afont%2Dfamily%3A%20%22Helvetica%20Neue%22%2C%20Helvetica%2C%20%22Segoe%20UI%22%2C%20Arial%2C%20freesans%2C%20sans%2Dserif%2C%20%22Apple%20Color%20Emoji%22%2C%20%22Segoe%20UI%20Emoji%22%2C%20%22Segoe%20UI%20Symbol%22%3B%0Afont%2Dsize%3A%2016px%3B%0Aline%2Dheight%3A%201%2E6%3B%0Aword%2Dwrap%3A%20break%2Dword%3B%0A%7D%0Aa%20%7B%0Abackground%2Dcolor%3A%20transparent%3B%0A%7D%0Aa%3Aactive%2C%0Aa%3Ahover%20%7B%0Aoutline%3A%200%3B%0A%7D%0Astrong%20%7B%0Afont%2Dweight%3A%20bold%3B%0A%7D%0Ah1%20%7B%0Afont%2Dsize%3A%202em%3B%0Amargin%3A%200%2E67em%200%3B%0A%7D%0Aimg%20%7B%0Aborder%3A%200%3B%0A%7D%0Ahr%20%7B%0Abox%2Dsizing%3A%20content%2Dbox%3B%0Aheight%3A%200%3B%0A%7D%0Apre%20%7B%0Aoverflow%3A%20auto%3B%0A%7D%0Acode%2C%0Akbd%2C%0Apre%20%7B%0Afont%2Dfamily%3A%20monospace%2C%20monospace%3B%0Afont%2Dsize%3A%201em%3B%0A%7D%0Ainput%20%7B%0Acolor%3A%20inherit%3B%0Afont%3A%20inherit%3B%0Amargin%3A%200%3B%0A%7D%0Ahtml%20input%5Bdisabled%5D%20%7B%0Acursor%3A%20default%3B%0A%7D%0Ainput%20%7B%0Aline%2Dheight%3A%20normal%3B%0A%7D%0Ainput%5Btype%3D%22checkbox%22%5D%20%7B%0Abox%2Dsizing%3A%20border%2Dbox%3B%0Apadding%3A%200%3B%0A%7D%0Atable%20%7B%0Aborder%2Dcollapse%3A%20collapse%3B%0Aborder%2Dspacing%3A%200%3B%0A%7D%0Atd%2C%0Ath%20%7B%0Apadding%3A%200%3B%0A%7D%0A%2A%20%7B%0Abox%2Dsizing%3A%20border%2Dbox%3B%0A%7D%0Ainput%20%7B%0Afont%3A%2013px%20%2F%201%2E4%20Helvetica%2C%20arial%2C%20nimbussansl%2C%20liberationsans%2C%20freesans%2C%20clean%2C%20sans%2Dserif%2C%20%22Apple%20Color%20Emoji%22%2C%20%22Segoe%20UI%20Emoji%22%2C%20%22Segoe%20UI%20Symbol%22%3B%0A%7D%0Aa%20%7B%0Acolor%3A%20%234078c0%3B%0Atext%2Ddecoration%3A%20none%3B%0A%7D%0Aa%3Ahover%2C%0Aa%3Aactive%20%7B%0Atext%2Ddecoration%3A%20underline%3B%0A%7D%0Ahr%20%7B%0Aheight%3A%200%3B%0Amargin%3A%2015px%200%3B%0Aoverflow%3A%20hidden%3B%0Abackground%3A%20transparent%3B%0Aborder%3A%200%3B%0Aborder%2Dbottom%3A%201px%20solid%20%23ddd%3B%0A%7D%0Ahr%3Abefore%20%7B%0Adisplay%3A%20table%3B%0Acontent%3A%20%22%22%3B%0A%7D%0Ahr%3Aafter%20%7B%0Adisplay%3A%20table%3B%0Aclear%3A%20both%3B%0Acontent%3A%20%22%22%3B%0A%7D%0Ah1%2C%0Ah2%2C%0Ah3%2C%0Ah4%2C%0Ah5%2C%0Ah6%20%7B%0Amargin%2Dtop%3A%2015px%3B%0Amargin%2Dbottom%3A%2015px%3B%0Aline%2Dheight%3A%201%2E1%3B%0A%7D%0Ah1%20%7B%0Afont%2Dsize%3A%2030px%3B%0A%7D%0Ah2%20%7B%0Afont%2Dsize%3A%2021px%3B%0A%7D%0Ah3%20%7B%0Afont%2Dsize%3A%2016px%3B%0A%7D%0Ah4%20%7B%0Afont%2Dsize%3A%2014px%3B%0A%7D%0Ah5%20%7B%0Afont%2Dsize%3A%2012px%3B%0A%7D%0Ah6%20%7B%0Afont%2Dsize%3A%2011px%3B%0A%7D%0Ablockquote%20%7B%0Amargin%3A%200%3B%0A%7D%0Aul%2C%0Aol%20%7B%0Apadding%3A%200%3B%0Amargin%2Dtop%3A%200%3B%0Amargin%2Dbottom%3A%200%3B%0A%7D%0Aol%20ol%2C%0Aul%20ol%20%7B%0Alist%2Dstyle%2Dtype%3A%20lower%2Droman%3B%0A%7D%0Aul%20ul%20ol%2C%0Aul%20ol%20ol%2C%0Aol%20ul%20ol%2C%0Aol%20ol%20ol%20%7B%0Alist%2Dstyle%2Dtype%3A%20lower%2Dalpha%3B%0A%7D%0Add%20%7B%0Amargin%2Dleft%3A%200%3B%0A%7D%0Acode%20%7B%0Afont%2Dfamily%3A%20Consolas%2C%20%22Liberation%20Mono%22%2C%20Menlo%2C%20Courier%2C%20monospace%3B%0Afont%2Dsize%3A%2012px%3B%0A%7D%0Apre%20%7B%0Amargin%2Dtop%3A%200%3B%0Amargin%2Dbottom%3A%200%3B%0Afont%3A%2012px%20Consolas%2C%20%22Liberation%20Mono%22%2C%20Menlo%2C%20Courier%2C%20monospace%3B%0A%7D%0A%2Eselect%3A%3A%2Dms%2Dexpand%20%7B%0Aopacity%3A%200%3B%0A%7D%0A%2Eocticon%20%7B%0Afont%3A%20normal%20normal%20normal%2016px%2F1%20octicons%2Dlink%3B%0Adisplay%3A%20inline%2Dblock%3B%0Atext%2Ddecoration%3A%20none%3B%0Atext%2Drendering%3A%20auto%3B%0A%2Dwebkit%2Dfont%2Dsmoothing%3A%20antialiased%3B%0A%2Dmoz%2Dosx%2Dfont%2Dsmoothing%3A%20grayscale%3B%0A%2Dwebkit%2Duser%2Dselect%3A%20none%3B%0A%2Dmoz%2Duser%2Dselect%3A%20none%3B%0A%2Dms%2Duser%2Dselect%3A%20none%3B%0Auser%2Dselect%3A%20none%3B%0A%7D%0A%2Eocticon%2Dlink%3Abefore%20%7B%0Acontent%3A%20%27%5Cf05c%27%3B%0A%7D%0A%2Emarkdown%2Dbody%3Abefore%20%7B%0Adisplay%3A%20table%3B%0Acontent%3A%20%22%22%3B%0A%7D%0A%2Emarkdown%2Dbody%3Aafter%20%7B%0Adisplay%3A%20table%3B%0Aclear%3A%20both%3B%0Acontent%3A%20%22%22%3B%0A%7D%0A%2Emarkdown%2Dbody%3E%2A%3Afirst%2Dchild%20%7B%0Amargin%2Dtop%3A%200%20%21important%3B%0A%7D%0A%2Emarkdown%2Dbody%3E%2A%3Alast%2Dchild%20%7B%0Amargin%2Dbottom%3A%200%20%21important%3B%0A%7D%0Aa%3Anot%28%5Bhref%5D%29%20%7B%0Acolor%3A%20inherit%3B%0Atext%2Ddecoration%3A%20none%3B%0A%7D%0A%2Eanchor%20%7B%0Adisplay%3A%20inline%2Dblock%3B%0Apadding%2Dright%3A%202px%3B%0Amargin%2Dleft%3A%20%2D18px%3B%0A%7D%0A%2Eanchor%3Afocus%20%7B%0Aoutline%3A%20none%3B%0A%7D%0Ah1%2C%0Ah2%2C%0Ah3%2C%0Ah4%2C%0Ah5%2C%0Ah6%20%7B%0Amargin%2Dtop%3A%201em%3B%0Amargin%2Dbottom%3A%2016px%3B%0Afont%2Dweight%3A%20bold%3B%0Aline%2Dheight%3A%201%2E4%3B%0A%7D%0Ah1%20%2Eocticon%2Dlink%2C%0Ah2%20%2Eocticon%2Dlink%2C%0Ah3%20%2Eocticon%2Dlink%2C%0Ah4%20%2Eocticon%2Dlink%2C%0Ah5%20%2Eocticon%2Dlink%2C%0Ah6%20%2Eocticon%2Dlink%20%7B%0Acolor%3A%20%23000%3B%0Avertical%2Dalign%3A%20middle%3B%0Avisibility%3A%20hidden%3B%0A%7D%0Ah1%3Ahover%20%2Eanchor%2C%0Ah2%3Ahover%20%2Eanchor%2C%0Ah3%3Ahover%20%2Eanchor%2C%0Ah4%3Ahover%20%2Eanchor%2C%0Ah5%3Ahover%20%2Eanchor%2C%0Ah6%3Ahover%20%2Eanchor%20%7B%0Atext%2Ddecoration%3A%20none%3B%0A%7D%0Ah1%3Ahover%20%2Eanchor%20%2Eocticon%2Dlink%2C%0Ah2%3Ahover%20%2Eanchor%20%2Eocticon%2Dlink%2C%0Ah3%3Ahover%20%2Eanchor%20%2Eocticon%2Dlink%2C%0Ah4%3Ahover%20%2Eanchor%20%2Eocticon%2Dlink%2C%0Ah5%3Ahover%20%2Eanchor%20%2Eocticon%2Dlink%2C%0Ah6%3Ahover%20%2Eanchor%20%2Eocticon%2Dlink%20%7B%0Avisibility%3A%20visible%3B%0A%7D%0Ah1%20%7B%0Apadding%2Dbottom%3A%200%2E3em%3B%0Afont%2Dsize%3A%202%2E25em%3B%0Aline%2Dheight%3A%201%2E2%3B%0Aborder%2Dbottom%3A%201px%20solid%20%23eee%3B%0A%7D%0Ah1%20%2Eanchor%20%7B%0Aline%2Dheight%3A%201%3B%0A%7D%0Ah2%20%7B%0Apadding%2Dbottom%3A%200%2E3em%3B%0Afont%2Dsize%3A%201%2E75em%3B%0Aline%2Dheight%3A%201%2E225%3B%0Aborder%2Dbottom%3A%201px%20solid%20%23eee%3B%0A%7D%0Ah2%20%2Eanchor%20%7B%0Aline%2Dheight%3A%201%3B%0A%7D%0Ah3%20%7B%0Afont%2Dsize%3A%201%2E5em%3B%0Aline%2Dheight%3A%201%2E43%3B%0A%7D%0Ah3%20%2Eanchor%20%7B%0Aline%2Dheight%3A%201%2E2%3B%0A%7D%0Ah4%20%7B%0Afont%2Dsize%3A%201%2E25em%3B%0A%7D%0Ah4%20%2Eanchor%20%7B%0Aline%2Dheight%3A%201%2E2%3B%0A%7D%0Ah5%20%7B%0Afont%2Dsize%3A%201em%3B%0A%7D%0Ah5%20%2Eanchor%20%7B%0Aline%2Dheight%3A%201%2E1%3B%0A%7D%0Ah6%20%7B%0Afont%2Dsize%3A%201em%3B%0Acolor%3A%20%23777%3B%0A%7D%0Ah6%20%2Eanchor%20%7B%0Aline%2Dheight%3A%201%2E1%3B%0A%7D%0Ap%2C%0Ablockquote%2C%0Aul%2C%0Aol%2C%0Adl%2C%0Atable%2C%0Apre%20%7B%0Amargin%2Dtop%3A%200%3B%0Amargin%2Dbottom%3A%2016px%3B%0A%7D%0Ahr%20%7B%0Aheight%3A%204px%3B%0Apadding%3A%200%3B%0Amargin%3A%2016px%200%3B%0Abackground%2Dcolor%3A%20%23e7e7e7%3B%0Aborder%3A%200%20none%3B%0A%7D%0Aul%2C%0Aol%20%7B%0Apadding%2Dleft%3A%202em%3B%0A%7D%0Aul%20ul%2C%0Aul%20ol%2C%0Aol%20ol%2C%0Aol%20ul%20%7B%0Amargin%2Dtop%3A%200%3B%0Amargin%2Dbottom%3A%200%3B%0A%7D%0Ali%3Ep%20%7B%0Amargin%2Dtop%3A%2016px%3B%0A%7D%0Adl%20%7B%0Apadding%3A%200%3B%0A%7D%0Adl%20dt%20%7B%0Apadding%3A%200%3B%0Amargin%2Dtop%3A%2016px%3B%0Afont%2Dsize%3A%201em%3B%0Afont%2Dstyle%3A%20italic%3B%0Afont%2Dweight%3A%20bold%3B%0A%7D%0Adl%20dd%20%7B%0Apadding%3A%200%2016px%3B%0Amargin%2Dbottom%3A%2016px%3B%0A%7D%0Ablockquote%20%7B%0Apadding%3A%200%2015px%3B%0Acolor%3A%20%23777%3B%0Aborder%2Dleft%3A%204px%20solid%20%23ddd%3B%0A%7D%0Ablockquote%3E%3Afirst%2Dchild%20%7B%0Amargin%2Dtop%3A%200%3B%0A%7D%0Ablockquote%3E%3Alast%2Dchild%20%7B%0Amargin%2Dbottom%3A%200%3B%0A%7D%0Atable%20%7B%0Adisplay%3A%20block%3B%0Awidth%3A%20100%25%3B%0Aoverflow%3A%20auto%3B%0Aword%2Dbreak%3A%20normal%3B%0Aword%2Dbreak%3A%20keep%2Dall%3B%0A%7D%0Atable%20th%20%7B%0Afont%2Dweight%3A%20bold%3B%0A%7D%0Atable%20th%2C%0Atable%20td%20%7B%0Apadding%3A%206px%2013px%3B%0Aborder%3A%201px%20solid%20%23ddd%3B%0A%7D%0Atable%20tr%20%7B%0Abackground%2Dcolor%3A%20%23fff%3B%0Aborder%2Dtop%3A%201px%20solid%20%23ccc%3B%0A%7D%0Atable%20tr%3Anth%2Dchild%282n%29%20%7B%0Abackground%2Dcolor%3A%20%23f8f8f8%3B%0A%7D%0Aimg%20%7B%0Amax%2Dwidth%3A%20100%25%3B%0Abox%2Dsizing%3A%20content%2Dbox%3B%0Abackground%2Dcolor%3A%20%23fff%3B%0A%7D%0Acode%20%7B%0Apadding%3A%200%3B%0Apadding%2Dtop%3A%200%2E2em%3B%0Apadding%2Dbottom%3A%200%2E2em%3B%0Amargin%3A%200%3B%0Afont%2Dsize%3A%2085%25%3B%0Abackground%2Dcolor%3A%20rgba%280%2C0%2C0%2C0%2E04%29%3B%0Aborder%2Dradius%3A%203px%3B%0A%7D%0Acode%3Abefore%2C%0Acode%3Aafter%20%7B%0Aletter%2Dspacing%3A%20%2D0%2E2em%3B%0Acontent%3A%20%22%5C00a0%22%3B%0A%7D%0Apre%3Ecode%20%7B%0Apadding%3A%200%3B%0Amargin%3A%200%3B%0Afont%2Dsize%3A%20100%25%3B%0Aword%2Dbreak%3A%20normal%3B%0Awhite%2Dspace%3A%20pre%3B%0Abackground%3A%20transparent%3B%0Aborder%3A%200%3B%0A%7D%0A%2Ehighlight%20%7B%0Amargin%2Dbottom%3A%2016px%3B%0A%7D%0A%2Ehighlight%20pre%2C%0Apre%20%7B%0Apadding%3A%2016px%3B%0Aoverflow%3A%20auto%3B%0Afont%2Dsize%3A%2085%25%3B%0Aline%2Dheight%3A%201%2E45%3B%0Abackground%2Dcolor%3A%20%23f7f7f7%3B%0Aborder%2Dradius%3A%203px%3B%0A%7D%0A%2Ehighlight%20pre%20%7B%0Amargin%2Dbottom%3A%200%3B%0Aword%2Dbreak%3A%20normal%3B%0A%7D%0Apre%20%7B%0Aword%2Dwrap%3A%20normal%3B%0A%7D%0Apre%20code%20%7B%0Adisplay%3A%20inline%3B%0Amax%2Dwidth%3A%20initial%3B%0Apadding%3A%200%3B%0Amargin%3A%200%3B%0Aoverflow%3A%20initial%3B%0Aline%2Dheight%3A%20inherit%3B%0Aword%2Dwrap%3A%20normal%3B%0Abackground%2Dcolor%3A%20transparent%3B%0Aborder%3A%200%3B%0A%7D%0Apre%20code%3Abefore%2C%0Apre%20code%3Aafter%20%7B%0Acontent%3A%20normal%3B%0A%7D%0Akbd%20%7B%0Adisplay%3A%20inline%2Dblock%3B%0Apadding%3A%203px%205px%3B%0Afont%2Dsize%3A%2011px%3B%0Aline%2Dheight%3A%2010px%3B%0Acolor%3A%20%23555%3B%0Avertical%2Dalign%3A%20middle%3B%0Abackground%2Dcolor%3A%20%23fcfcfc%3B%0Aborder%3A%20solid%201px%20%23ccc%3B%0Aborder%2Dbottom%2Dcolor%3A%20%23bbb%3B%0Aborder%2Dradius%3A%203px%3B%0Abox%2Dshadow%3A%20inset%200%20%2D1px%200%20%23bbb%3B%0A%7D%0A%2Epl%2Dc%20%7B%0Acolor%3A%20%23969896%3B%0A%7D%0A%2Epl%2Dc1%2C%0A%2Epl%2Ds%20%2Epl%2Dv%20%7B%0Acolor%3A%20%230086b3%3B%0A%7D%0A%2Epl%2De%2C%0A%2Epl%2Den%20%7B%0Acolor%3A%20%23795da3%3B%0A%7D%0A%2Epl%2Ds%20%2Epl%2Ds1%2C%0A%2Epl%2Dsmi%20%7B%0Acolor%3A%20%23333%3B%0A%7D%0A%2Epl%2Dent%20%7B%0Acolor%3A%20%2363a35c%3B%0A%7D%0A%2Epl%2Dk%20%7B%0Acolor%3A%20%23a71d5d%3B%0A%7D%0A%2Epl%2Dpds%2C%0A%2Epl%2Ds%2C%0A%2Epl%2Ds%20%2Epl%2Dpse%20%2Epl%2Ds1%2C%0A%2Epl%2Dsr%2C%0A%2Epl%2Dsr%20%2Epl%2Dcce%2C%0A%2Epl%2Dsr%20%2Epl%2Dsra%2C%0A%2Epl%2Dsr%20%2Epl%2Dsre%20%7B%0Acolor%3A%20%23183691%3B%0A%7D%0A%2Epl%2Dv%20%7B%0Acolor%3A%20%23ed6a43%3B%0A%7D%0A%2Epl%2Did%20%7B%0Acolor%3A%20%23b52a1d%3B%0A%7D%0A%2Epl%2Dii%20%7B%0Abackground%2Dcolor%3A%20%23b52a1d%3B%0Acolor%3A%20%23f8f8f8%3B%0A%7D%0A%2Epl%2Dsr%20%2Epl%2Dcce%20%7B%0Acolor%3A%20%2363a35c%3B%0Afont%2Dweight%3A%20bold%3B%0A%7D%0A%2Epl%2Dml%20%7B%0Acolor%3A%20%23693a17%3B%0A%7D%0A%2Epl%2Dmh%2C%0A%2Epl%2Dmh%20%2Epl%2Den%2C%0A%2Epl%2Dms%20%7B%0Acolor%3A%20%231d3e81%3B%0Afont%2Dweight%3A%20bold%3B%0A%7D%0A%2Epl%2Dmq%20%7B%0Acolor%3A%20%23008080%3B%0A%7D%0A%2Epl%2Dmi%20%7B%0Acolor%3A%20%23333%3B%0Afont%2Dstyle%3A%20italic%3B%0A%7D%0A%2Epl%2Dmb%20%7B%0Acolor%3A%20%23333%3B%0Afont%2Dweight%3A%20bold%3B%0A%7D%0A%2Epl%2Dmd%20%7B%0Abackground%2Dcolor%3A%20%23ffecec%3B%0Acolor%3A%20%23bd2c00%3B%0A%7D%0A%2Epl%2Dmi1%20%7B%0Abackground%2Dcolor%3A%20%23eaffea%3B%0Acolor%3A%20%2355a532%3B%0A%7D%0A%2Epl%2Dmdr%20%7B%0Acolor%3A%20%23795da3%3B%0Afont%2Dweight%3A%20bold%3B%0A%7D%0A%2Epl%2Dmo%20%7B%0Acolor%3A%20%231d3e81%3B%0A%7D%0Akbd%20%7B%0Adisplay%3A%20inline%2Dblock%3B%0Apadding%3A%203px%205px%3B%0Afont%3A%2011px%20Consolas%2C%20%22Liberation%20Mono%22%2C%20Menlo%2C%20Courier%2C%20monospace%3B%0Aline%2Dheight%3A%2010px%3B%0Acolor%3A%20%23555%3B%0Avertical%2Dalign%3A%20middle%3B%0Abackground%2Dcolor%3A%20%23fcfcfc%3B%0Aborder%3A%20solid%201px%20%23ccc%3B%0Aborder%2Dbottom%2Dcolor%3A%20%23bbb%3B%0Aborder%2Dradius%3A%203px%3B%0Abox%2Dshadow%3A%20inset%200%20%2D1px%200%20%23bbb%3B%0A%7D%0A%2Etask%2Dlist%2Ditem%20%7B%0Alist%2Dstyle%2Dtype%3A%20none%3B%0A%7D%0A%2Etask%2Dlist%2Ditem%2B%2Etask%2Dlist%2Ditem%20%7B%0Amargin%2Dtop%3A%203px%3B%0A%7D%0A%2Etask%2Dlist%2Ditem%20input%20%7B%0Amargin%3A%200%200%2E35em%200%2E25em%20%2D1%2E6em%3B%0Avertical%2Dalign%3A%20middle%3B%0A%7D%0A%3Achecked%2B%2Eradio%2Dlabel%20%7B%0Az%2Dindex%3A%201%3B%0Aposition%3A%20relative%3B%0Aborder%2Dcolor%3A%20%234078c0%3B%0A%7D%0Acode%20%3E%20%2Ekw%20%7B%20color%3A%20%23000000%3B%20%7D%0Acode%20%3E%20%2Edt%20%7B%20color%3A%20%23ed6a43%3B%20%7D%0Acode%20%3E%20%2Edv%20%7B%20color%3A%20%23009999%3B%20%7D%0Acode%20%3E%20%2Ebn%20%7B%20color%3A%20%23009999%3B%20%7D%0Acode%20%3E%20%2Efl%20%7B%20color%3A%20%23009999%3B%20%7D%0Acode%20%3E%20%2Ech%20%7B%20color%3A%20%23009999%3B%20%7D%0Acode%20%3E%20%2Est%20%7B%20color%3A%20%23183691%3B%20%7D%0Acode%20%3E%20%2Eco%20%7B%20color%3A%20%23969896%3B%20%7D%0Acode%20%3E%20%2Eot%20%7B%20color%3A%20%230086b3%3B%20%7D%0Acode%20%3E%20%2Eal%20%7B%20color%3A%20%23a61717%3B%20%7D%0Acode%20%3E%20%2Efu%20%7B%20color%3A%20%2363a35c%3B%20%7D%0Acode%20%3E%20%2Eer%20%7B%20color%3A%20%23a61717%3B%20background%2Dcolor%3A%20%23e3d2d2%3B%20%7D%0Acode%20%3E%20%2Ewa%20%7B%20color%3A%20%23000000%3B%20%7D%0Acode%20%3E%20%2Ecn%20%7B%20color%3A%20%23008080%3B%20%7D%0Acode%20%3E%20%2Esc%20%7B%20color%3A%20%23008080%3B%20%7D%0Acode%20%3E%20%2Evs%20%7B%20color%3A%20%23183691%3B%20%7D%0Acode%20%3E%20%2Ess%20%7B%20color%3A%20%23183691%3B%20%7D%0Acode%20%3E%20%2Eim%20%7B%20color%3A%20%23000000%3B%20%7D%0Acode%20%3E%20%2Eva%20%7Bcolor%3A%20%23008080%3B%20%7D%0Acode%20%3E%20%2Ecf%20%7B%20color%3A%20%23000000%3B%20%7D%0Acode%20%3E%20%2Eop%20%7B%20color%3A%20%23000000%3B%20%7D%0Acode%20%3E%20%2Ebu%20%7B%20color%3A%20%23000000%3B%20%7D%0Acode%20%3E%20%2Eex%20%7B%20color%3A%20%23000000%3B%20%7D%0Acode%20%3E%20%2Epp%20%7B%20color%3A%20%23999999%3B%20%7D%0Acode%20%3E%20%2Eat%20%7B%20color%3A%20%23008080%3B%20%7D%0Acode%20%3E%20%2Edo%20%7B%20color%3A%20%23969896%3B%20%7D%0Acode%20%3E%20%2Ean%20%7B%20color%3A%20%23008080%3B%20%7D%0Acode%20%3E%20%2Ecv%20%7B%20color%3A%20%23008080%3B%20%7D%0Acode%20%3E%20%2Ein%20%7B%20color%3A%20%23008080%3B%20%7D%0A" rel="stylesheet">
+<style>
+body {
+  box-sizing: border-box;
+  min-width: 200px;
+  max-width: 980px;
+  margin: 0 auto;
+  padding: 45px;
+  padding-top: 0px;
+}
 </style>
 
 </head>
 
 <body>
 
-
-  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
-
-    <div class="book-summary">
-      <nav role="navigation">
-
-<ul class="summary">
-<li class="chapter" data-level="1" data-path="getting-started.html"><a href="getting-started.html"><i class="fa fa-check"></i><b>1</b> Getting started</a><ul>
-<li class="chapter" data-level="1.1" data-path="getting-started.html"><a href="getting-started.html#loading-packages"><i class="fa fa-check"></i><b>1.1</b> Loading packages</a></li>
-<li class="chapter" data-level="1.2" data-path="getting-started.html"><a href="getting-started.html#loading-data-into-r"><i class="fa fa-check"></i><b>1.2</b> Loading data into R</a></li>
-</ul></li>
-<li class="chapter" data-level="2" data-path="inspecting-the-data.html"><a href="inspecting-the-data.html"><i class="fa fa-check"></i><b>2</b> Inspecting the data</a><ul>
-<li class="chapter" data-level="2.1" data-path="inspecting-the-data.html"><a href="inspecting-the-data.html#basic-queries"><i class="fa fa-check"></i><b>2.1</b> Basic queries</a></li>
-<li class="chapter" data-level="2.2" data-path="inspecting-the-data.html"><a href="inspecting-the-data.html#more-on-querying-data"><i class="fa fa-check"></i><b>2.2</b> More on querying data</a><ul>
-<li class="chapter" data-level="2.2.1" data-path="inspecting-the-data.html"><a href="inspecting-the-data.html#exercises"><i class="fa fa-check"></i><b>2.2.1</b> Exercises</a></li>
-<li class="chapter" data-level="2.2.2" data-path="inspecting-the-data.html"><a href="inspecting-the-data.html#solutions"><i class="fa fa-check"></i><b>2.2.2</b> Solutions</a></li>
-</ul></li>
-<li class="chapter" data-level="2.3" data-path="inspecting-the-data.html"><a href="inspecting-the-data.html#basic-summaries"><i class="fa fa-check"></i><b>2.3</b> Basic summaries</a><ul>
-<li class="chapter" data-level="2.3.1" data-path="inspecting-the-data.html"><a href="inspecting-the-data.html#exercises-1"><i class="fa fa-check"></i><b>2.3.1</b> Exercises</a></li>
-<li class="chapter" data-level="2.3.2" data-path="inspecting-the-data.html"><a href="inspecting-the-data.html#solutions-1"><i class="fa fa-check"></i><b>2.3.2</b> Solutions</a></li>
-</ul></li>
-</ul></li>
-<li class="chapter" data-level="3" data-path="cleaning-the-data.html"><a href="cleaning-the-data.html"><i class="fa fa-check"></i><b>3</b> Cleaning the data</a><ul>
-<li class="chapter" data-level="3.0.1" data-path="cleaning-the-data.html"><a href="cleaning-the-data.html#exercises-2"><i class="fa fa-check"></i><b>3.0.1</b> Exercises</a></li>
-<li class="chapter" data-level="3.0.2" data-path="cleaning-the-data.html"><a href="cleaning-the-data.html#solutions-2"><i class="fa fa-check"></i><b>3.0.2</b> Solutions</a></li>
-<li class="chapter" data-level="3.1" data-path="cleaning-the-data.html"><a href="cleaning-the-data.html#dealing-with-datetimes"><i class="fa fa-check"></i><b>3.1</b> Dealing with datetimes</a></li>
-<li class="chapter" data-level="3.2" data-path="cleaning-the-data.html"><a href="cleaning-the-data.html#dealing-with-factors"><i class="fa fa-check"></i><b>3.2</b> Dealing with factors</a><ul>
-<li class="chapter" data-level="3.2.1" data-path="cleaning-the-data.html"><a href="cleaning-the-data.html#exercises-3"><i class="fa fa-check"></i><b>3.2.1</b> Exercises</a></li>
-<li class="chapter" data-level="3.2.2" data-path="cleaning-the-data.html"><a href="cleaning-the-data.html#solutions-3"><i class="fa fa-check"></i><b>3.2.2</b> Solutions</a></li>
-</ul></li>
-<li class="chapter" data-level="3.3" data-path="cleaning-the-data.html"><a href="cleaning-the-data.html#being-more-efficient"><i class="fa fa-check"></i><b>3.3</b> Being more efficient</a><ul>
-<li class="chapter" data-level="3.3.1" data-path="cleaning-the-data.html"><a href="cleaning-the-data.html#exercises-4"><i class="fa fa-check"></i><b>3.3.1</b> Exercises</a></li>
-<li class="chapter" data-level="3.3.2" data-path="cleaning-the-data.html"><a href="cleaning-the-data.html#solutions-4"><i class="fa fa-check"></i><b>3.3.2</b> Solutions</a></li>
-</ul></li>
-</ul></li>
-<li class="chapter" data-level="4" data-path="creating-new-features.html"><a href="creating-new-features.html"><i class="fa fa-check"></i><b>4</b> Creating new features</a><ul>
-<li class="chapter" data-level="4.0.1" data-path="creating-new-features.html"><a href="creating-new-features.html#exercises-5"><i class="fa fa-check"></i><b>4.0.1</b> Exercises</a></li>
-<li class="chapter" data-level="4.1" data-path="creating-new-features.html"><a href="creating-new-features.html#date-and-time-features"><i class="fa fa-check"></i><b>4.1</b> Date and time features</a></li>
-<li class="chapter" data-level="4.2" data-path="creating-new-features.html"><a href="creating-new-features.html#geographical-features"><i class="fa fa-check"></i><b>4.2</b> Geographical features</a><ul>
-<li class="chapter" data-level="4.2.1" data-path="creating-new-features.html"><a href="creating-new-features.html#exercises-6"><i class="fa fa-check"></i><b>4.2.1</b> Exercises</a></li>
-<li class="chapter" data-level="4.2.2" data-path="creating-new-features.html"><a href="creating-new-features.html#solutions-5"><i class="fa fa-check"></i><b>4.2.2</b> Solutions</a></li>
-</ul></li>
-<li class="chapter" data-level="4.3" data-path="creating-new-features.html"><a href="creating-new-features.html#creating-a-function"><i class="fa fa-check"></i><b>4.3</b> Creating a function</a><ul>
-<li class="chapter" data-level="4.3.1" data-path="creating-new-features.html"><a href="creating-new-features.html#exercises-7"><i class="fa fa-check"></i><b>4.3.1</b> Exercises</a></li>
-<li class="chapter" data-level="4.3.2" data-path="creating-new-features.html"><a href="creating-new-features.html#solution"><i class="fa fa-check"></i><b>4.3.2</b> Solution</a></li>
-<li class="chapter" data-level="4.3.3" data-path="creating-new-features.html"><a href="creating-new-features.html#exercises-8"><i class="fa fa-check"></i><b>4.3.3</b> Exercises</a></li>
-<li class="chapter" data-level="4.3.4" data-path="creating-new-features.html"><a href="creating-new-features.html#solutions-6"><i class="fa fa-check"></i><b>4.3.4</b> Solutions</a></li>
-</ul></li>
-<li class="chapter" data-level="4.4" data-path="creating-new-features.html"><a href="creating-new-features.html#tipping-behavior"><i class="fa fa-check"></i><b>4.4</b> Tipping behavior</a><ul>
-<li class="chapter" data-level="4.4.1" data-path="creating-new-features.html"><a href="creating-new-features.html#exercises-9"><i class="fa fa-check"></i><b>4.4.1</b> Exercises</a></li>
-<li class="chapter" data-level="4.4.2" data-path="creating-new-features.html"><a href="creating-new-features.html#solutions-7"><i class="fa fa-check"></i><b>4.4.2</b> Solutions</a></li>
-</ul></li>
-</ul></li>
-<li class="chapter" data-level="5" data-path="data-summary-and-analysis.html"><a href="data-summary-and-analysis.html"><i class="fa fa-check"></i><b>5</b> Data summary and analysis</a><ul>
-<li class="chapter" data-level="5.1" data-path="data-summary-and-analysis.html"><a href="data-summary-and-analysis.html#summary-functions"><i class="fa fa-check"></i><b>5.1</b> Summary functions</a><ul>
-<li class="chapter" data-level="5.1.1" data-path="data-summary-and-analysis.html"><a href="data-summary-and-analysis.html#exercises-10"><i class="fa fa-check"></i><b>5.1.1</b> Exercises</a></li>
-<li class="chapter" data-level="5.1.2" data-path="data-summary-and-analysis.html"><a href="data-summary-and-analysis.html#solutions-8"><i class="fa fa-check"></i><b>5.1.2</b> Solutions</a></li>
-</ul></li>
-<li class="chapter" data-level="5.2" data-path="data-summary-and-analysis.html"><a href="data-summary-and-analysis.html#data-summary-in-base-r"><i class="fa fa-check"></i><b>5.2</b> Data summary in <code>base</code> R</a><ul>
-<li class="chapter" data-level="5.2.1" data-path="data-summary-and-analysis.html"><a href="data-summary-and-analysis.html#exercises-11"><i class="fa fa-check"></i><b>5.2.1</b> Exercises</a></li>
-<li class="chapter" data-level="5.2.2" data-path="data-summary-and-analysis.html"><a href="data-summary-and-analysis.html#solutions-9"><i class="fa fa-check"></i><b>5.2.2</b> Solutions</a></li>
-</ul></li>
-<li class="chapter" data-level="5.3" data-path="data-summary-and-analysis.html"><a href="data-summary-and-analysis.html#writing-summary-functions"><i class="fa fa-check"></i><b>5.3</b> Writing summary functions</a><ul>
-<li class="chapter" data-level="5.3.1" data-path="data-summary-and-analysis.html"><a href="data-summary-and-analysis.html#exercises-12"><i class="fa fa-check"></i><b>5.3.1</b> Exercises</a></li>
-<li class="chapter" data-level="5.3.2" data-path="data-summary-and-analysis.html"><a href="data-summary-and-analysis.html#solutions-10"><i class="fa fa-check"></i><b>5.3.2</b> Solutions</a></li>
-</ul></li>
-<li class="chapter" data-level="5.4" data-path="data-summary-and-analysis.html"><a href="data-summary-and-analysis.html#data-summary-with-dplyr"><i class="fa fa-check"></i><b>5.4</b> Data summary with <code>dplyr</code></a><ul>
-<li class="chapter" data-level="5.4.1" data-path="data-summary-and-analysis.html"><a href="data-summary-and-analysis.html#exercises-13"><i class="fa fa-check"></i><b>5.4.1</b> Exercises</a></li>
-<li class="chapter" data-level="5.4.2" data-path="data-summary-and-analysis.html"><a href="data-summary-and-analysis.html#solutions-11"><i class="fa fa-check"></i><b>5.4.2</b> Solutions</a></li>
-</ul></li>
-</ul></li>
-<li class="chapter" data-level="6" data-path="review.html"><a href="review.html"><i class="fa fa-check"></i><b>6</b> Review</a></li>
-</ul>
-
-      </nav>
-    </div>
-
-    <div class="book-body">
-      <div class="body-inner">
-        <div class="book-header" role="navigation">
-          <h1>
-            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">R Deep-dive</a>
-          </h1>
-        </div>
-
-        <div class="page-wrapper" tabindex="-1" role="main">
-          <div class="page-inner">
-
-            <section class="normal" id="section-">
-<div id="data-summary-and-analysis" class="section level1">
-<h1><span class="header-section-number">5</span> Data summary and analysis</h1>
-<p>Let’s recap where we are in the process:</p>
-<ol style="list-style-type: decimal">
+<h1 id="data-summary-and-analysis">Data summary and analysis</h1>
+<p>Seth Mottaghinejad<br />
+2017-01-30</p>
+<p>Let's recap where we are in the process:</p>
+<ol>
 <li>load all the data (and combine them if necessary)</li>
 <li>inspect the data in preparation cleaning it</li>
 <li>clean the data in preparation for analysis</li>
@@ -193,9 +37,9 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li><strong>find ways to analyze or summarize the data and report your findings</strong></li>
 </ol>
 <p>Of course in practice a workflow is not clean-cut the way we have it here, and it tends to be circular in that finding out certain quirks about the data forces us to go back and make certain changes to the data-cleaning process or add other features and so on.</p>
-<p>We now have a data set that’s more or less ready for analysis. In the next section we go over ways we can summarize the data and produce plots and tables. Let’s run <code>str(nyc_taxi)</code> and <code>head(nyc_taxi)</code> again to review all the work we did so far.</p>
+<p>We now have a data set that's more or less ready for analysis. In the next section we go over ways we can summarize the data and produce plots and tables. Let's run <code>str(nyc_taxi)</code> and <code>head(nyc_taxi)</code> again to review all the work we did so far.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">str</span>(nyc_taxi)</code></pre></div>
-<pre><code>## Classes &#39;tbl_df&#39;, &#39;tbl&#39; and &#39;data.frame&#39;:    6000000 obs. of  25 variables:
+<pre><code>## Classes 'tbl_df', 'tbl' and 'data.frame':    6000000 obs. of  25 variables:
 ##  $ pickup_datetime      : POSIXct, format: &quot;2016-06-21 21:33:52&quot; &quot;2016-06-08 09:52:19&quot; ...
 ##  $ dropoff_datetime     : POSIXct, format: &quot;2016-06-21 21:34:40&quot; &quot;2016-06-08 10:19:55&quot; ...
 ##  $ passenger_count      : int  5 1 1 5 3 1 1 2 1 1 ...
@@ -223,94 +67,114 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 ##  $ tip_percent          : int  22 NA 14 25 17 25 19 25 5 NA ...</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">head</span>(nyc_taxi, <span class="dv">3</span>)</code></pre></div>
 <pre><code>## # A tibble: 3 × 25
-##       pickup_datetime    dropoff_datetime passenger_count trip_distance pickup_longitude
-##                &lt;dttm&gt;              &lt;dttm&gt;           &lt;int&gt;         &lt;dbl&gt;            &lt;dbl&gt;
-## 1 2016-06-21 21:33:52 2016-06-21 21:34:40               5           0.4              -74
-## 2 2016-06-08 09:52:19 2016-06-08 10:19:55               1           5.2              -74
-## 3 2016-06-14 23:27:22 2016-06-14 23:35:05               1           2.1              -74
-##   pickup_latitude rate_code_id dropoff_longitude dropoff_latitude payment_type
-##             &lt;dbl&gt;       &lt;fctr&gt;             &lt;dbl&gt;            &lt;dbl&gt;       &lt;fctr&gt;
-## 1            40.7     standard               -74             40.7         card
-## 2            40.8     standard               -74             40.8         cash
-## 3            40.7     standard               -74             40.7         card
-##   fare_amount extra mta_tax tip_amount tolls_amount improvement_surcharge total_amount
-##         &lt;dbl&gt; &lt;dbl&gt;   &lt;dbl&gt;      &lt;dbl&gt;        &lt;dbl&gt;                 &lt;dbl&gt;        &lt;dbl&gt;
-## 1         3.0   0.5     0.5       0.86            0                   0.3         5.16
-## 2        21.5   0.0     0.5         NA            0                   0.3        22.30
-## 3         9.0   0.5     0.5       1.50            0                   0.3        11.80
-##   pickup_hour pickup_dow dropoff_hour dropoff_dow trip_duration    pickup_nhood
-##        &lt;fctr&gt;     &lt;fctr&gt;       &lt;fctr&gt;      &lt;fctr&gt;         &lt;int&gt;          &lt;fctr&gt;
-## 1    6PM-10PM        Tue     6PM-10PM         Tue            48     Murray Hill
-## 2     5AM-9AM        Wed     9AM-12PM         Wed          1656 Upper West Side
-## 3    10PM-1AM        Tue     10PM-1AM         Tue           463 Lower East Side
-##      dropoff_nhood tip_percent
-##             &lt;fctr&gt;       &lt;int&gt;
-## 1         Gramercy          22
-## 2 Garment District          NA
-## 3               NA          14</code></pre>
+##       pickup_datetime    dropoff_datetime passenger_count trip_distance
+##                &lt;dttm&gt;              &lt;dttm&gt;           &lt;int&gt;         &lt;dbl&gt;
+## 1 2016-06-21 21:33:52 2016-06-21 21:34:40               5           0.4
+## 2 2016-06-08 09:52:19 2016-06-08 10:19:55               1           5.2
+## 3 2016-06-14 23:27:22 2016-06-14 23:35:05               1           2.1
+##   pickup_longitude pickup_latitude rate_code_id dropoff_longitude
+##              &lt;dbl&gt;           &lt;dbl&gt;       &lt;fctr&gt;             &lt;dbl&gt;
+## 1              -74            40.7     standard               -74
+## 2              -74            40.8     standard               -74
+## 3              -74            40.7     standard               -74
+##   dropoff_latitude payment_type fare_amount extra mta_tax tip_amount
+##              &lt;dbl&gt;       &lt;fctr&gt;       &lt;dbl&gt; &lt;dbl&gt;   &lt;dbl&gt;      &lt;dbl&gt;
+## 1             40.7         card         3.0   0.5     0.5       0.86
+## 2             40.8         cash        21.5   0.0     0.5         NA
+## 3             40.7         card         9.0   0.5     0.5       1.50
+##   tolls_amount improvement_surcharge total_amount pickup_hour pickup_dow
+##          &lt;dbl&gt;                 &lt;dbl&gt;        &lt;dbl&gt;      &lt;fctr&gt;     &lt;fctr&gt;
+## 1            0                   0.3         5.16    6PM-10PM        Tue
+## 2            0                   0.3        22.30     5AM-9AM        Wed
+## 3            0                   0.3        11.80    10PM-1AM        Tue
+##   dropoff_hour dropoff_dow trip_duration    pickup_nhood    dropoff_nhood
+##         &lt;fctr&gt;      &lt;fctr&gt;         &lt;int&gt;          &lt;fctr&gt;           &lt;fctr&gt;
+## 1     6PM-10PM         Tue            48     Murray Hill         Gramercy
+## 2     9AM-12PM         Wed          1656 Upper West Side Garment District
+## 3     10PM-1AM         Tue           463 Lower East Side               NA
+##   tip_percent
+##         &lt;int&gt;
+## 1          22
+## 2          NA
+## 3          14</code></pre>
 <p>We divide this chapter into three section:</p>
-<ol style="list-style-type: decimal">
+<ol>
 <li><strong>Overview of some important statistical summary functions:</strong> This is by no means a comprehensive glossary of statistical functions, but rather a sampling of the important ones and how to use them, how to modify them, and some common patterns among them.</li>
 <li><strong>Data summary with <code>base</code> R tools:</strong> The <code>base</code> R tools for summarizing data are a bit more tedious and some have a different notation or way of passing arguments, but they are also widely used and they can be very efficient if used right.</li>
 <li><strong>Data summary with <code>dplyr</code>:</strong> <code>dplyr</code> offers a consistent and popular notation for processing and summarizing data, and one worth learning on top of <code>base</code> R.</li>
 </ol>
-<p>To reiterate, statistical summary functions which we cover in section 1 can be used in either of the above cases, but what’s different is the way we query the data using those functions. For the latter, we will review two (mostly alternative) ways: one using <code>base</code> functions in section 2 and one using the <code>dplyr</code> library in section 3.</p>
-<div id="summary-functions" class="section level2">
-<h2><span class="header-section-number">5.1</span> Summary functions</h2>
+<p>To reiterate, statistical summary functions which we cover in section 1 can be used in either of the above cases, but what's different is the way we query the data using those functions. For the latter, we will review two (mostly alternative) ways: one using <code>base</code> functions in section 2 and one using the <code>dplyr</code> library in section 3.</p>
+<h2 id="summary-functions">Summary functions</h2>
 <p>We already learned of one all-encompassing summary function, namely <code>summary</code>:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">summary</span>(nyc_taxi) <span class="co"># summary of the whole data</span></code></pre></div>
-<pre><code>##  pickup_datetime               dropoff_datetime              passenger_count
-##  Min.   :2016-01-01 00:00:00   Min.   :1996-06-20 16:23:24   Min.   :0.00   
-##  1st Qu.:2016-02-15 15:13:43   1st Qu.:2016-02-15 15:28:34   1st Qu.:1.00   
-##  Median :2016-03-31 23:59:59   Median :2016-04-01 00:14:49   Median :1.00   
-##  Mean   :2016-03-31 22:26:38   Mean   :2016-03-31 22:40:51   Mean   :1.66   
-##  3rd Qu.:2016-05-15 21:27:04   3rd Qu.:2016-05-15 21:43:05   3rd Qu.:2.00   
-##  Max.   :2016-06-30 23:59:56   Max.   :2016-07-01 22:38:46   Max.   :9.00   
-##                                                                             
-##  trip_distance     pickup_longitude pickup_latitude                rate_code_id    
-##  Min.   :      0   Min.   :-75      Min.   :38      standard             :5839179  
-##  1st Qu.:      1   1st Qu.:-74      1st Qu.:41      JFK                  : 128092  
-##  Median :      2   Median :-74      Median :41      negotiated           :  18253  
-##  Mean   :      4   Mean   :-74      Mean   :41      Newark               :  10939  
-##  3rd Qu.:      3   3rd Qu.:-74      3rd Qu.:41      Nassau or Westchester:   2716  
-##  Max.   :1674368   Max.   :-73      Max.   :41      (Other)              :     54  
-##                    NA&#39;s   :85784    NA&#39;s   :85983   NA&#39;s                 :    767  
-##  dropoff_longitude dropoff_latitude payment_type    fare_amount         extra    
-##  Min.   :-75       Min.   :38       card:3982658   Min.   :  -450   Min.   :-36  
-##  1st Qu.:-74       1st Qu.:41       cash:1986124   1st Qu.:     6   1st Qu.:  0  
-##  Median :-74       Median :41       NA&#39;s:  31218   Median :    10   Median :  0  
-##  Mean   :-74       Mean   :41                      Mean   :    13   Mean   :  0  
-##  3rd Qu.:-74       3rd Qu.:41                      3rd Qu.:    14   3rd Qu.:  0  
-##  Max.   :-73       Max.   :41                      Max.   :628545   Max.   :636  
-##  NA&#39;s   :80650     NA&#39;s   :81540                                                 
-##     mta_tax       tip_amount      tolls_amount improvement_surcharge  total_amount   
-##  Min.   :-2.7   Min.   :-64      Min.   :-12   Min.   :-0.30         Min.   :  -451  
-##  1st Qu.: 0.5   1st Qu.:  1      1st Qu.:  0   1st Qu.: 0.30         1st Qu.:     9  
-##  Median : 0.5   Median :  2      Median :  0   Median : 0.30         Median :    12  
-##  Mean   : 0.5   Mean   :  2      Mean   :  0   Mean   : 0.30         Mean   :    16  
-##  3rd Qu.: 0.5   3rd Qu.:  3      3rd Qu.:  0   3rd Qu.: 0.30         3rd Qu.:    18  
-##  Max.   :80.5   Max.   :844      Max.   :906   Max.   : 0.76         Max.   :629034  
-##                 NA&#39;s   :832696                                                       
-##    pickup_hour      pickup_dow     dropoff_hour     dropoff_dow  trip_duration       
-##  1AM-5AM : 329006   Sun:800938   1AM-5AM : 342428   Sun:808101   Min.   :-631147949  
-##  5AM-9AM : 918307   Mon:772497   5AM-9AM : 867447   Mon:772490   1st Qu.:       395  
-##  9AM-12PM: 844536   Tue:834303   9AM-12PM: 838545   Tue:833377   Median :       661  
-##  12PM-4PM:1163923   Wed:863102   12PM-4PM:1166009   Wed:861748   Mean   :       853  
-##  4PM-6PM : 688718   Thu:900046   4PM-6PM : 666898   Thu:896975   3rd Qu.:      1076  
-##  6PM-10PM:1395406   Fri:922501   6PM-10PM:1414732   Fri:920326   Max.   :  11122910  
-##  10PM-1AM: 660104   Sat:906613   10PM-1AM: 703941   Sat:906983                       
-##           pickup_nhood             dropoff_nhood      tip_percent    
-##  Midtown        : 972293   Midtown        : 914279   Min.   :   -1   
-##  Upper East Side: 815312   Upper East Side: 772333   1st Qu.:   14   
-##  Upper West Side: 494749   Upper West Side: 489991   Median :   18   
-##  Gramercy       : 466436   Gramercy       : 428740   Mean   :   17   
-##  Chelsea        : 397915   Chelsea        : 358347   3rd Qu.:   20   
-##  (Other)        :2296334   (Other)        :2252434   Max.   :45100   
-##  NA&#39;s           : 556961   NA&#39;s           : 783876   NA&#39;s   :833023</code></pre>
-<p>We can use <code>summary</code> to run a sanity check on the data and find ways that the data might need to be cleaned in preparation for analysis, but we are now interested in individual summaries. For example, here’s how we can find the average fare amount for the whole data.</p>
+<pre><code>##  pickup_datetime               dropoff_datetime             
+##  Min.   :2016-01-01 00:00:00   Min.   :1996-06-20 16:23:24  
+##  1st Qu.:2016-02-15 15:13:43   1st Qu.:2016-02-15 15:28:34  
+##  Median :2016-03-31 23:59:59   Median :2016-04-01 00:14:49  
+##  Mean   :2016-03-31 22:26:38   Mean   :2016-03-31 22:40:51  
+##  3rd Qu.:2016-05-15 21:27:04   3rd Qu.:2016-05-15 21:43:05  
+##  Max.   :2016-06-30 23:59:56   Max.   :2016-07-01 22:38:46  
+##                                                             
+##  passenger_count trip_distance     pickup_longitude pickup_latitude
+##  Min.   :0.00    Min.   :      0   Min.   :-75      Min.   :38     
+##  1st Qu.:1.00    1st Qu.:      1   1st Qu.:-74      1st Qu.:41     
+##  Median :1.00    Median :      2   Median :-74      Median :41     
+##  Mean   :1.66    Mean   :      4   Mean   :-74      Mean   :41     
+##  3rd Qu.:2.00    3rd Qu.:      3   3rd Qu.:-74      3rd Qu.:41     
+##  Max.   :9.00    Max.   :1674368   Max.   :-73      Max.   :41     
+##                                    NA's   :85784    NA's   :85983  
+##                 rate_code_id     dropoff_longitude dropoff_latitude
+##  standard             :5839179   Min.   :-75       Min.   :38      
+##  JFK                  : 128092   1st Qu.:-74       1st Qu.:41      
+##  negotiated           :  18253   Median :-74       Median :41      
+##  Newark               :  10939   Mean   :-74       Mean   :41      
+##  Nassau or Westchester:   2716   3rd Qu.:-74       3rd Qu.:41      
+##  (Other)              :     54   Max.   :-73       Max.   :41      
+##  NA's                 :    767   NA's   :80650     NA's   :81540   
+##  payment_type    fare_amount         extra        mta_tax    
+##  card:3982658   Min.   :  -450   Min.   :-36   Min.   :-2.7  
+##  cash:1986124   1st Qu.:     6   1st Qu.:  0   1st Qu.: 0.5  
+##  NA's:  31218   Median :    10   Median :  0   Median : 0.5  
+##                 Mean   :    13   Mean   :  0   Mean   : 0.5  
+##                 3rd Qu.:    14   3rd Qu.:  0   3rd Qu.: 0.5  
+##                 Max.   :628545   Max.   :636   Max.   :80.5  
+##                                                              
+##    tip_amount      tolls_amount improvement_surcharge  total_amount   
+##  Min.   :-64      Min.   :-12   Min.   :-0.30         Min.   :  -451  
+##  1st Qu.:  1      1st Qu.:  0   1st Qu.: 0.30         1st Qu.:     9  
+##  Median :  2      Median :  0   Median : 0.30         Median :    12  
+##  Mean   :  2      Mean   :  0   Mean   : 0.30         Mean   :    16  
+##  3rd Qu.:  3      3rd Qu.:  0   3rd Qu.: 0.30         3rd Qu.:    18  
+##  Max.   :844      Max.   :906   Max.   : 0.76         Max.   :629034  
+##  NA's   :832696                                                       
+##    pickup_hour      pickup_dow     dropoff_hour     dropoff_dow 
+##  1AM-5AM : 329006   Sun:800938   1AM-5AM : 342428   Sun:808101  
+##  5AM-9AM : 918307   Mon:772497   5AM-9AM : 867447   Mon:772490  
+##  9AM-12PM: 844536   Tue:834303   9AM-12PM: 838545   Tue:833377  
+##  12PM-4PM:1163923   Wed:863102   12PM-4PM:1166009   Wed:861748  
+##  4PM-6PM : 688718   Thu:900046   4PM-6PM : 666898   Thu:896975  
+##  6PM-10PM:1395406   Fri:922501   6PM-10PM:1414732   Fri:920326  
+##  10PM-1AM: 660104   Sat:906613   10PM-1AM: 703941   Sat:906983  
+##  trip_duration                 pickup_nhood             dropoff_nhood    
+##  Min.   :-631147949   Midtown        : 972293   Midtown        : 914279  
+##  1st Qu.:       395   Upper East Side: 815312   Upper East Side: 772333  
+##  Median :       661   Upper West Side: 494749   Upper West Side: 489991  
+##  Mean   :       853   Gramercy       : 466436   Gramercy       : 428740  
+##  3rd Qu.:      1076   Chelsea        : 397915   Chelsea        : 358347  
+##  Max.   :  11122910   (Other)        :2296334   (Other)        :2252434  
+##                       NA's           : 556961   NA's           : 783876  
+##   tip_percent    
+##  Min.   :   -1   
+##  1st Qu.:   14   
+##  Median :   18   
+##  Mean   :   17   
+##  3rd Qu.:   20   
+##  Max.   :45100   
+##  NA's   :833023</code></pre>
+<p>We can use <code>summary</code> to run a sanity check on the data and find ways that the data might need to be cleaned in preparation for analysis, but we are now interested in individual summaries. For example, here's how we can find the average fare amount for the whole data.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">mean</span>(nyc_taxi$fare_amount) <span class="co"># the average of `fare_amount`</span></code></pre></div>
 <pre><code>## [1] 13</code></pre>
-<p>By specifying <code>trim = .10</code> we can get a 10 percent trimmed average, i.e. the average after throwing out the top and bottom 10 percent of the data:</p>
+<p>By specifying <code>trim = .10</code> we can get a 10 percent trimmed average, i.e. the average after throwing out the top and bottom 10 percent of the data:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">mean</span>(nyc_taxi$fare_amount, <span class="dt">trim =</span> .<span class="dv">10</span>) <span class="co"># trimmed mean</span></code></pre></div>
 <pre><code>## [1] 10.7</code></pre>
 <p>By default, the <code>mean</code> function will return NA if there is any NA in the data, but we can overwrite that with <code>na.rm = TRUE</code>. This same argument shows up in almost all the statistical functions we encounter in this section.</p>
@@ -347,40 +211,53 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <p>The difference between the 25th and 75th percentiles is called the inter-quartile range, which we can also get using the <code>IQR</code> function.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">IQR</span>(nyc_taxi$trip_duration, <span class="dt">na.rm =</span> <span class="ot">TRUE</span>) <span class="co"># interquartile range</span></code></pre></div>
 <pre><code>## [1] 681</code></pre>
-<p>Let’s look at a common bivariate summary statistic for numeric data: correlation.</p>
+<p>Let's look at a common bivariate summary statistic for numeric data: correlation.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">cor</span>(nyc_taxi$trip_distance, nyc_taxi$trip_duration, <span class="dt">use =</span> <span class="st">&quot;complete.obs&quot;</span>)</code></pre></div>
 <pre><code>## [1] -0.00000114</code></pre>
-<p>We can use <code>mothod</code> to switch from Pearson’s correlation to Spearman rank correlation.</p>
+<p>We can use <code>mothod</code> to switch from Pearson's correlation to Spearman rank correlation.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">cor</span>(nyc_taxi$trip_distance, nyc_taxi$trip_duration, <span class="dt">use =</span> <span class="st">&quot;complete.obs&quot;</span>, <span class="dt">method =</span> <span class="st">&quot;spearman&quot;</span>)</code></pre></div>
 <pre><code>## [1] 0.839</code></pre>
 <p>Why does the Spearman correlation coefficient takes so much longer to compute?</p>
-<p>So far we’ve examined functions for summarizing numeric data. Let’s now shift our attention to categorical data. We already saw that we can use <code>table</code> to get counts for each level of a <code>factor</code> column.</p>
+<p>So far we've examined functions for summarizing numeric data. Let's now shift our attention to categorical data. We already saw that we can use <code>table</code> to get counts for each level of a <code>factor</code> column.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">table</span>(nyc_taxi$pickup_nhood) <span class="co"># one-way table</span></code></pre></div>
 <pre><code>## 
-##        West Village        East Village        Battery Park       Carnegie Hill 
-##              140332              204170               55599               69672 
-##            Gramercy                Soho         Murray Hill        Little Italy 
-##              466436              119095              200315               50010 
-##        Central Park   Greenwich Village             Midtown Morningside Heights 
-##               80785              270512              972293               28971 
-##              Harlem    Hamilton Heights             Tribeca   North Sutton Area 
-##               30857               11817               97612               59162 
-##     Upper East Side  Financial District              Inwood             Chelsea 
-##              815312              126715                 619              397915 
-##     Lower East Side           Chinatown  Washington Heights     Upper West Side 
-##              139292               18155                7712              494749 
-##             Clinton           Yorkville    Garment District         East Harlem 
-##              177426               39669              349100               18737</code></pre>
+##        West Village        East Village        Battery Park 
+##              140332              204170               55599 
+##       Carnegie Hill            Gramercy                Soho 
+##               69672              466436              119095 
+##         Murray Hill        Little Italy        Central Park 
+##              200315               50010               80785 
+##   Greenwich Village             Midtown Morningside Heights 
+##              270512              972293               28971 
+##              Harlem    Hamilton Heights             Tribeca 
+##               30857               11817               97612 
+##   North Sutton Area     Upper East Side  Financial District 
+##               59162              815312              126715 
+##              Inwood             Chelsea     Lower East Side 
+##                 619              397915              139292 
+##           Chinatown  Washington Heights     Upper West Side 
+##               18155                7712              494749 
+##             Clinton           Yorkville    Garment District 
+##              177426               39669              349100 
+##         East Harlem 
+##               18737</code></pre>
 <p>When we pass more than one column to <code>table</code>, we get counts for each <em>combination</em> of the factor levels. For example, with two columns we get counts for each combination of the levels of the first factor and the second factor. In other words, we get a two-way table.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">two_way &lt;-<span class="st"> </span><span class="kw">with</span>(nyc_taxi, <span class="kw">table</span>(pickup_nhood, dropoff_nhood)) <span class="co"># two-way table: an R `matrix`</span>
 two_way[<span class="dv">1</span>:<span class="dv">5</span>, <span class="dv">1</span>:<span class="dv">5</span>]</code></pre></div>
 <pre><code>##                dropoff_nhood
-## pickup_nhood    West Village East Village Battery Park Carnegie Hill Gramercy
-##   West Village          7232         6407         3059           390    10077
-##   East Village          6119        17738         1326           393    27860
-##   Battery Park          2865         1243         1748           141     2837
-##   Carnegie Hill          296          273          229          2749     1565
-##   Gramercy             11348        28705         3936          2122    57703</code></pre>
+## pickup_nhood    West Village East Village Battery Park Carnegie Hill
+##   West Village          7232         6407         3059           390
+##   East Village          6119        17738         1326           393
+##   Battery Park          2865         1243         1748           141
+##   Carnegie Hill          296          273          229          2749
+##   Gramercy             11348        28705         3936          2122
+##                dropoff_nhood
+## pickup_nhood    Gramercy
+##   West Village     10077
+##   East Village     27860
+##   Battery Park      2837
+##   Carnegie Hill     1565
+##   Gramercy         57703</code></pre>
 <p>What about a three-way table? A three-way table (or n-way table where n is an integer) is represented in R by an object we call an <code>array</code>. A vector is a one- dimensional array, a matrix a two-dimensional array, and a three-way table is a kind of three-dimensional array.</p>
 <p>What about a three-way table? A three-way table (or n-way table where n is an integer) is represented in R by an object we call an <code>array</code>. A vector is a one- dimensional array, a matrix a two-dimensional array, and a three-way table is a kind of three-dimensional array.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">arr_3d &lt;-<span class="st"> </span><span class="kw">with</span>(nyc_taxi, <span class="kw">table</span>(pickup_dow, pickup_hour, payment_type)) <span class="co"># a three-way table, an R 3D `array`</span>
@@ -408,8 +285,8 @@ arr_3d</code></pre></div>
 ##        Thu   12172   44692    43035    60186   32546    62329    25920
 ##        Fri   18567   43319    43707    62022   34143    68639    34471
 ##        Sat   26939   30345    47302    68499   37802    69633    42708</code></pre>
-<p>Let’s see how we query a 3-dimensional <code>array</code>: Because we have a 3-dimensional array, we need to index it across three different dimensions:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">arr_3d[<span class="dv">3</span>, <span class="dv">2</span>, <span class="dv">2</span>] <span class="co"># give me the 3rd row, 2nd column, 2nd &#39;page&#39;</span></code></pre></div>
+<p>Let's see how we query a 3-dimensional <code>array</code>: Because we have a 3-dimensional array, we need to index it across three different dimensions:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">arr_3d[<span class="dv">3</span>, <span class="dv">2</span>, <span class="dv">2</span>] <span class="co"># give me the 3rd row, 2nd column, 2nd 'page'</span></code></pre></div>
 <pre><code>## [1] 44922</code></pre>
 <p>Just as with a <code>data.frame</code>, leaving out the index for one of the dimensions returns all the values for that dimension.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">arr_3d[ , , <span class="dv">2</span>]</code></pre></div>
@@ -423,7 +300,7 @@ arr_3d</code></pre></div>
 ##        Fri   18567   43319    43707    62022   34143    68639    34471
 ##        Sat   26939   30345    47302    68499   37802    69633    42708</code></pre>
 <p>We can use the names of the dimensions instead of their numeric index:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">arr_3d[<span class="st">&#39;Tue&#39;</span>, <span class="st">&#39;5AM-9AM&#39;</span>, <span class="st">&#39;cash&#39;</span>]</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">arr_3d[<span class="st">'Tue'</span>, <span class="st">'5AM-9AM'</span>, <span class="st">'cash'</span>]</code></pre></div>
 <pre><code>## [1] 44922</code></pre>
 <p>We can turn the <code>array</code> representation into a <code>data.frame</code> representation:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">df_arr_3d &lt;-<span class="st"> </span><span class="kw">as.data.frame</span>(arr_3d) <span class="co"># same information, formatted as data frame</span>
@@ -436,7 +313,7 @@ arr_3d</code></pre></div>
 ## 5        Thu     1AM-5AM         card 18162
 ## 6        Fri     1AM-5AM         card 29268</code></pre>
 <p>We can subset the <code>data.frame</code> using the <code>subset</code> function:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">subset</span>(df_arr_3d, pickup_dow ==<span class="st"> &#39;Tue&#39;</span> &amp;<span class="st"> </span>pickup_hour ==<span class="st"> &#39;5AM-9AM&#39;</span> &amp;<span class="st"> </span>payment_type ==<span class="st"> &#39;cash&#39;</span>)</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">subset</span>(df_arr_3d, pickup_dow ==<span class="st"> 'Tue'</span> &amp;<span class="st"> </span>pickup_hour ==<span class="st"> '5AM-9AM'</span> &amp;<span class="st"> </span>payment_type ==<span class="st"> 'cash'</span>)</code></pre></div>
 <pre><code>##    pickup_dow pickup_hour payment_type  Freq
 ## 59        Tue     5AM-9AM         cash 44922</code></pre>
 <p>Notice how the <code>array</code> notation is more terse, but not as readable (because we need to remember the order of the dimensions).</p>
@@ -477,8 +354,8 @@ arr_3d</code></pre></div>
 ##        Thu 0.00204 0.00749  0.00721  0.01008 0.00545  0.01044  0.00434
 ##        Fri 0.00311 0.00726  0.00732  0.01039 0.00572  0.01150  0.00578
 ##        Sat 0.00451 0.00508  0.00792  0.01148 0.00633  0.01167  0.00716</code></pre>
-<p>For proportions out of marginal totals, we provide the second argument to <code>prop.table</code>. For example, specifying 1 as the second argument gives us proportions out of “row” totals. Recall that in a 3d object, a “row” is a 2D object, for example <code>arr_3d[1, , ]</code> is the first “row”, <code>arr3d[2, , ]</code> is the second “row” and so on.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">prop.table</span>(arr_3d, <span class="dv">1</span>) <span class="co"># as a proportion of &#39;row&#39; totals, or marginal totals for the first dimension</span></code></pre></div>
+<p>For proportions out of marginal totals, we provide the second argument to <code>prop.table</code>. For example, specifying 1 as the second argument gives us proportions out of &quot;row&quot; totals. Recall that in a 3d object, a &quot;row&quot; is a 2D object, for example <code>arr_3d[1, , ]</code> is the first &quot;row&quot;, <code>arr3d[2, , ]</code> is the second &quot;row&quot; and so on.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">prop.table</span>(arr_3d, <span class="dv">1</span>) <span class="co"># as a proportion of 'row' totals, or marginal totals for the first dimension</span></code></pre></div>
 <pre><code>## , , payment_type = card
 ## 
 ##           pickup_hour
@@ -560,7 +437,7 @@ arr_3d</code></pre></div>
 ##        Thu 0.00613 0.02250  0.02167  0.03030 0.01639  0.03138  0.01305
 ##        Fri 0.00935 0.02181  0.02201  0.03123 0.01719  0.03456  0.01736
 ##        Sat 0.01356 0.01528  0.02382  0.03449 0.01903  0.03506  0.02150</code></pre>
-<p>Both <code>prop.table</code> and <code>apply</code> also accepts combinations of dimensions as the second argument. This makes them powerful tools for aggregation, as long as we’re careful. For example, letting the second argument be <code>c(1, 2)</code> gives us proportions that add up to 1 for each combination of “row” and “column”. So in other words, we get the percentage of card vs cash payments for each pick-up day of week and hour combination.</p>
+<p>Both <code>prop.table</code> and <code>apply</code> also accepts combinations of dimensions as the second argument. This makes them powerful tools for aggregation, as long as we're careful. For example, letting the second argument be <code>c(1, 2)</code> gives us proportions that add up to 1 for each combination of &quot;row&quot; and &quot;column&quot;. So in other words, we get the percentage of card vs cash payments for each pick-up day of week and hour combination.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">prop.table</span>(arr_3d, <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>)) <span class="co"># as a proportion of totals for each combination of 1st and 2nd dimensions</span></code></pre></div>
 <pre><code>## , , payment_type = card
 ## 
@@ -585,10 +462,9 @@ arr_3d</code></pre></div>
 ##        Thu   0.401   0.276    0.350    0.364   0.323    0.275    0.296
 ##        Fri   0.388   0.284    0.360    0.375   0.338    0.317    0.305
 ##        Sat   0.332   0.383    0.375    0.389   0.382    0.352    0.301</code></pre>
-<div id="exercises-10" class="section level3">
-<h3><span class="header-section-number">5.1.1</span> Exercises</h3>
-<ol style="list-style-type: decimal">
-<li>The <code>trim</code> argument for the <code>mean</code> function is two-sided. Let’s build a one- sided trimmed mean function, and one that uses counts instead of percentiles. Call it <code>mean_except_top_10</code>. For example <code>mean_except_top_10(x, 5)</code> will throw out the highest 5 values of <code>x</code> before computing the average. HINT: you can sort <code>x</code> using the <code>sort</code> function.</li>
+<h3 id="exercises">Exercises</h3>
+<ol>
+<li>The <code>trim</code> argument for the <code>mean</code> function is two-sided. Let's build a one- sided trimmed mean function, and one that uses counts instead of percentiles. Call it <code>mean_except_top_10</code>. For example <code>mean_except_top_10(x, 5)</code> will throw out the highest 5 values of <code>x</code> before computing the average. HINT: you can sort <code>x</code> using the <code>sort</code> function.</li>
 </ol>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">mean_except_top_10</span>(<span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">5</span>, <span class="dv">3</span>, <span class="dv">99</span>), <span class="dv">1</span>) <span class="co"># should return 3</span></code></pre></div>
 <hr />
@@ -602,7 +478,7 @@ arr_3d</code></pre></div>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">quantile</span>(nyc_taxi$trip_distance, <span class="dt">probs =</span> <span class="kw">c</span>(.<span class="dv">3</span>, .<span class="dv">6</span>, .<span class="dv">9</span>))</code></pre></div>
 <pre><code>##  30%  60%  90% 
 ## 1.10 2.10 6.77</code></pre>
-<p>As it turns out, there’s a considerable difference in efficiency between the first and second approach. We explore this in this exercise:</p>
+<p>As it turns out, there's a considerable difference in efficiency between the first and second approach. We explore this in this exercise:</p>
 <p>There are two important tools we can use when considering efficiency:</p>
 <ul>
 <li><strong>profiling</strong> is a helpful tool if we need to understand what a function does under the hood (good for finding bottlenecks)</li>
@@ -610,15 +486,15 @@ arr_3d</code></pre></div>
 </ul>
 <p>Both of these tools can be slow when working with large datasets (especially the benchmarking tool), so instead we create a vector of random numbers and use that for testing (alternatively, we could use a sample of the data). We want the vector to be big enough that test result are stable (not due to chance), but small enough that they will run within a reasonable time frame.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">random_vec &lt;-<span class="st"> </span><span class="kw">rnorm</span>(<span class="dv">10</span>^<span class="dv">6</span>) <span class="co"># a million random numbers generated from a standard normal distribution</span></code></pre></div>
-<p>Let’s begin by profiling, for which we rely on the <code>profr</code> library:</p>
+<p>Let's begin by profiling, for which we rely on the <code>profr</code> library:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(profr)
 my_test_function &lt;-<span class="st"> </span>function(){
   <span class="kw">quantile</span>(random_vec, <span class="dt">p =</span> <span class="kw">seq</span>(<span class="dv">0</span>, <span class="dv">1</span>, <span class="dt">by =</span> .<span class="dv">01</span>))
 }
 p &lt;-<span class="st"> </span><span class="kw">profr</span>(<span class="kw">my_test_function</span>())
 <span class="kw">plot</span>(p)</code></pre></div>
-<p><img src="images/unnamed-chunk-191-1.png" width="960" /></p>
-<ol start="2" style="list-style-type: decimal">
+<p><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAA8AAAAPACAMAAADNCOCpAAAAbFBMVEUAAAAAADoAAGYAOjoAOpAAZrY6AAA6ADo6Ojo6OpA6kNtmAABmADpmkJBmtrZmtv+QOgCQZgCQkGaQtpCQ27aQ2/+2ZgC225C2/7a2///bkDrb2//b/7bb/9vb////tmb/25D//7b//9v////AgrgwAAAACXBIWXMAAA7DAAAOwwHHb6hkAAAXCUlEQVR4nO3dDVviWIKG4egqNQPVhduzMFNsr4D8//+4Jyd8aUGVJdjhhfu+LiwJSSCtDycf2jYrIFbT9wsAPk7AEEzAEEzAEEzAEEzAEEzAEEzAEEzAEEzAEEzAEEzAEEzAEEzAEEzAEEzAEEzAEEzAEEzAEEzAEEzAEEzAEEzAEEzAEEzAEEzAEEzAEEzAEEzAEEzAEEzAEEzAEEzAEEzAEEzAEEzAEEzAEEzAEEzAEEzAEEzAEEzAEEzAEEzAEEzAEEzAEEzAEEzAEEzAEEzAEEzAEEzAEEzAEEzAEEzAEEzAEEzAEEzAEEzAEEzAEEzAEEzAEEzAEEzAEEzAEEzAEEzAEEzAEEzAEEzAEEzAEEzAEEzAEEzAEEzAEEzAEEzAEOzMATfAGfQV8HlXB7dJwBBMwBBMwBBMwBBMwBBMwBBMwBBMwBBMwBBMwBBMwBBMwBBMwBBMwBBMwBBMwBBMwBBMwBBMwBBMwBBMwBBMwBBMwBBMwBBMwBBMwBBMwBDsQgPu+y9GwaU4KaQPzHiW1RmgoRIwBBMwBBMwBBMwBBMwBBMwBBMwBBMwBBMwBBMwBBMwBBMwBBMwBBMwBBMwBBMwBBMwBBMwBBMwBBMwBBMwBBMwBBMwBBMwBBMwBBMwBBMwBBMwBBMwBBMwBBMwBBMwBBMwBBMwBBMwBBMwBBMwBBMwBBMwBBMwBBMwBBMwBBMwBBMwBBMwBBMwBBMwBBMwBBMwBBMwBBMwBBMwBBMwBLvSgOfj+s9yNP5hGlyR6wz4Vbg/mQbhBAzB+gl4ev99tRg0zd3kY6vbe7hdTdOmOS//DkunX/9sWg/Pqy7a5ejbqMzRzlenwRXpJeDa75fJT0bFd7+sxWDctjuut+XosdxKppv1dgGXt4nZ3cQIzBXqI+DlqIyU08f209mRQfHdL2te3gtaL0/D9l7b6XD1JuBh7VzAXKF+Ah6vg9v2t1nL1nufbTnq1lBH4m2nrwPuJgiYK9TPLnQZfWfnGYHLO0E9Bu4C3nQqYG5ELwG3w2YdgufHzmL93sua3k2MwNykni4jzbsd5ccPru7Nw6XNvWNgAXM70q8D1zG8/bA7Cz1enyZbvQ14eN7XCP1LD7iO5XVHfHMduA600+bh/54eXwXcTnMdmCsTHzDcMgFDMAFDMAFDMAFDMAFDMAFDMAFDMAFDMAFDMAFDMAFDMAFDMAFDMAFDMAFDMAFDMAFDMAFDMAFDMAFDMAFDMAFDMAFDMAFDMAFDMAFDMAFDMAFDMAFDMAFDMAFDMAFDMAFDMAFDMAFDMAFDMAFDMAFDMAFDMAFDMAFDMAFDMAFDMAFDMAFDMAFDMAFDMAFDMAFDMAFDMAFDMAFDMAFDsNCAgeqkkD4w41lWZwSGSsAQTMAQTMAQTMAQTMAQTMAQTMAQTMAQTMAQTMAQTMAQTMAQTMAQTMAQTMAQTMAQTMAQTMAQTMAQTMAQTMAQTMAQTMAQTMAQTMAQTMAQTMAQTMAQTMAQTMAQTMAQTMAQTMAQTMAQTMAQTMAQTMAQTMAQTMAQTMAQTMAQTMAQTMAQTMAQTMAQTMAQTMAQTMAQTMAQTMAQTMAQTMAQTMAQ7EoDno/379xNdndmTTN8O/dyNH69BIS4zoDbInf2A16Ofsi3zv56CQhxewEfCFXApOoj4G4UnDdNc//9Y6vbe3gxKOsZr9dX1rv8+mfTeniuD5c95rs/24Bn9eF27vKk026ZWm2t94/BdgkI0lvAs7aXo+Peu1/WYjBu2x3X23L0WG5lxdv1Tkut86YEPCu3xWDYPTJ9XNUJu4CNwGTqK+B1MLMjw967X9Z8PYi/PNVR/W5S3x02Oda8V9P11Hbm9pHl10n3kIBJ11fAXVrb/jZr2Xrvsy1H3Rq69ZWPmyhXu9WXrLvD4M3Dq7rDLWDypY/AZeitx7NdwJsSNznOtgGv3xe6h8vx8P2/jcBcgX4Cblt6XB25qPP7L6vsI79rBF51j9R57UJzDXq6jFQaLknNf/yZivet7s3Dpb69Y+Dx22Pg2XrqetYu6+6k13ATvYCJlH4duA6t8/pmsDkLPd4b2Wf1kfVZ6O5s1ng9+JY3j5enh+eyC94FfOy9BC5YesD18m/dP95cB65D6bR5+L+ndif91XXgMvJujoHvJtN6HalpvnXD79R1YALFBwy3TMAQTMAQTMAQTMAQTMAQTMAQTMAQTMAQTMAQTMAQTMAQTMAQTMAQTMAQTMAQTMAQTMAQTMAQTMAQTMAQTMAQTMAQTMAQTMAQTMAQTMAQTMAQTMAQTMAQTMAQTMAQTMAQTMAQTMAQTMAQTMAQTMAQTMAQTMAQTMAQTMAQTMAQTMAQTMAQTMAQTMAQTMAQTMAQTMAQTMAQTMAQTMAQTMAQLDRgoDoppA/MeJbVGYGhEjAEEzAEEzAEEzAEEzAEEzAEEzAEEzAEEzAEEzAEEzAEEzAEEzAEEzAEEzAEEzAEEzAEEzAEEzAEEzAEEzAEEzAEEzAEEzAEEzAEEzAEEzAEEzAEEzAEEzAEEzAEEzAEEzAEEzAEEzAEEzAEEzAEEzAEEzAEEzAEEzAEEzAEEzAEEzAEEzAEEzAEEzAEEzAEEzAEEzAEEzAEEzAEEzAEu9KA5+NzvRK4ZNcZ8HIkYG5CnwEvBkczEzC8Rx8BL0fN1v33E1/WYlDW0uY6L/8Oy8q//llX/PD8G68IQvUyAs/b0s4zAtd1zEvB7W05eiy3kq4RmBvRzy50rexAwLuR+b3PNl8P4S9P7XvC/G6yHA3tQnMz+joGnt5NzjICL0ddwd26ysfaroC5Eb2dxJo1w7OcxHp5qsfA3bpKuALmlvR3Fnox+K9znYUuw7kRmJvU42WkMnaeKeDS694xsIC5Hek/yFGS7T7szkLXgIfnfT1wmdIDrpd/24i314Hr4Dt1HZibEB8w3DIBQzABQzABQzABQzABQzABQzABQzABQzABQzABQzABQzABQzABQzABQzABQzABQzABQzABQzABQzABQzABQzABQzABQzABQzABQzABQzABQzABQzABQzABQzABQzABQzABQzABQzABQzABQzABQzABQ7DzBrwcNVv33y/gZcF1MwJDMAFDsE8IuOxHPzxPhx99Re95XgFDdf6A53eT2cPzcnRSwQKG9zh7wC9Pw1UJeDVzEgs+3dkDXo7GNeC5gOHTfdoIPC23jxMwvMdnHQPPmvGHX9Ovn1fAUH3OWeimuZt89BW953kFDJXrwBBMwBDsE85CP3781bz3eQUM1flH4OnpR8AChvf5lF3oefvbSCcNxAKG9/isY+CXp0/9QQ6gOimkIzMageHv8Qk/idU4Boa/ibPQEMx1YAjmF/ohmF/oh2B+oR+C+YV+COYX+iGYX+iHYH6hH4K5DgzBBAzBBAzBzhuwv04IfysjMAQTMAQTMAQTMAQTMAQTMAQTMAQTMAQTMAQTMAQTMAQTMAQTMAQTMAQTMAQTMAQTMAQTMAQTMAQTMAQTMAQTMAQTMAQTMAQTMAQTMAQTMAQTMAQTMAQTMAQTMAQTMAQTMAQTMAQTMAQTMAQTMAQTMAQTMAS7gYDn49Vy1N0OPHg32d2ZNc3w7QztYvNDS8IFuP6AN+H+OuDl6Id862KHl4QL0GPA86bZH/5+Z3WfFfCBOQTMJesn4GnZV1388/lIVL9e3f7DZb/37l9fJnVV9UNZeVM//zYqnywGTfPw12YXusy820tul/yzDbib2s55/323+Hhd7x/tGp5/a/vgb9JLwNPSw7QOfbMjZbz/ZU1Lc/MylG8Dnj6W1ZaVL0flw6x7YHNrpy8Gw9dLbqd2+W8X3wRsBOZy9RFwDWLxpQ14XiLaX8vWe59tMWjjmu0CXn6ddFPrEW35ZC/g7iB3/ZzdktN2yfXUOtducQFz+foJuC3m5X9XZxiBuxoX+7vQ9ej6VYGbgLsD3q7c9ZJl0nbqJtS3iwuYi9XLLvRsM+4ePO/7jtXtHp79EHA5oL3/9+BwwOvhfbxbsg14M3VzlPx2cQFzsfo5iTXrzv3Om2NlvH8E7obPXcB1fF0cCXj/rPebEXjV5X9ocQFzsdKvA3dxzdZHsqW82uX88C70qxJfHz1v1rW3+PYQWsBcrPSA16eQ7yYvTw/PL0/NuBs9m+FewMNXZ6HX57+7JbdnobuzWePVdvHN+rbnvuACxQfcnnJq/vjSXvdpmm/dMfDdZLp/XenNdeAyxr48Pa7eXAcuUzdz1MU361uvwXVgLlJ+wK3umhTcHAFDMAFDsOsIGG6UgCGYgCGYgCGYgCGYgCGYgCGYgCGYgCGYgCGYgCGYgCGYgCGYgCGYgCGYgCGYgCGYgCGYgCGYgCGYgCGYgCGYgCGYgCGYgCGYgCGYgCGYgCGYgCGYgCGYgCGYgCGYgCGYgCGYgCGYgCGYgCGYgCGYgCGYgCGYgCGYgCGYgCGYgCGYgCGYgCGYgCGYgCGYgCGYgCGYgCFYaMBAdVJIH5jxLKszAkMlYAgmYAgmYAgmYAgmYAgmYAgmYAgmYAgmYAgmYAgmYAgmYAgmYAgmYAgmYAgmYAgmYAgmYAgmYAgmYAgmYAgmYAgmYAgmYAgmYAgmYAgmYAgmYAgmYAgmYAgmYAgmYAgmYAgmYAgmYAgmYAgmYAgmYAgmYAgmYAgmYAgmYAgmYAgmYAgmYAgmYAgmYAgmYAgmYAgmYAgmYAgmYAh2AwHPx6vlqLvBlbn+gDfhCpgrJGAI1k/As6Zpak6z++8fWd3+w2Vdd//6Mql91g/TbuXL0bdR+WQxaJqHvza70O0TD3/rpcIl6yXg2d2k9PS4OkfA07KGeXO3C3j6uHmC8mHWPbC5tdMXAwVzNfoI+OVpWD8+PJ8e8GLQjuSzXcDLr5Nu6nI0rJ/sBVwnreZHnhPy9BHw5mh0+vD8JuBm673P1tW42N+FLhPbfeht0buA52UA3jQP16C/EbiYPp48As9+CLgc5t7/e3A44PW7g4C5Fv0cA6+zXY6aUwNeD6q7gOv4ujgScJ0ZrkdfZ6G7QfDl6dSAu53megzcHfLWfer54V1oV5K4NvHXgbsTy3eT9pzYy1Mz7gbfZrgX8PDVWejV1DjM1YgPuD1j1fzxpb1s1DTfumPgu8l0/7rSm+vATkJzPfIDbpVj4PM+P2QQMAQTMAS7joDhRgkYggkYggkYggkYggkYggkYggkYggkYggkYggkYggkYggkYggkYggkYggkYggkYggkYggkYggkYggkYggkYggkYggkYggkYggkYggkYggkYggkYggkYggkYggkYggkYggkYggkYggkYggkYggkYggkYggkYggkYggkYggkYggkYggkYggkYggkYggkYggkYggkYggkYggkYgoUGDFQnhfSBGc+yOiMwVAKGYAKGYAKGYAKGYAKGYAKGYAKGYAKGYAKGYAKGYAKGYAKGYAKGYAKGYAKGYAKGYAKGYAKGYAKGYAKGYAKGYAKGYAKGYAKGYAKGYAKGYAKGYAKGYAKGYAKGYAKGYAKGYAKGYAKGYAKGYAKGYAKGYAKGYAKGYAKGYAKGYAKGYAKGYAKGYAKGYAKGYAKGYAKGYAKGYAKGYAKGYAKGYNcd8Hz8q4mzphn+ZOnl6NAa4FJcdcAH83s1cTk6mq94CXDzAR+PVMBcvvSAF4Nvo7IXvBg0zXg1fSxTZo+7x5rm4bndS667ye3dZryeuJvj/j9tqKXW5ahdVRttu8RjnfGvGvG8W8NuBrgQ+QHfTUpw999Xs/vv8/LPy9OusDqGzsoMi8Gw3MZtiuMfRuDlNuB2Vetb2bfePlYWKp88rrYzwKXoI+BlGcc2SnInvaw2zc2H2ubiyy6wLsF29J13dW8mvpljE/BmLcNXj7081TXcTTYz/MamwufqZQR+eTrW7dZ7n632tP1Q9qFn2/3jLsF5HTFrl92T/iTg7t9NopvHuvvr9wdHxlyUfnahX54efz7DBwMuo+x077RyDXj9jtCOpPWfXwe8HsNfB7w3w29tKnymno6B5784F/TBgJdf/+fr3iHqbgTemLY7wkZgrkb+Saz9gF+e/rG3B73Lc3/KgYCHr/r8yTGwgLkw1xXwavbq56pqivW0cRl561C8ORW1m6MN9OG57F7vBth2ibKT38745iy0gLkwVxbw/jnoYrq5Dtyev2qPhmvMu+vAmyab5tv+IW69DlxnfHMdWMBcmPSA31j88/nYQ3CFrizg2fEfbYYrdFUBLwbtznH9kclmvb98ZL5fzQEZripguDUChmAChmAChmAChmAChmAChmAChmAChmAChmAChmAChmAChmAChmAChmAChmAChmAChmAChmAChmAChmAChmAChmAChmAChmAChmAChmAChmAChmAChmAChmAChmAChmAChmAChmAChmAChmAChmAChmAChmAChmAChmAChmAChmAChmAChmAChmAChmAChmAChmAChmAChmChAQPVSSF9YMZeVge3ScAQTMAQTMAQTMAQTMAQTMAQTMAQTMAQTMAQTMAQTMAQTMAQTMAQTMAQTMAQTMAQTMAQTMAQTMAQTMAQTMAQTMAQTMAQTMAQTMAQTMAQTMAQrLeAgTPoKeCLerZPYRMuQP4WnG0TBPybbMIFyN8CAffFJlyA/C0QcF9swgXI3wIB98UmXID8LRBwX2zCBcjfAgH3xSZcgPwtEHBfbMIFyN8CAffFJlyA/C0IDRg4KwFDMAFDMAFDMAFDMAFDMAFDMAFDMAFDMAFDMAFDMAFDMAFDsM8OeN40d5O3d16emqYZfvIzn83BTVjN9qdeusObUEwfnnt6Sb/p4BYsR+3/gPWxx5f1Ow5/ERaD07bgkwOel1c537zszZ2Xp/JhlvIf/uAmrGb333dTL93hTWg/b0ICPrwFiy8hX4DW4U2Yly/AcnRCCp8b8MtTO85OH1/fWQzGqy6BAIc3YTkatvcy3oMOb8KqjmAZAR/ZgnnGt1B1eBO6T05J4XMDfpXqm25Dxq+fbEJKwEc3Yfbw3xkBH9mCWcZ//+rwJpy+D/HJAdfXt36jfHWnvP9kvH3+ZBNmGW9BRzehfBpyDHxkC6b/yDmXcngT5vf/GZ22CZ8bcDfKrsfaV3fK4VfGf/mjmzCP+d45sgnt7ltIwIe3YDlqX/0046tweBNmTSn6pD25vgKeJ53DOvIe9PKU/O1fdqCfswNeP5axJ3ck4LtXe6Uf0NMudMr4+/OjgJTD+IObUD8JCfhnX4TuePLiHd6E7pj4lE3o5yTWLKbfn56HS/neObgJs/XfsUzYhJ9+ETKuJR3ehC7oUzahj8tIpd+E75rOz66Ehey9Hb2MFDMCX+0XYTk6dRP6+EGOxSBm/F0duwDffud3X4YAR3+QIyXgY1+ENoeQk1jHfiDo1O+jz/5RyvVPHHYn2tZ31jtvGQeQhzehfN+E7H1WhzdhlRPw9X4R5ideCfPLDBBMwBBMwBBMwBBMwBBMwBBMwBBMwBBMwBBMwBBMwBBMwBBMwBBMwBBMwBBMwBBMwBBMwBBMwBBMwBBMwBBMwBBMwBBMwBBMwBBMwBBMwBBMwLdgPl7/HTyujYBvgHivl4BvgICvl4Cv32LQNA9/lYgXg2+jphm29+tfiD/xL1tyAQR8A9oReFkDvpuUbO+/r2btLe5vrfMjAd+AXcDD1ebDeDlq252Xkgkm4BuwC3i82n6Y178QX++RS8A34HDATUfA0QR8A34yAhNOwDfgYMCuLV0FAd+A9nzVDwHXs9CrqXE4m4BvwXRzHXg/4Hod2EnocAKGYAKGYAKGYAKGYAKGYAKGYAKGYAKGYAKGYAKGYAKGYAKGYAKGYAKGYAKGYAKGYAKGYAKGYAKGYAKGYAKGYAKGYAKGYAKGYP8P3OCORfLmQewAAAAASUVORK5CYII=" /></p>
+<ol>
 <li>Describe what the plot is telling us: what is the bottleneck in getting quantiles?</li>
 </ol>
 <hr />
@@ -638,15 +514,13 @@ scond &lt;-<span class="st"> </span>function(x) {
   <span class="dt">times =</span> <span class="dv">10</span>))</code></pre></div>
 <pre><code>## Unit: milliseconds
 ##               expr  min   lq mean median   uq  max neval
-##  first(random_vec) 39.7 42.7 45.1   44.9 47.1 52.0    10
-##  scond(random_vec) 69.4 73.0 77.9   76.5 84.0 86.5    10</code></pre>
-<ol start="3" style="list-style-type: decimal">
+##  first(random_vec) 26.6 26.7 32.2   28.8 38.5 48.5    10
+##  scond(random_vec) 42.9 43.5 47.0   45.2 47.2 62.0    10</code></pre>
+<ol>
 <li>Describe what the results say? Do the runtimes bear out our intuition?</li>
 </ol>
-</div>
-<div id="solutions-8" class="section level3">
-<h3><span class="header-section-number">5.1.2</span> Solutions</h3>
-<ol style="list-style-type: decimal">
+<h3 id="solutions">Solutions</h3>
+<ol>
 <li>We can sort the vector in reverse order, throw out the top n entries and then compute the average.</li>
 </ol>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">mean_except_top_10 &lt;-<span class="st"> </span>function(x, n) {
@@ -654,41 +528,38 @@ scond &lt;-<span class="st"> </span>function(x) {
 }
 <span class="kw">mean_except_top_10</span>(<span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">5</span>, <span class="dv">3</span>, <span class="dv">99</span>), <span class="dv">1</span>)</code></pre></div>
 <pre><code>## [1] 3</code></pre>
-<ol start="2" style="list-style-type: decimal">
+<ol>
 <li><p>Based on the plot we can see that the almost all of the runtime of <code>my_test_function</code> is spent on sorting the vector. Sorting is a computationally intensive process and many algorithms have been devised to sort data for that reason.</p></li>
 <li><p>We can look at the <code>mean</code> column to compare the average runtime of running <code>first</code> 10 times (recall that we set <code>times = 10</code>) to the average runtime for <code>scond</code>. We can see that <code>scond</code> is about twice as long.</p></li>
 </ol>
-</div>
-</div>
-<div id="data-summary-in-base-r" class="section level2">
-<h2><span class="header-section-number">5.2</span> Data summary in <code>base</code> R</h2>
-<p>One of the most important sets of functions in <code>base</code> R are the <code>apply</code> family of functions: we learned about <code>apply</code> earlier, and learn about <code>sapply</code>, <code>lapply</code>, and <code>tapply</code> in this section (there are more of them, but we won’t cover them all).</p>
+<h2 id="data-summary-in-base-r">Data summary in <code>base</code> R</h2>
+<p>One of the most important sets of functions in <code>base</code> R are the <code>apply</code> family of functions: we learned about <code>apply</code> earlier, and learn about <code>sapply</code>, <code>lapply</code>, and <code>tapply</code> in this section (there are more of them, but we won't cover them all).</p>
 <ul>
 <li>We already learned how <code>apply</code> runs a summary function across any dimension of an <code>array</code></li>
 <li><code>sapply</code> and <code>lapply</code> allow us to apply a summary function to multiple column of the data at once using them means we can type less and avoid writing loops.</li>
 <li><code>tapply</code> is used to run a summary function on a column of the data, but group the result by other columns of the data</li>
 </ul>
 <p>Say we were interested in obtained summary statistics for all the columns listed in the vector <code>trip_metrics</code>:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">trip_metrics &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&#39;passenger_count&#39;</span>, <span class="st">&#39;trip_distance&#39;</span>, <span class="st">&#39;fare_amount&#39;</span>, <span class="st">&#39;tip_amount&#39;</span>, <span class="st">&#39;trip_duration&#39;</span>, <span class="st">&#39;tip_percent&#39;</span>)</code></pre></div>
-<p>We can use either <code>sapply</code> or <code>lapply</code> for this task. In fact, <code>sapply</code> and <code>lapply</code> have an identical syntax, but the difference is in the type output return. Let’s first look at <code>sapply</code>: <code>sapply</code> generally organizes the results in a tidy format (unsually a vector or a matrix):</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">trip_metrics &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">'passenger_count'</span>, <span class="st">'trip_distance'</span>, <span class="st">'fare_amount'</span>, <span class="st">'tip_amount'</span>, <span class="st">'trip_duration'</span>, <span class="st">'tip_percent'</span>)</code></pre></div>
+<p>We can use either <code>sapply</code> or <code>lapply</code> for this task. In fact, <code>sapply</code> and <code>lapply</code> have an identical syntax, but the difference is in the type output return. Let's first look at <code>sapply</code>: <code>sapply</code> generally organizes the results in a tidy format (unsually a vector or a matrix):</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">s_res &lt;-<span class="st"> </span><span class="kw">sapply</span>(nyc_taxi[ , trip_metrics], mean)
 s_res</code></pre></div>
-<pre><code>## passenger_count   trip_distance     fare_amount      tip_amount   trip_duration 
-##            1.66            3.81           12.98              NA          852.89 
-##     tip_percent 
-##              NA</code></pre>
+<pre><code>## passenger_count   trip_distance     fare_amount      tip_amount 
+##            1.66            3.81           12.98              NA 
+##   trip_duration     tip_percent 
+##          852.89              NA</code></pre>
 <p>One of the great advantages of the <code>apply</code>-family of functions is that in addition to the statistical summary, we can pass any secondary argument the function takes to the function. Notice how we pass <code>na.rm = TRUE</code> to <code>sapply</code> hear so that we can remove missing values from the data before we compute the means.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">s_res &lt;-<span class="st"> </span><span class="kw">sapply</span>(nyc_taxi[ , trip_metrics], mean, <span class="dt">na.rm =</span> <span class="ot">TRUE</span>)
 s_res</code></pre></div>
-<pre><code>## passenger_count   trip_distance     fare_amount      tip_amount   trip_duration 
-##            1.66            3.81           12.98            2.48          852.89 
-##     tip_percent 
-##           17.37</code></pre>
+<pre><code>## passenger_count   trip_distance     fare_amount      tip_amount 
+##            1.66            3.81           12.98            2.48 
+##   trip_duration     tip_percent 
+##          852.89           17.37</code></pre>
 <p>The object <code>sapply</code> returns in this case is a vector: <code>mean</code> is a summary function that returns a single number, and <code>sapply</code> applies <code>mean</code> to multiple columns, returning a <strong>named vector</strong> with the means as its elements and the original column names preserved. Because <code>s_res</code> is a named vector, we can query it by name:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">s_res[<span class="st">&quot;passenger_count&quot;</span>] <span class="co"># we can query the result object by name</span></code></pre></div>
 <pre><code>## passenger_count 
 ##            1.66</code></pre>
-<p>Now let’s see what <code>lapply</code> does: unlike <code>sapply</code>, <code>lapply</code> makes no attempt to organize the results. Instead, it always returns a <code>list</code> as its output. A <code>list</code> is a very “flexible” data type, in that anything can be “dumped” into it.</p>
+<p>Now let's see what <code>lapply</code> does: unlike <code>sapply</code>, <code>lapply</code> makes no attempt to organize the results. Instead, it always returns a <code>list</code> as its output. A <code>list</code> is a very &quot;flexible&quot; data type, in that anything can be &quot;dumped&quot; into it.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">l_res &lt;-<span class="st"> </span><span class="kw">lapply</span>(nyc_taxi[ , trip_metrics], mean)
 l_res</code></pre></div>
 <pre><code>## $passenger_count
@@ -708,12 +579,12 @@ l_res</code></pre></div>
 ## 
 ## $tip_percent
 ## [1] NA</code></pre>
-<p>In this case, we can ‘flatten’ the <code>list</code> with the <code>unlist</code> function to get the same result as <code>sapply</code>.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">unlist</span>(l_res) <span class="co"># this &#39;flattens&#39; the `list` and returns what `sapply` returns</span></code></pre></div>
-<pre><code>## passenger_count   trip_distance     fare_amount      tip_amount   trip_duration 
-##            1.66            3.81           12.98              NA          852.89 
-##     tip_percent 
-##              NA</code></pre>
+<p>In this case, we can 'flatten' the <code>list</code> with the <code>unlist</code> function to get the same result as <code>sapply</code>.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">unlist</span>(l_res) <span class="co"># this 'flattens' the `list` and returns what `sapply` returns</span></code></pre></div>
+<pre><code>## passenger_count   trip_distance     fare_amount      tip_amount 
+##            1.66            3.81           12.98              NA 
+##   trip_duration     tip_percent 
+##          852.89              NA</code></pre>
 <p>Querying a <code>list</code> is a bit more complicated. We use one bracket to query a <code>list</code>, but the return object is still a <code>list</code>, in other words, with a single bracket, we get a sublist.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">l_res[<span class="st">&quot;passenger_count&quot;</span>] <span class="co"># this is still a `list`</span></code></pre></div>
 <pre><code>## $passenger_count
@@ -724,11 +595,11 @@ l_res</code></pre></div>
 <p>The above distinction is not very important when all we want to do is look at the result. But when we need to perform more computations on the results we obtained, the distinction is crucial. For example, recall that both <code>s_res</code> and <code>l_res</code> store column averages for the data. Say now that we wanted to take the average for passenger count and add 1 to it, so that the count includes the driver too. With <code>s_res</code> we do the following:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">s_res[<span class="st">&quot;passenger_count&quot;</span>] &lt;-<span class="st"> </span>s_res[<span class="st">&quot;passenger_count&quot;</span>] +<span class="st"> </span><span class="dv">1</span>
 s_res</code></pre></div>
-<pre><code>## passenger_count   trip_distance     fare_amount      tip_amount   trip_duration 
-##            2.66            3.81           12.98            2.48          852.89 
-##     tip_percent 
-##           17.37</code></pre>
-<p>With <code>l_res</code> using a single bracket fails, because <code>l_res[&quot;passenger_count&quot;]</code> is still a <code>list</code> and we can’t add 1 to a <code>list</code>.</p>
+<pre><code>## passenger_count   trip_distance     fare_amount      tip_amount 
+##            2.66            3.81           12.98            2.48 
+##   trip_duration     tip_percent 
+##          852.89           17.37</code></pre>
+<p>With <code>l_res</code> using a single bracket fails, because <code>l_res[&quot;passenger_count&quot;]</code> is still a <code>list</code> and we can't add 1 to a <code>list</code>.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">l_res[<span class="st">&quot;passenger_count&quot;</span>] &lt;-<span class="st"> </span>l_res[<span class="st">&quot;passenger_count&quot;</span>] +<span class="st"> </span><span class="dv">1</span></code></pre></div>
 <pre><code>## Error in l_res[&quot;passenger_count&quot;] + 1: non-numeric argument to binary operator</code></pre>
 <p>So we need to use two brackets to perform the same operation on <code>l_res</code>.</p>
@@ -751,114 +622,124 @@ l_res</code></pre></div>
 ## 
 ## $tip_percent
 ## [1] NA</code></pre>
-<p>Let’s look at our last function in the <code>apply</code> family now, namely <code>tapply</code>: We use <code>tapply</code> to apply a function to the a column, <strong>but group the results by the values other columns.</strong></p>
+<p>Let's look at our last function in the <code>apply</code> family now, namely <code>tapply</code>: We use <code>tapply</code> to apply a function to the a column, <strong>but group the results by the values other columns.</strong></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">tapply</span>(nyc_taxi$tip_amount, nyc_taxi$pickup_nhood, mean, <span class="dt">trim =</span> <span class="fl">0.1</span>, <span class="dt">na.rm =</span> <span class="ot">TRUE</span>) <span class="co"># trimmed average tip, by pickup neighborhood</span></code></pre></div>
-<pre><code>##        West Village        East Village        Battery Park       Carnegie Hill 
-##                2.00                2.03                2.65                1.89 
-##            Gramercy                Soho         Murray Hill        Little Italy 
-##                1.91                2.07                2.02                2.06 
-##        Central Park   Greenwich Village             Midtown Morningside Heights 
-##                1.94                1.96                2.07                2.08 
-##              Harlem    Hamilton Heights             Tribeca   North Sutton Area 
-##                1.76                1.95                2.17                1.86 
-##     Upper East Side  Financial District              Inwood             Chelsea 
-##                1.85                2.76                2.21                1.95 
-##     Lower East Side           Chinatown  Washington Heights     Upper West Side 
-##                2.18                2.18                2.32                1.87 
-##             Clinton           Yorkville    Garment District         East Harlem 
-##                1.98                1.83                2.04                1.69</code></pre>
+<pre><code>##        West Village        East Village        Battery Park 
+##                2.00                2.03                2.65 
+##       Carnegie Hill            Gramercy                Soho 
+##                1.89                1.91                2.07 
+##         Murray Hill        Little Italy        Central Park 
+##                2.02                2.06                1.94 
+##   Greenwich Village             Midtown Morningside Heights 
+##                1.96                2.07                2.08 
+##              Harlem    Hamilton Heights             Tribeca 
+##                1.76                1.95                2.17 
+##   North Sutton Area     Upper East Side  Financial District 
+##                1.86                1.85                2.76 
+##              Inwood             Chelsea     Lower East Side 
+##                2.21                1.95                2.18 
+##           Chinatown  Washington Heights     Upper West Side 
+##                2.18                2.32                1.87 
+##             Clinton           Yorkville    Garment District 
+##                1.98                1.83                2.04 
+##         East Harlem 
+##                1.69</code></pre>
 <p>We can group the results by pickup and dropoff neighborhood pairs, by combining those two columns into one. For example, the <code>paste</code> function concatenates the pick-up and drop-off neighborhoods into a single string. The result is a flat vector with one element for each pick-up and drop-off neighborhood combination.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">flat_array &lt;-<span class="st"> </span><span class="kw">tapply</span>(nyc_taxi$tip_amount,
 <span class="kw">paste</span>(nyc_taxi$pickup_nhood, nyc_taxi$dropoff_nhood, <span class="dt">sep =</span> <span class="st">&quot; to &quot;</span>),
 mean, <span class="dt">trim =</span> <span class="fl">0.1</span>, <span class="dt">na.rm =</span> <span class="ot">TRUE</span>)
 
 <span class="kw">head</span>(flat_array)</code></pre></div>
-<pre><code>##  Battery Park to Battery Park Battery Park to Carnegie Hill  Battery Park to Central Park 
-##                          1.38                          5.25                          4.57 
-##       Battery Park to Chelsea     Battery Park to Chinatown       Battery Park to Clinton 
-##                          2.35                          1.87                          3.02</code></pre>
+<pre><code>##  Battery Park to Battery Park Battery Park to Carnegie Hill 
+##                          1.38                          5.25 
+##  Battery Park to Central Park       Battery Park to Chelsea 
+##                          4.57                          2.35 
+##     Battery Park to Chinatown       Battery Park to Clinton 
+##                          1.87                          3.02</code></pre>
 <p>By putting both grouping columns in a <code>list</code> we can get an <code>array</code> (a 2D <code>array</code> or <code>matrix</code> in this case) instead of the flat vector we got earlier.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">square_array &lt;-<span class="st"> </span><span class="kw">tapply</span>(nyc_taxi$tip_amount,
 <span class="kw">list</span>(nyc_taxi$pickup_nhood, nyc_taxi$dropoff_nhood),
 mean, <span class="dt">trim =</span> <span class="fl">0.1</span>, <span class="dt">na.rm =</span> <span class="ot">TRUE</span>)
 
 square_array[<span class="dv">1</span>:<span class="dv">5</span>, <span class="dv">1</span>:<span class="dv">5</span>]</code></pre></div>
-<pre><code>##               West Village East Village Battery Park Carnegie Hill Gramercy
-## West Village          1.14         1.92         1.80          4.00     1.87
-## East Village          1.85         1.20         2.63          3.41     1.50
-## Battery Park          1.83         2.84         1.38          5.25     3.36
-## Carnegie Hill         4.33         3.72         5.00          1.06     3.35
-## Gramercy              1.83         1.57         2.94          3.01     1.29</code></pre>
-<div id="exercises-11" class="section level3">
-<h3><span class="header-section-number">5.2.1</span> Exercises</h3>
-<p>Let’s look at two other cases of using <code>sapply</code> vs <code>lapply</code>, one involving <code>quantile</code> and one involving <code>unique</code>.</p>
+<pre><code>##               West Village East Village Battery Park Carnegie Hill
+## West Village          1.14         1.92         1.80          4.00
+## East Village          1.85         1.20         2.63          3.41
+## Battery Park          1.83         2.84         1.38          5.25
+## Carnegie Hill         4.33         3.72         5.00          1.06
+## Gramercy              1.83         1.57         2.94          3.01
+##               Gramercy
+## West Village      1.87
+## East Village      1.50
+## Battery Park      3.36
+## Carnegie Hill     3.35
+## Gramercy          1.29</code></pre>
+<h3 id="exercises-1">Exercises</h3>
+<p>Let's look at two other cases of using <code>sapply</code> vs <code>lapply</code>, one involving <code>quantile</code> and one involving <code>unique</code>.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">qsap1 &lt;-<span class="st"> </span><span class="kw">sapply</span>(nyc_taxi[ , trip_metrics], quantile, <span class="dt">probs =</span> <span class="kw">c</span>(.<span class="dv">01</span>, .<span class="dv">05</span>, .<span class="dv">95</span>, .<span class="dv">99</span>), <span class="dt">na.rm =</span> <span class="ot">TRUE</span>)
 qlap1 &lt;-<span class="st"> </span><span class="kw">lapply</span>(nyc_taxi[ , trip_metrics], quantile, <span class="dt">probs =</span> <span class="kw">c</span>(.<span class="dv">01</span>, .<span class="dv">05</span>, .<span class="dv">95</span>, .<span class="dv">99</span>), <span class="dt">na.rm =</span> <span class="ot">TRUE</span>)</code></pre></div>
-<ol style="list-style-type: decimal">
+<ol>
 <li>Query <code>qsap1</code> and <code>qlap1</code> for the 5th and 95th percentiles of <code>trip_distance</code> and <code>trip_duration</code>.</li>
 </ol>
-<p>Let’s now try the same, but this time pass the <code>unique</code> function to both, which returns the unique values in the data for each of the columns.</p>
+<p>Let's now try the same, but this time pass the <code>unique</code> function to both, which returns the unique values in the data for each of the columns.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">qsap2 &lt;-<span class="st"> </span><span class="kw">sapply</span>(nyc_taxi[ , trip_metrics], unique)
 qlap2 &lt;-<span class="st"> </span><span class="kw">lapply</span>(nyc_taxi[ , trip_metrics], unique)</code></pre></div>
-<ol start="2" style="list-style-type: decimal">
+<ol>
 <li><p>Query <code>qsap2</code> and <code>qlap2</code> to show the distinct values of <code>passenger_count</code> and <code>tip_percent</code>. Can you tell why did <code>sapply</code> and <code>lapply</code> both return lists in the second case?</p></li>
 <li><p>Use <code>qlap2</code> to find the number of unique values for each column.</p></li>
 </ol>
-</div>
-<div id="solutions-9" class="section level3">
-<h3><span class="header-section-number">5.2.2</span> Solutions</h3>
-<ol style="list-style-type: decimal">
+<h3 id="solutions-1">Solutions</h3>
+<ol>
 <li>Because <code>qsap1</code> is a matrix, we can query it the same way we query any n-dimensional <code>array</code>:</li>
 </ol>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">qsap1[<span class="kw">c</span>(<span class="st">&#39;5%&#39;</span>, <span class="st">&#39;95%&#39;</span>), <span class="kw">c</span>(<span class="st">&#39;trip_distance&#39;</span>, <span class="st">&#39;trip_duration&#39;</span>)]</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">qsap1[<span class="kw">c</span>(<span class="st">'5%'</span>, <span class="st">'95%'</span>), <span class="kw">c</span>(<span class="st">'trip_distance'</span>, <span class="st">'trip_duration'</span>)]</code></pre></div>
 <pre><code>##     trip_distance trip_duration
 ## 5%            0.5           177
 ## 95%          10.5          2107</code></pre>
 <p>Since <code>qlap1</code> is a list with one element per each column of the data, we use two brackets to extract the percentiles for column separately. Moreover, because the percentiles themselves are stored in a named vector, we can pass the names of the percentiles we want in a single bracket to get the desired result.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">qlap1[[<span class="st">&#39;trip_distance&#39;</span>]][<span class="kw">c</span>(<span class="st">&#39;5%&#39;</span>, <span class="st">&#39;95%&#39;</span>)]</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">qlap1[[<span class="st">'trip_distance'</span>]][<span class="kw">c</span>(<span class="st">'5%'</span>, <span class="st">'95%'</span>)]</code></pre></div>
 <pre><code>##   5%  95% 
 ##  0.5 10.5</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">qlap1[[<span class="st">&#39;trip_duration&#39;</span>]][<span class="kw">c</span>(<span class="st">&#39;5%&#39;</span>, <span class="st">&#39;95%&#39;</span>)]</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">qlap1[[<span class="st">'trip_duration'</span>]][<span class="kw">c</span>(<span class="st">'5%'</span>, <span class="st">'95%'</span>)]</code></pre></div>
 <pre><code>##   5%  95% 
 ##  177 2107</code></pre>
-<ol start="2" style="list-style-type: decimal">
+<ol>
 <li>In this case, <code>sapply</code> and <code>lapply</code> both return a <code>list</code>, simply because there is no other way for <code>sapply</code> to organize the results. We can just return the results for <code>passenger_count</code> and <code>tip_percent</code> as a sublist.</li>
 </ol>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">qsap2[<span class="kw">c</span>(<span class="st">&#39;passenger_count&#39;</span>, <span class="st">&#39;tip_percent&#39;</span>)]</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">qsap2[<span class="kw">c</span>(<span class="st">'passenger_count'</span>, <span class="st">'tip_percent'</span>)]</code></pre></div>
 <pre><code>## $passenger_count
 ##  [1] 5 1 3 2 6 4 0 8 7 9
 ## 
 ## $tip_percent
-##   [1]    22    NA    14    25    17    19     5    16    18    21    20    10    35     6
-##  [15]    11    13     7     8     0    12    15    33    24    40    30     9    26    27
-##  [29]    28    23    29    78    36     4    32    47     1    51    88     2    37    41
-##  [43]    46   100    99    39    34    54     3    42    59    50    84    86    38    56
-##  [57]    44    43    45    72    57    55    71    31    63    60    66    91    94    76
-##  [71]   400    53    69    49    70    68    62    61    81    52    64    80   350    48
-##  [85]    58    73    67    96    85    95    83    97    92    65    77    89  2100  5300
-##  [99]    75    98    74    82   700    90   800    87   450   850    79   500    93 45100
-## [113]   550   600   650  2150  1300  1430   900 10100  1650  3180  1380  3629    -1   750
-## [127]  1150  2200  9284</code></pre>
-<ol start="3" style="list-style-type: decimal">
+##   [1]    22    NA    14    25    17    19     5    16    18    21    20
+##  [12]    10    35     6    11    13     7     8     0    12    15    33
+##  [23]    24    40    30     9    26    27    28    23    29    78    36
+##  [34]     4    32    47     1    51    88     2    37    41    46   100
+##  [45]    99    39    34    54     3    42    59    50    84    86    38
+##  [56]    56    44    43    45    72    57    55    71    31    63    60
+##  [67]    66    91    94    76   400    53    69    49    70    68    62
+##  [78]    61    81    52    64    80   350    48    58    73    67    96
+##  [89]    85    95    83    97    92    65    77    89  2100  5300    75
+## [100]    98    74    82   700    90   800    87   450   850    79   500
+## [111]    93 45100   550   600   650  2150  1300  1430   900 10100  1650
+## [122]  3180  1380  3629    -1   750  1150  2200  9284</code></pre>
+<ol>
 <li>Since we have the unique values for each column stored in <code>qlap2</code>, we can just run the <code>length</code> function to count how many unique values each column has. For example, for <code>passenger_count</code> we have</li>
 </ol>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">length</span>(qlap2[[<span class="st">&#39;passenger_count&#39;</span>]]) <span class="co"># don&#39;t forget the double bracket here!</span></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">length</span>(qlap2[[<span class="st">'passenger_count'</span>]]) <span class="co"># don't forget the double bracket here!</span></code></pre></div>
 <pre><code>## [1] 10</code></pre>
-<p>But we want to do this automatically for all the columns at once. The solution is to use <code>sapply</code>. So far we’ve been using <code>sapply</code> and <code>lapply</code> with the dataset as input. But we can just as well feed them any random list like <code>qsap</code> and apply a function to each element of that list (as long as doing so doesn’t result in an error for any of the list’s elements).</p>
+<p>But we want to do this automatically for all the columns at once. The solution is to use <code>sapply</code>. So far we've been using <code>sapply</code> and <code>lapply</code> with the dataset as input. But we can just as well feed them any random list like <code>qsap</code> and apply a function to each element of that list (as long as doing so doesn't result in an error for any of the list's elements).</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">sapply</span>(qlap2, length)</code></pre></div>
-<pre><code>## passenger_count   trip_distance     fare_amount      tip_amount   trip_duration 
-##              10            4035            1524            3120           10806 
-##     tip_percent 
-##             129</code></pre>
+<pre><code>## passenger_count   trip_distance     fare_amount      tip_amount 
+##              10            4035            1524            3120 
+##   trip_duration     tip_percent 
+##           10806             129</code></pre>
 <p>The above exercise offers a glimpse of how powerful R can be and quickly and succinctly processing the basic data types, as long as we write good functions and use the <code>apply</code> family of functions to iterate through the data types. A good goal to set for yourself as an R programmer is to increase your reliance on the <code>apply</code> family of function to run your code.</p>
-</div>
-</div>
-<div id="writing-summary-functions" class="section level2">
-<h2><span class="header-section-number">5.3</span> Writing summary functions</h2>
+<h2 id="writing-summary-functions">Writing summary functions</h2>
 <p>As we use R more and more, we will see that a lot of R functions return a <code>list</code> as output (or something that is fundamentally a <code>list</code> but looks cosmetically different). In fact, as it happens a <code>data.frame</code> is also just a kind a <code>list</code>, with each element of the list corresponding to a column of the <code>data.frame</code>, and <strong>all elements having the same length</strong>. Why would a <code>data.frame</code> be a <code>list</code> and not a <code>matrix</code>? Because like a <code>vector</code>, a <code>matirx</code> or any <code>array</code> is <strong>atomic</strong>, meaning that its elements must be of the same type (usually <code>numeric</code>). Notice what happens if we try to force a vector to have one <code>character</code> element and one <code>numeric</code> one:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">c</span>(<span class="st">&quot;one&quot;</span>, <span class="dv">1</span>)</code></pre></div>
 <pre><code>## [1] &quot;one&quot; &quot;1&quot;</code></pre>
-<p>The second element was <strong>coerced</strong> into the string “1”. A <code>list</code> will not complain about this:</p>
+<p>The second element was <strong>coerced</strong> into the string &quot;1&quot;. A <code>list</code> will not complain about this:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">list</span>(<span class="st">&quot;one&quot;</span>, <span class="dv">1</span>)</code></pre></div>
 <pre><code>## [[1]]
 ## [1] &quot;one&quot;
@@ -930,17 +811,17 @@ qlap2 &lt;-<span class="st"> </span><span class="kw">lapply</span>(nyc_taxi[ , t
 ## Thu    2.76    2.36     2.55     2.76    2.62     2.55     2.63
 ## Fri    2.71    2.36     2.47     2.65    2.53     2.42     2.54
 ## Sat    2.40    2.36     2.15     2.28    2.26     2.26     2.40</code></pre>
-<p>Looking at the above result, we can see that something went wrong with the trimmed mean: the trimmed mean and the mean appear to be the same, which is very unlikely. It’s not obvious what the bug is. Take a moment and try find out what the problem is and propose a fix.</p>
-<p>One thing that makes it hard to debug the function is that we do not have direct access to its <strong>environment</strong>. We need a way to “step inside” the function and run it line by line so we can see where the problem is. This is what <code>debug</code> is for.</p>
+<p>Looking at the above result, we can see that something went wrong with the trimmed mean: the trimmed mean and the mean appear to be the same, which is very unlikely. It's not obvious what the bug is. Take a moment and try find out what the problem is and propose a fix.</p>
+<p>One thing that makes it hard to debug the function is that we do not have direct access to its <strong>environment</strong>. We need a way to &quot;step inside&quot; the function and run it line by line so we can see where the problem is. This is what <code>debug</code> is for.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">debug</span>(my.summary) <span class="co"># puts the function in debug mode</span></code></pre></div>
-<p>Now, anytime we run the function we leave our current “global” environment and step into the function’s environment, where we have access to all the local variables in the function as we run the code line-by-line.</p>
+<p>Now, anytime we run the function we leave our current &quot;global&quot; environment and step into the function's environment, where we have access to all the local variables in the function as we run the code line-by-line.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">my.summary</span>(nyc_taxi$pickup_dow, nyc_taxi$pickup_hour, nyc_taxi$tip_amount)</code></pre></div>
-<p>We start at the beginning, where the only things evaluated are the function’s arguments. We can press ENTER to run the next line. After running each line, we can query the object to see if it looks like it should. We can always go back to the global environment by pressing Q and ENTER. If you were unsuccessful at fixing the bug earlier, take a second stab at it now. (HINT: it has something to do with NAs.)</p>
+<p>We start at the beginning, where the only things evaluated are the function's arguments. We can press ENTER to run the next line. After running each line, we can query the object to see if it looks like it should. We can always go back to the global environment by pressing Q and ENTER. If you were unsuccessful at fixing the bug earlier, take a second stab at it now. (HINT: it has something to do with NAs.)</p>
 <p>Once we resolve the issue, we run <code>undebug</code> so the function can now run normally.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">undebug</span>(my.summary)</code></pre></div>
 <p>To run <code>my.summary</code> on multiple numeric columns at once, we can use <code>lapply</code>:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">res &lt;-<span class="st"> </span><span class="kw">lapply</span>(nyc_taxi[ , trip_metrics], my.summary, <span class="dt">grp_1 =</span> nyc_taxi$pickup_dow, <span class="dt">grp_2 =</span> nyc_taxi$pickup_hour)</code></pre></div>
-<p><code>res</code> is just a nested <code>list</code> and we can ‘drill into’ any individual piece we want with the right query. At the first level are the column names.</p>
+<p><code>res</code> is just a nested <code>list</code> and we can 'drill into' any individual piece we want with the right query. At the first level are the column names.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">res$tip_amount</code></pre></div>
 <pre><code>## $mean
 ## [1] 2.48
@@ -997,109 +878,119 @@ qlap2 &lt;-<span class="st"> </span><span class="kw">lapply</span>(nyc_taxi[ , t
 <span class="kw">load</span>(<span class="dt">file =</span> <span class="st">&quot;res.RData&quot;</span>) <span class="co"># we can use `load` to reopen it anytime we need it again</span>
 <span class="kw">file.remove</span>(<span class="dt">file =</span> <span class="st">&quot;res.RData&quot;</span>) <span class="co"># delete the file</span></code></pre></div>
 <pre><code>## [1] TRUE</code></pre>
-<div id="exercises-12" class="section level3">
-<h3><span class="header-section-number">5.3.1</span> Exercises</h3>
+<h3 id="exercises-2">Exercises</h3>
 <p>Debug the summary function <code>my.summary</code> in the last section so that the trimmed mean returns the correct result.</p>
 <p>HINT: Notice what <code>sort</code> does to missing values.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">sort</span>(<span class="kw">c</span>(<span class="dv">5</span>, <span class="dv">1</span>, <span class="ot">NA</span>, <span class="ot">NA</span>, <span class="dv">2</span>))</code></pre></div>
 <pre><code>## [1] 1 2 5</code></pre>
-</div>
-<div id="solutions-10" class="section level3">
-<h3><span class="header-section-number">5.3.2</span> Solutions</h3>
-<p>This is a tricky type of “bug” because nothing in R went wrong and no error message was returned. Instead, we simply overlooked something in the code. As it turns out, when we pass a vector with missing values to <code>sort</code>, <code>sort</code> returns the sorted vector with the missing values <strong>removed</strong>. But if missing values are removed, then the length of the vector changes and we need to recompute it. This is a quick fix: we need to change <code>n &lt;- length(resp)</code> in the body of the function to <code>n &lt;- length(sorted_resp)</code>.</p>
-</div>
-</div>
-<div id="data-summary-with-dplyr" class="section level2">
-<h2><span class="header-section-number">5.4</span> Data summary with <code>dplyr</code></h2>
+<h3 id="solutions-2">Solutions</h3>
+<p>This is a tricky type of &quot;bug&quot; because nothing in R went wrong and no error message was returned. Instead, we simply overlooked something in the code. As it turns out, when we pass a vector with missing values to <code>sort</code>, <code>sort</code> returns the sorted vector with the missing values <strong>removed</strong>. But if missing values are removed, then the length of the vector changes and we need to recompute it. This is a quick fix: we need to change <code>n &lt;- length(resp)</code> in the body of the function to <code>n &lt;- length(sorted_resp)</code>.</p>
+<h2 id="data-summary-with-dplyr">Data summary with <code>dplyr</code></h2>
 <p>When it comes to summarizing data, we have a lot of options. We covered just a few in the last section, but there are many more functions both in <code>base</code> R and packages. We will cover <code>dplyr</code> in this section, as an example of a third-party package. What makes <code>dplyr</code> very popular is the simple and streight-farward notation for creating increasing complex data pipelines.</p>
-<p>First let’s review important functions in <code>dplyr</code>: <code>filter</code>, <code>mutate</code>, <code>transmute</code>, <code>group_by</code>, <code>select</code>, <code>slice</code>, <code>summarize</code>, <code>distinct</code>, <code>arrange</code>, <code>rename</code>, <code>inner_join</code>, <code>outer_join</code>, <code>left_join</code>. With each of the above function, we can either pass the data directly to the function or infer it from the the pipeline. Here’s an example of <code>filter</code> being used in both ways. In the first case we pass the data as the first argument to <code>filter</code>.</p>
+<p>First let's review important functions in <code>dplyr</code>: <code>filter</code>, <code>mutate</code>, <code>transmute</code>, <code>group_by</code>, <code>select</code>, <code>slice</code>, <code>summarize</code>, <code>distinct</code>, <code>arrange</code>, <code>rename</code>, <code>inner_join</code>, <code>outer_join</code>, <code>left_join</code>. With each of the above function, we can either pass the data directly to the function or infer it from the the pipeline. Here's an example of <code>filter</code> being used in both ways. In the first case we pass the data as the first argument to <code>filter</code>.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(dplyr)
 <span class="kw">head</span>(<span class="kw">filter</span>(nyc_taxi, fare_amount &gt;<span class="st"> </span><span class="dv">500</span>)) <span class="co"># pass data directly to the function</span></code></pre></div>
 <pre><code>## # A tibble: 6 × 25
-##       pickup_datetime    dropoff_datetime passenger_count trip_distance pickup_longitude
-##                &lt;dttm&gt;              &lt;dttm&gt;           &lt;int&gt;         &lt;dbl&gt;            &lt;dbl&gt;
-## 1 2016-06-08 16:40:58 2016-06-08 16:43:46               1           0.0            -73.9
-## 2 2016-06-13 12:08:55 2016-06-13 12:09:45               1           0.4            -73.8
-## 3 2016-06-22 14:53:04 2016-06-22 15:04:21               5           0.0               NA
-## 4 2016-06-13 01:14:08 2016-06-13 01:15:34               1           0.0            -74.0
-## 5 2016-06-30 09:28:53 2016-06-30 09:28:53               1           0.0            -73.9
-## 6 2016-05-19 11:24:04 2016-05-20 10:14:22               2           0.0            -73.9
-##   pickup_latitude rate_code_id dropoff_longitude dropoff_latitude payment_type
-##             &lt;dbl&gt;       &lt;fctr&gt;             &lt;dbl&gt;            &lt;dbl&gt;       &lt;fctr&gt;
-## 1            40.8   negotiated             -73.9             40.8         cash
-## 2            40.6          JFK             -73.8             40.6           NA
-## 3              NA     standard                NA               NA         cash
-## 4            40.6   negotiated             -74.0             40.6         card
-## 5            40.8     standard                NA               NA         cash
-## 6            40.8     standard             -73.9             40.8         cash
-##   fare_amount extra mta_tax tip_amount tolls_amount improvement_surcharge total_amount
-##         &lt;dbl&gt; &lt;dbl&gt;   &lt;dbl&gt;      &lt;dbl&gt;        &lt;dbl&gt;                 &lt;dbl&gt;        &lt;dbl&gt;
-## 1         550     0     0.0         NA            0                   0.3          550
-## 2        8452     0     0.5         NA            0                   0.3         8453
-## 3         726     0     0.5         NA            0                   0.3          726
-## 4         950     0     0.0       49.7            0                   0.3            1
-## 5      628545   488     0.5         NA            0                   0.3       629034
-## 6         688     0     0.5         NA            0                   0.3          688
-##   pickup_hour pickup_dow dropoff_hour dropoff_dow trip_duration pickup_nhood
-##        &lt;fctr&gt;     &lt;fctr&gt;       &lt;fctr&gt;      &lt;fctr&gt;         &lt;int&gt;       &lt;fctr&gt;
-## 1    12PM-4PM        Wed     12PM-4PM         Wed           168           NA
-## 2    9AM-12PM        Mon     9AM-12PM         Mon            50           NA
-## 3    12PM-4PM        Wed     12PM-4PM         Wed           677           NA
-## 4    10PM-1AM        Mon     10PM-1AM         Mon            86           NA
-## 5     5AM-9AM        Thu      5AM-9AM         Thu             0           NA
-## 6    9AM-12PM        Thu     9AM-12PM         Fri         82218           NA
-##   dropoff_nhood tip_percent
-##          &lt;fctr&gt;       &lt;int&gt;
-## 1            NA          NA
-## 2            NA          NA
-## 3            NA          NA
-## 4            NA           4
-## 5            NA          NA
-## 6            NA          NA</code></pre>
+##       pickup_datetime    dropoff_datetime passenger_count trip_distance
+##                &lt;dttm&gt;              &lt;dttm&gt;           &lt;int&gt;         &lt;dbl&gt;
+## 1 2016-06-08 16:40:58 2016-06-08 16:43:46               1           0.0
+## 2 2016-06-13 12:08:55 2016-06-13 12:09:45               1           0.4
+## 3 2016-06-22 14:53:04 2016-06-22 15:04:21               5           0.0
+## 4 2016-06-13 01:14:08 2016-06-13 01:15:34               1           0.0
+## 5 2016-06-30 09:28:53 2016-06-30 09:28:53               1           0.0
+## 6 2016-05-19 11:24:04 2016-05-20 10:14:22               2           0.0
+##   pickup_longitude pickup_latitude rate_code_id dropoff_longitude
+##              &lt;dbl&gt;           &lt;dbl&gt;       &lt;fctr&gt;             &lt;dbl&gt;
+## 1            -73.9            40.8   negotiated             -73.9
+## 2            -73.8            40.6          JFK             -73.8
+## 3               NA              NA     standard                NA
+## 4            -74.0            40.6   negotiated             -74.0
+## 5            -73.9            40.8     standard                NA
+## 6            -73.9            40.8     standard             -73.9
+##   dropoff_latitude payment_type fare_amount extra mta_tax tip_amount
+##              &lt;dbl&gt;       &lt;fctr&gt;       &lt;dbl&gt; &lt;dbl&gt;   &lt;dbl&gt;      &lt;dbl&gt;
+## 1             40.8         cash         550     0     0.0         NA
+## 2             40.6           NA        8452     0     0.5         NA
+## 3               NA         cash         726     0     0.5         NA
+## 4             40.6         card         950     0     0.0       49.7
+## 5               NA         cash      628545   488     0.5         NA
+## 6             40.8         cash         688     0     0.5         NA
+##   tolls_amount improvement_surcharge total_amount pickup_hour pickup_dow
+##          &lt;dbl&gt;                 &lt;dbl&gt;        &lt;dbl&gt;      &lt;fctr&gt;     &lt;fctr&gt;
+## 1            0                   0.3          550    12PM-4PM        Wed
+## 2            0                   0.3         8453    9AM-12PM        Mon
+## 3            0                   0.3          726    12PM-4PM        Wed
+## 4            0                   0.3            1    10PM-1AM        Mon
+## 5            0                   0.3       629034     5AM-9AM        Thu
+## 6            0                   0.3          688    9AM-12PM        Thu
+##   dropoff_hour dropoff_dow trip_duration pickup_nhood dropoff_nhood
+##         &lt;fctr&gt;      &lt;fctr&gt;         &lt;int&gt;       &lt;fctr&gt;        &lt;fctr&gt;
+## 1     12PM-4PM         Wed           168           NA            NA
+## 2     9AM-12PM         Mon            50           NA            NA
+## 3     12PM-4PM         Wed           677           NA            NA
+## 4     10PM-1AM         Mon            86           NA            NA
+## 5      5AM-9AM         Thu             0           NA            NA
+## 6     9AM-12PM         Fri         82218           NA            NA
+##   tip_percent
+##         &lt;int&gt;
+## 1          NA
+## 2          NA
+## 3          NA
+## 4           4
+## 5          NA
+## 6          NA</code></pre>
 <p>In the second case, we start a pipeline with the data, followed by the piping function <code>%&gt;%</code>, followed by <code>filter</code> which now inherits the data from the previous step and only needs the filtering condition.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">nyc_taxi %&gt;%<span class="st"> </span><span class="kw">filter</span>(fare_amount &gt;<span class="st"> </span><span class="dv">500</span>) %&gt;%<span class="st"> </span>head <span class="co"># infer the data from the pipeline</span></code></pre></div>
 <pre><code>## # A tibble: 6 × 25
-##       pickup_datetime    dropoff_datetime passenger_count trip_distance pickup_longitude
-##                &lt;dttm&gt;              &lt;dttm&gt;           &lt;int&gt;         &lt;dbl&gt;            &lt;dbl&gt;
-## 1 2016-06-08 16:40:58 2016-06-08 16:43:46               1           0.0            -73.9
-## 2 2016-06-13 12:08:55 2016-06-13 12:09:45               1           0.4            -73.8
-## 3 2016-06-22 14:53:04 2016-06-22 15:04:21               5           0.0               NA
-## 4 2016-06-13 01:14:08 2016-06-13 01:15:34               1           0.0            -74.0
-## 5 2016-06-30 09:28:53 2016-06-30 09:28:53               1           0.0            -73.9
-## 6 2016-05-19 11:24:04 2016-05-20 10:14:22               2           0.0            -73.9
-##   pickup_latitude rate_code_id dropoff_longitude dropoff_latitude payment_type
-##             &lt;dbl&gt;       &lt;fctr&gt;             &lt;dbl&gt;            &lt;dbl&gt;       &lt;fctr&gt;
-## 1            40.8   negotiated             -73.9             40.8         cash
-## 2            40.6          JFK             -73.8             40.6           NA
-## 3              NA     standard                NA               NA         cash
-## 4            40.6   negotiated             -74.0             40.6         card
-## 5            40.8     standard                NA               NA         cash
-## 6            40.8     standard             -73.9             40.8         cash
-##   fare_amount extra mta_tax tip_amount tolls_amount improvement_surcharge total_amount
-##         &lt;dbl&gt; &lt;dbl&gt;   &lt;dbl&gt;      &lt;dbl&gt;        &lt;dbl&gt;                 &lt;dbl&gt;        &lt;dbl&gt;
-## 1         550     0     0.0         NA            0                   0.3          550
-## 2        8452     0     0.5         NA            0                   0.3         8453
-## 3         726     0     0.5         NA            0                   0.3          726
-## 4         950     0     0.0       49.7            0                   0.3            1
-## 5      628545   488     0.5         NA            0                   0.3       629034
-## 6         688     0     0.5         NA            0                   0.3          688
-##   pickup_hour pickup_dow dropoff_hour dropoff_dow trip_duration pickup_nhood
-##        &lt;fctr&gt;     &lt;fctr&gt;       &lt;fctr&gt;      &lt;fctr&gt;         &lt;int&gt;       &lt;fctr&gt;
-## 1    12PM-4PM        Wed     12PM-4PM         Wed           168           NA
-## 2    9AM-12PM        Mon     9AM-12PM         Mon            50           NA
-## 3    12PM-4PM        Wed     12PM-4PM         Wed           677           NA
-## 4    10PM-1AM        Mon     10PM-1AM         Mon            86           NA
-## 5     5AM-9AM        Thu      5AM-9AM         Thu             0           NA
-## 6    9AM-12PM        Thu     9AM-12PM         Fri         82218           NA
-##   dropoff_nhood tip_percent
-##          &lt;fctr&gt;       &lt;int&gt;
-## 1            NA          NA
-## 2            NA          NA
-## 3            NA          NA
-## 4            NA           4
-## 5            NA          NA
-## 6            NA          NA</code></pre>
-<p>Piping is especially useful for longer pipelines. Here’s an example of a query without piping.</p>
+##       pickup_datetime    dropoff_datetime passenger_count trip_distance
+##                &lt;dttm&gt;              &lt;dttm&gt;           &lt;int&gt;         &lt;dbl&gt;
+## 1 2016-06-08 16:40:58 2016-06-08 16:43:46               1           0.0
+## 2 2016-06-13 12:08:55 2016-06-13 12:09:45               1           0.4
+## 3 2016-06-22 14:53:04 2016-06-22 15:04:21               5           0.0
+## 4 2016-06-13 01:14:08 2016-06-13 01:15:34               1           0.0
+## 5 2016-06-30 09:28:53 2016-06-30 09:28:53               1           0.0
+## 6 2016-05-19 11:24:04 2016-05-20 10:14:22               2           0.0
+##   pickup_longitude pickup_latitude rate_code_id dropoff_longitude
+##              &lt;dbl&gt;           &lt;dbl&gt;       &lt;fctr&gt;             &lt;dbl&gt;
+## 1            -73.9            40.8   negotiated             -73.9
+## 2            -73.8            40.6          JFK             -73.8
+## 3               NA              NA     standard                NA
+## 4            -74.0            40.6   negotiated             -74.0
+## 5            -73.9            40.8     standard                NA
+## 6            -73.9            40.8     standard             -73.9
+##   dropoff_latitude payment_type fare_amount extra mta_tax tip_amount
+##              &lt;dbl&gt;       &lt;fctr&gt;       &lt;dbl&gt; &lt;dbl&gt;   &lt;dbl&gt;      &lt;dbl&gt;
+## 1             40.8         cash         550     0     0.0         NA
+## 2             40.6           NA        8452     0     0.5         NA
+## 3               NA         cash         726     0     0.5         NA
+## 4             40.6         card         950     0     0.0       49.7
+## 5               NA         cash      628545   488     0.5         NA
+## 6             40.8         cash         688     0     0.5         NA
+##   tolls_amount improvement_surcharge total_amount pickup_hour pickup_dow
+##          &lt;dbl&gt;                 &lt;dbl&gt;        &lt;dbl&gt;      &lt;fctr&gt;     &lt;fctr&gt;
+## 1            0                   0.3          550    12PM-4PM        Wed
+## 2            0                   0.3         8453    9AM-12PM        Mon
+## 3            0                   0.3          726    12PM-4PM        Wed
+## 4            0                   0.3            1    10PM-1AM        Mon
+## 5            0                   0.3       629034     5AM-9AM        Thu
+## 6            0                   0.3          688    9AM-12PM        Thu
+##   dropoff_hour dropoff_dow trip_duration pickup_nhood dropoff_nhood
+##         &lt;fctr&gt;      &lt;fctr&gt;         &lt;int&gt;       &lt;fctr&gt;        &lt;fctr&gt;
+## 1     12PM-4PM         Wed           168           NA            NA
+## 2     9AM-12PM         Mon            50           NA            NA
+## 3     12PM-4PM         Wed           677           NA            NA
+## 4     10PM-1AM         Mon            86           NA            NA
+## 5      5AM-9AM         Thu             0           NA            NA
+## 6     9AM-12PM         Fri         82218           NA            NA
+##   tip_percent
+##         &lt;int&gt;
+## 1          NA
+## 2          NA
+## 3          NA
+## 4           4
+## 5          NA
+## 6          NA</code></pre>
+<p>Piping is especially useful for longer pipelines. Here's an example of a query without piping.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">summarize</span>( <span class="co"># (3)</span>
   <span class="kw">group_by</span>( <span class="co"># (2)</span>
     <span class="kw">filter</span>(nyc_taxi, fare_amount &gt;<span class="st"> </span><span class="dv">500</span>), <span class="co"># (1)</span>
@@ -1125,9 +1016,8 @@ qlap2 &lt;-<span class="st"> </span><span class="kw">lapply</span>(nyc_taxi[ , t
 ## 3           NA          494        4.250</code></pre>
 <p>Instead of working from the inside out, piping allows us to read the code from top to bottom. This makes it easier (1) to understand what the query does and (2) to build upon the query.</p>
 <p>The best way to learn <code>dplyr</code> is by example. So instead of covering functions one by one, we state some interesting queries and use <code>dplyr</code> to implement them. There are obvious parallels between <code>dplyr</code> and the SQL language, but important differences exist too. We point out some of those differences along the way.</p>
-<div id="exercises-13" class="section level3">
-<h3><span class="header-section-number">5.4.1</span> Exercises</h3>
-<ol style="list-style-type: decimal">
+<h3 id="exercises-3">Exercises</h3>
+<ol>
 <li>In the following query, we want to add a forth step: Sort the results by descending average trip duration. The <code>dplyr</code> function to sort is <code>arrange</code>. For example <code>arrange(data, x1, desc(x2))</code> will sort <code>data</code> by increasing values of <code>x1</code> and decreasing values of <code>x2</code> within each value of <code>x1</code>.</li>
 </ol>
 <p>Implement this forth step to both the code with and without the pipeline, both of which are shown here:</p>
@@ -1137,21 +1027,19 @@ qlap2 &lt;-<span class="st"> </span><span class="kw">lapply</span>(nyc_taxi[ , t
   payment_type),
 <span class="dt">ave_duration =</span> <span class="kw">mean</span>(trip_duration), <span class="dt">ave_distance =</span> <span class="kw">mean</span>(trip_distance))</code></pre></div>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">nyc_taxi %&gt;%
-<span class="kw">filter</span>(fare_amount &gt;<span class="st"> </span><span class="dv">500</span>) %&gt;%<span class="st"> </span><span class="co"># (1)</span>
-<span class="kw">group_by</span>(payment_type) %&gt;%<span class="st"> </span><span class="co"># (2)</span>
-<span class="kw">summarize</span>(<span class="dt">ave_duration =</span> <span class="kw">mean</span>(trip_duration), <span class="dt">ave_distance =</span> <span class="kw">mean</span>(trip_distance)) <span class="co"># (3)</span></code></pre></div>
+<span class="st">  </span><span class="kw">filter</span>(fare_amount &gt;<span class="st"> </span><span class="dv">500</span>) %&gt;%<span class="st"> </span><span class="co"># (1)</span>
+<span class="st">  </span><span class="kw">group_by</span>(payment_type) %&gt;%<span class="st"> </span><span class="co"># (2)</span>
+<span class="st">  </span><span class="kw">summarize</span>(<span class="dt">ave_duration =</span> <span class="kw">mean</span>(trip_duration), <span class="dt">ave_distance =</span> <span class="kw">mean</span>(trip_distance)) <span class="co"># (3)</span></code></pre></div>
 <p>The remaining exercises are questions about the data that need to be translated into a <code>dplyr</code> pipeline. The goal of the exercise is two-fold: learn to break down a question into multiple pieces and learn to translate each piece into a line in <code>dplyr</code>, which together comprise the pipeline.</p>
-<ol start="2" style="list-style-type: decimal">
+<ol>
 <li><p>What are the pick-up times of the day and the days of the week with the highest average fare per mile of ride?</p></li>
-<li><p>For each pick-up neighborhood, find the number and percentage of trips that “fan out” into other neighborhoods. Sort results by pickup neighborhood and descending percentage. Limit results to top 50 percent coverage. In other words, show only the top 50 percent of destinations for each pick-up neighborhood.</p></li>
+<li><p>For each pick-up neighborhood, find the number and percentage of trips that &quot;fan out&quot; into other neighborhoods. Sort results by pickup neighborhood and descending percentage. Limit results to top 50 percent coverage. In other words, show only the top 50 percent of destinations for each pick-up neighborhood.</p></li>
 <li><p>Are any dates missing from the data?</p></li>
 <li><p>Find the 3 consecutive days with the most total number of trips?</p></li>
 <li><p>Get the average, standard deviation, and mean absolute deviation of <code>trip_distance</code> and <code>trip_duration</code>, as well as the ratio of <code>trip_duration</code> over <code>trip_distance</code>. Results should be broken up by <code>pickup_nhood</code> and <code>dropoff_nhood</code>.</p></li>
 </ol>
-</div>
-<div id="solutions-11" class="section level3">
-<h3><span class="header-section-number">5.4.2</span> Solutions</h3>
-<ol style="list-style-type: decimal">
+<h3 id="solutions-3">Solutions</h3>
+<ol>
 <li>Without the pipeline function, we would have <code>arrange</code> as the outermost function:</li>
 </ol>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">arrange</span>( <span class="co"># (4)</span>
@@ -1181,14 +1069,14 @@ qlap2 &lt;-<span class="st"> </span><span class="kw">lapply</span>(nyc_taxi[ , t
 ## 1         cash        16531        0.104
 ## 2         card         3808       39.867
 ## 3           NA          494        4.250</code></pre>
-<ol start="2" style="list-style-type: decimal">
+<ol>
 <li>What are the times of the day and the days of the week with the highest fare per mile of ride?</li>
 </ol>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">q2 &lt;-<span class="st"> </span>nyc_taxi %&gt;%
 <span class="st">  </span><span class="kw">filter</span>(trip_distance &gt;<span class="st"> </span><span class="dv">0</span>) %&gt;%
 <span class="st">  </span><span class="kw">group_by</span>(pickup_dow, pickup_hour) %&gt;%
 <span class="st">  </span><span class="kw">summarize</span>(<span class="dt">ave_fare_per_mile =</span> <span class="kw">mean</span>(fare_amount /<span class="st"> </span>trip_distance, <span class="dt">na.rm =</span> <span class="ot">TRUE</span>), <span class="dt">count =</span> <span class="kw">n</span>()) %&gt;%
-<span class="st">  </span><span class="kw">group_by</span>() %&gt;%<span class="st"> </span><span class="co"># we &#39;reset&#39;, or remove, the group by, otherwise sorting won&#39;t work</span>
+<span class="st">  </span><span class="kw">group_by</span>() %&gt;%<span class="st"> </span><span class="co"># we 'reset', or remove, the group by, otherwise sorting won't work</span>
 <span class="st">  </span><span class="kw">arrange</span>(<span class="kw">desc</span>(ave_fare_per_mile))
 
 <span class="kw">head</span>(q2)</code></pre></div>
@@ -1201,8 +1089,8 @@ qlap2 &lt;-<span class="st"> </span><span class="kw">lapply</span>(nyc_taxi[ , t
 ## 4        Thu    9AM-12PM              7.70 122612
 ## 5        Thu    12PM-4PM              7.62 165127
 ## 6        Tue    9AM-12PM              7.53 118885</code></pre>
-<ol start="3" style="list-style-type: decimal">
-<li>For each pick-up neighborhood, find the number and percentage of trips that “fan out” into other neighborhoods. Sort results by pickup neighborhood and descending percentage. Limit results to top 50 percent coverage. In other words, show only the top 50 percent of destinations for each pick-up neighborhood.</li>
+<ol>
+<li>For each pick-up neighborhood, find the number and percentage of trips that &quot;fan out&quot; into other neighborhoods. Sort results by pickup neighborhood and descending percentage. Limit results to top 50 percent coverage. In other words, show only the top 50 percent of destinations for each pick-up neighborhood.</li>
 </ol>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">q3 &lt;-<span class="st"> </span>nyc_taxi %&gt;%
 <span class="st">  </span><span class="kw">filter</span>(!<span class="kw">is.na</span>(pickup_nhood) &amp;<span class="st"> </span>!<span class="kw">is.na</span>(dropoff_nhood)) %&gt;%
@@ -1229,7 +1117,7 @@ qlap2 &lt;-<span class="st"> </span><span class="kw">lapply</span>(nyc_taxi[ , t
 ## 4 West Village          Gramercy 10077     0.0783    0.445
 ## 5 West Village  Garment District  7970     0.0619    0.507
 ## 6 West Village      West Village  7232     0.0562    0.563</code></pre>
-<ol start="4" style="list-style-type: decimal">
+<ol>
 <li>Are any dates missing from the data?</li>
 </ol>
 <p>There are many ways to answer this query and we cover three because each way highlights an important point. The first way consists sorting the data by date and using the <code>lag</code> function to find the difference between each date and the date proceeding it. If this difference is greater than 1, then we skipped one or more days.</p>
@@ -1261,9 +1149,9 @@ qlap2 &lt;-<span class="st"> </span><span class="kw">lapply</span>(nyc_taxi[ , t
 <p>Then we create a new <code>data.frame</code> of all dates that span the time range in the data. We can use <code>seq</code> to do that.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">start_date &lt;-<span class="st"> </span><span class="kw">min</span>(data_dates$date)
 end_date &lt;-<span class="st"> </span><span class="kw">max</span>(data_dates$date)
-all_dates &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">date =</span> <span class="kw">seq</span>(start_date, end_date, <span class="dt">by =</span> <span class="st">&#39;1 day&#39;</span>))</code></pre></div>
-<p>Finally, we ask for the “anti-join” of the two datasets. An anti-join is the opposite of an left join: any keys present in left dataset but not the right are returned.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">anti_join</span>(all_dates, data_dates, <span class="dt">by =</span> <span class="st">&#39;date&#39;</span>) <span class="co"># an anti-join is the reverse of an left join</span></code></pre></div>
+all_dates &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">date =</span> <span class="kw">seq</span>(start_date, end_date, <span class="dt">by =</span> <span class="st">'1 day'</span>))</code></pre></div>
+<p>Finally, we ask for the &quot;anti-join&quot; of the two datasets. An anti-join is the opposite of an left join: any keys present in left dataset but not the right are returned.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">anti_join</span>(all_dates, data_dates, <span class="dt">by =</span> <span class="st">'date'</span>) <span class="co"># an anti-join is the reverse of an left join</span></code></pre></div>
 <pre><code>## [1] date
 ## &lt;0 rows&gt; (or 0-length row.names)</code></pre>
 <p>The third solution consists of comparing the number of days between the earliest and latest dates in the data to the number of days we expect to see if no days were missing.</p>
@@ -1276,22 +1164,23 @@ all_dates &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span
 ##     min_date   max_date     n     diff
 ##       &lt;date&gt;     &lt;date&gt; &lt;int&gt;   &lt;time&gt;
 ## 1 2016-01-01 2016-06-30   182 182 days</code></pre>
-<ol start="5" style="list-style-type: decimal">
+<ol>
 <li>Find the 3 consecutive days with the most total number of trips?</li>
 </ol>
-<p>This is a hard exercise. In query 3, we need to compute rolling statistics (rolling sums in this case). There are functions in R that we can use for that purpose, but one of the advantages of R is that writing our own functions is not always that hard. Write a function called <code>rolling_sum</code> that takes in two arguments: <code>x</code> and <code>nlag</code>: <code>x</code> is a numeric vector <code>nlags</code> is a positive integer for the number of days we’re rolling by. The function returns a vector of the same length as <code>x</code>, of the rolling sum of <code>x</code> over <code>nlag</code> elements.</p>
+<p>This is a hard exercise. In query 3, we need to compute rolling statistics (rolling sums in this case). There are functions in R that we can use for that purpose, but one of the advantages of R is that writing our own functions is not always that hard. Write a function called <code>rolling_sum</code> that takes in two arguments: <code>x</code> and <code>nlag</code>: <code>x</code> is a numeric vector <code>nlags</code> is a positive integer for the number of days we're rolling by. The function returns a vector of the same length as <code>x</code>, of the rolling sum of <code>x</code> over <code>nlag</code> elements.</p>
 <p>For example, given <code>x &lt;- 1:6</code> and <code>n &lt;- 2</code> as inputs, the function returns <code>c(NA, NA, 6, 9, 12, 15)</code></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">rolling_sum &lt;-<span class="st"> </span>function(x, nlag) {
   <span class="kw">stopifnot</span>(nlag &gt;<span class="st"> </span><span class="dv">0</span>, nlag &lt;<span class="st"> </span><span class="kw">length</span>(x))
   <span class="kw">c</span>(<span class="kw">rep</span>(<span class="ot">NA</span>, nlag), <span class="kw">sapply</span>((nlag +<span class="st"> </span><span class="dv">1</span>):<span class="kw">length</span>(x), function(ii) <span class="kw">sum</span>(x[(ii -<span class="st"> </span>nlag):ii])))
 }
-<span class="co"># Here&#39;s an easy test to see if things seem to be working:</span>
+<span class="co"># Here's an easy test to see if things seem to be working:</span>
 <span class="kw">rolling_sum</span>(<span class="kw">rep</span>(<span class="dv">1</span>, <span class="dv">100</span>), <span class="dv">10</span>) <span class="co"># Should return 10 NAs followed by 90 entries that are all 11</span></code></pre></div>
-<pre><code>##   [1] NA NA NA NA NA NA NA NA NA NA 11 11 11 11 11 11 11 11 11 11 11 11 11 11 11 11 11 11
-##  [29] 11 11 11 11 11 11 11 11 11 11 11 11 11 11 11 11 11 11 11 11 11 11 11 11 11 11 11 11
-##  [57] 11 11 11 11 11 11 11 11 11 11 11 11 11 11 11 11 11 11 11 11 11 11 11 11 11 11 11 11
-##  [85] 11 11 11 11 11 11 11 11 11 11 11 11 11 11 11 11</code></pre>
-<p>We can even go one step further. Let’s rename the function to <code>rolling</code> and add a third argument to it called <code>FUN</code>, allowing us to specify any rolling function, not just <code>sum</code>.</p>
+<pre><code>##   [1] NA NA NA NA NA NA NA NA NA NA 11 11 11 11 11 11 11 11 11 11 11 11 11
+##  [24] 11 11 11 11 11 11 11 11 11 11 11 11 11 11 11 11 11 11 11 11 11 11 11
+##  [47] 11 11 11 11 11 11 11 11 11 11 11 11 11 11 11 11 11 11 11 11 11 11 11
+##  [70] 11 11 11 11 11 11 11 11 11 11 11 11 11 11 11 11 11 11 11 11 11 11 11
+##  [93] 11 11 11 11 11 11 11 11</code></pre>
+<p>We can even go one step further. Let's rename the function to <code>rolling</code> and add a third argument to it called <code>FUN</code>, allowing us to specify any rolling function, not just <code>sum</code>.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">rolling &lt;-<span class="st"> </span>function(x, nlag, FUN) {
   <span class="kw">stopifnot</span>(nlag &gt;<span class="st"> </span><span class="dv">0</span>, nlag &lt;<span class="st"> </span><span class="kw">length</span>(x))
   <span class="kw">c</span>(<span class="kw">rep</span>(<span class="ot">NA</span>, nlag), <span class="kw">sapply</span>((nlag +<span class="st"> </span><span class="dv">1</span>):<span class="kw">length</span>(x), function(ii) <span class="kw">FUN</span>(x[(ii -<span class="st"> </span>nlag):ii])))
@@ -1320,11 +1209,11 @@ q5 &lt;-<span class="st"> </span>nyc_taxi %&gt;%
 ## 4 2016-02-12 2016-02-14 35352 112826
 ## 5 2016-01-14 2016-01-16 37685 111217
 ## 6 2016-01-29 2016-01-31 33196 110965</code></pre>
-<p>As it turns out, there’s already a similar function we could have used, called <code>rollapply</code> in the <code>zoo</code> package. Sometimes it pays off to take the time and search for the right function, especially if what we’re trying to do is common enough that we should not have to “reinvent the wheel”.</p>
+<p>As it turns out, there's already a similar function we could have used, called <code>rollapply</code> in the <code>zoo</code> package. Sometimes it pays off to take the time and search for the right function, especially if what we're trying to do is common enough that we should not have to &quot;reinvent the wheel&quot;.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(zoo)
-<span class="kw">rollapply</span>(<span class="dv">1</span>:<span class="dv">10</span>, <span class="dv">3</span>, sum, <span class="dt">fill =</span> <span class="ot">NA</span>, <span class="dt">align =</span> <span class="st">&#39;right&#39;</span>)</code></pre></div>
+<span class="kw">rollapply</span>(<span class="dv">1</span>:<span class="dv">10</span>, <span class="dv">3</span>, sum, <span class="dt">fill =</span> <span class="ot">NA</span>, <span class="dt">align =</span> <span class="st">'right'</span>)</code></pre></div>
 <pre><code>##  [1] NA NA  6  9 12 15 18 21 24 27</code></pre>
-<p>Here’s an alternative solution: We could have run the above query without <code>rolling</code> by just using the <code>lag</code> function, but the code is more complicated and harder to automate it for different values of <code>nlag</code> or for different functions other than <code>sum</code>. Here’s how we can rewrite the above query with <code>lag</code>:</p>
+<p>Here's an alternative solution: We could have run the above query without <code>rolling</code> by just using the <code>lag</code> function, but the code is more complicated and harder to automate it for different values of <code>nlag</code> or for different functions other than <code>sum</code>. Here's how we can rewrite the above query with <code>lag</code>:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">q5 &lt;-<span class="st"> </span>nyc_taxi %&gt;%
 <span class="st">  </span><span class="kw">filter</span>(!<span class="kw">is.na</span>(pickup_datetime)) %&gt;%
 <span class="st">  </span><span class="kw">transmute</span>(<span class="dt">end_date =</span> <span class="kw">as.Date</span>(pickup_datetime)) %&gt;%
@@ -1348,11 +1237,11 @@ q5 &lt;-<span class="st"> </span>nyc_taxi %&gt;%
 ## 4 2016-02-11 2016-02-14 35352 112826
 ## 5 2016-01-13 2016-01-16 37685 111217
 ## 6 2016-01-28 2016-01-31 33196 110965</code></pre>
-<ol start="6" style="list-style-type: decimal">
+<ol>
 <li>Get the average, standard deviation, and mean absolute deviation of <code>trip_distance</code> and <code>trip_duration</code>, as well as the ratio of <code>trip_duration</code> over <code>trip_distance</code>. Results should be broken up by <code>pickup_nhood</code> and <code>dropoff_nhood</code>.</li>
 </ol>
-<p>Here’s how we compute the mean absolute deviation:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">mad &lt;-<span class="st"> </span>function(x) <span class="kw">mean</span>(<span class="kw">abs</span>(x -<span class="st"> </span><span class="kw">median</span>(x))) <span class="co"># one-liner functions don&#39;t need curly braces</span></code></pre></div>
+<p>Here's how we compute the mean absolute deviation:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">mad &lt;-<span class="st"> </span>function(x) <span class="kw">mean</span>(<span class="kw">abs</span>(x -<span class="st"> </span><span class="kw">median</span>(x))) <span class="co"># one-liner functions don't need curly braces</span></code></pre></div>
 <p>This query can easily be written with the tools we learned so far.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">q6 &lt;-<span class="st"> </span>nyc_taxi %&gt;%
 <span class="st">  </span><span class="kw">filter</span>(!<span class="kw">is.na</span>(pickup_nhood) &amp;<span class="st"> </span>!<span class="kw">is.na</span>(dropoff_nhood)) %&gt;%
@@ -1368,114 +1257,65 @@ q5 &lt;-<span class="st"> </span>nyc_taxi %&gt;%
 <pre><code>## Source: local data frame [6 x 8]
 ## Groups: pickup_nhood [1]
 ## 
-##   pickup_nhood dropoff_nhood mean_trip_distance mean_trip_duration sd_trip_distance
-##         &lt;fctr&gt;        &lt;fctr&gt;              &lt;dbl&gt;              &lt;dbl&gt;            &lt;dbl&gt;
-## 1 West Village  West Village              0.679                401            0.959
-## 2 West Village  East Village              1.596                872            0.457
-## 3 West Village  Battery Park              1.972                664            0.551
-## 4 West Village Carnegie Hill              5.405               1593            0.699
-## 5 West Village      Gramercy              1.699                813            0.502
-## 6 West Village          Soho              1.213                648            0.431
-##   sd_trip_duration mad_trip_distance mad_trip_duration
-##              &lt;dbl&gt;             &lt;dbl&gt;             &lt;dbl&gt;
-## 1             3171             0.356               262
-## 2             3175             0.304               314
-## 3             3088             0.385               242
-## 4              529             0.584               387
-## 5             2701             0.362               296
-## 6             2782             0.307               284</code></pre>
-<p>You may have noticed that the query we wrote in the last exercise was a little tedious and repetitive. Let’s now see a way of rewriting the query using some “shortcut” functions available in <code>dplyr</code>:</p>
+##   pickup_nhood dropoff_nhood mean_trip_distance mean_trip_duration
+##         &lt;fctr&gt;        &lt;fctr&gt;              &lt;dbl&gt;              &lt;dbl&gt;
+## 1 West Village  West Village              0.679                401
+## 2 West Village  East Village              1.596                872
+## 3 West Village  Battery Park              1.972                664
+## 4 West Village Carnegie Hill              5.405               1593
+## 5 West Village      Gramercy              1.699                813
+## 6 West Village          Soho              1.213                648
+##   sd_trip_distance sd_trip_duration mad_trip_distance mad_trip_duration
+##              &lt;dbl&gt;            &lt;dbl&gt;             &lt;dbl&gt;             &lt;dbl&gt;
+## 1            0.959             3171             0.356               262
+## 2            0.457             3175             0.304               314
+## 3            0.551             3088             0.385               242
+## 4            0.699              529             0.584               387
+## 5            0.502             2701             0.362               296
+## 6            0.431             2782             0.307               284</code></pre>
+<p>You may have noticed that the query we wrote in the last exercise was a little tedious and repetitive. Let's now see a way of rewriting the query using some &quot;shortcut&quot; functions available in <code>dplyr</code>:</p>
 <ul>
 <li>When we apply the same summary function(s) to the same column(s) of the data, we can save a lot of time typing by using <code>summarize_each</code> instead of <code>summarize</code>. There is also a <code>mutate_each</code> function.</li>
 <li>We can select <code>trip_distance</code> and <code>trip_duration</code> automatically using <code>starts_with('trip_')</code>, since they are the only columns that begin with that prefix, this can be a time-saver if we are selecting lots of columns at once (and we named them in a smart way). There are other helper functions called <code>ends_with</code> and <code>contains</code>.</li>
-<li>Instead of defining the <code>mad</code> function separately, we can define it in-line. In fact, there’s a shortcut whereby we just name the function and provide the body of the function, replacing <code>x</code> with a period.</li>
+<li>Instead of defining the <code>mad</code> function separately, we can define it in-line. In fact, there's a shortcut whereby we just name the function and provide the body of the function, replacing <code>x</code> with a period.</li>
 </ul>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">q6 &lt;-<span class="st"> </span>nyc_taxi %&gt;%
 <span class="st">  </span><span class="kw">filter</span>(!<span class="kw">is.na</span>(pickup_nhood) &amp;<span class="st"> </span>!<span class="kw">is.na</span>(dropoff_nhood)) %&gt;%
 <span class="st">  </span><span class="kw">group_by</span>(pickup_nhood, dropoff_nhood) %&gt;%
 <span class="st">  </span><span class="kw">summarize_each</span>(
     <span class="kw">funs</span>(mean, sd, <span class="dt">mad =</span> <span class="kw">mean</span>(<span class="kw">abs</span>(. -<span class="st"> </span><span class="kw">median</span>(.)))), <span class="co"># all the functions that we apply to the data are   listed here</span>
-    <span class="kw">starts_with</span>(<span class="st">&#39;trip_&#39;</span>), <span class="co"># `trip_distance` and `trip_duration` are the only columns that start with `trip_`</span>
+    <span class="kw">starts_with</span>(<span class="st">'trip_'</span>), <span class="co"># `trip_distance` and `trip_duration` are the only columns that start with `trip_`</span>
     <span class="dt">wait_per_mile =</span> trip_duration /<span class="st"> </span>trip_distance) <span class="co"># `duration_over_dist` is created on the fly</span>
 
 <span class="kw">head</span>(q6)</code></pre></div>
 <pre><code>## Source: local data frame [6 x 11]
 ## Groups: pickup_nhood [1]
 ## 
-##   pickup_nhood dropoff_nhood trip_distance_mean trip_duration_mean wait_per_mile_mean
-##         &lt;fctr&gt;        &lt;fctr&gt;              &lt;dbl&gt;              &lt;dbl&gt;              &lt;dbl&gt;
-## 1 West Village  West Village              0.679                401                -74
-## 2 West Village  East Village              1.596                872                -74
-## 3 West Village  Battery Park              1.972                664                -74
-## 4 West Village Carnegie Hill              5.405               1593                -74
-## 5 West Village      Gramercy              1.699                813                -74
-## 6 West Village          Soho              1.213                648                -74
-##   trip_distance_sd trip_duration_sd wait_per_mile_sd trip_distance_mad trip_duration_mad
-##              &lt;dbl&gt;            &lt;dbl&gt;            &lt;dbl&gt;             &lt;dbl&gt;             &lt;dbl&gt;
-## 1            0.959             3171          0.00202             0.356               262
-## 2            0.457             3175          0.00216             0.304               314
-## 3            0.551             3088          0.00181             0.385               242
-## 4            0.699              529          0.00204             0.584               387
-## 5            0.502             2701          0.00198             0.362               296
-## 6            0.431             2782          0.00181             0.307               284
-##   wait_per_mile_mad
-##               &lt;dbl&gt;
-## 1           0.00153
-## 2           0.00174
-## 3           0.00142
-## 4           0.00160
-## 5           0.00153
-## 6           0.00140</code></pre>
+##   pickup_nhood dropoff_nhood trip_distance_mean trip_duration_mean
+##         &lt;fctr&gt;        &lt;fctr&gt;              &lt;dbl&gt;              &lt;dbl&gt;
+## 1 West Village  West Village              0.679                401
+## 2 West Village  East Village              1.596                872
+## 3 West Village  Battery Park              1.972                664
+## 4 West Village Carnegie Hill              5.405               1593
+## 5 West Village      Gramercy              1.699                813
+## 6 West Village          Soho              1.213                648
+##   wait_per_mile_mean trip_distance_sd trip_duration_sd wait_per_mile_sd
+##                &lt;dbl&gt;            &lt;dbl&gt;            &lt;dbl&gt;            &lt;dbl&gt;
+## 1                -74            0.959             3171          0.00202
+## 2                -74            0.457             3175          0.00216
+## 3                -74            0.551             3088          0.00181
+## 4                -74            0.699              529          0.00204
+## 5                -74            0.502             2701          0.00198
+## 6                -74            0.431             2782          0.00181
+##   trip_distance_mad trip_duration_mad wait_per_mile_mad
+##               &lt;dbl&gt;             &lt;dbl&gt;             &lt;dbl&gt;
+## 1             0.356               262           0.00153
+## 2             0.304               314           0.00174
+## 3             0.385               242           0.00142
+## 4             0.584               387           0.00160
+## 5             0.362               296           0.00153
+## 6             0.307               284           0.00140</code></pre>
 <p>We can do far more with <code>dplyr</code> but we leave it at this for an introduction. The goal was to give the user enough <code>dplyr</code> to develop an appreciation and be inspired to learn more.</p>
 
-</div>
-</div>
-</div>
-            </section>
-
-          </div>
-        </div>
-      </div>
-<a href="creating-new-features.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="review.html" class="navigation navigation-next " aria-label="Next page""><i class="fa fa-angle-right"></i></a>
-
-<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
-<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
-<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
-<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
-<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
-<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
-<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
-<script>
-require(["gitbook"], function(gitbook) {
-gitbook.start({
-"sharing": {
-"github": false,
-"facebook": true,
-"twitter": true,
-"google": false,
-"weibo": false,
-"instapper": false,
-"vk": false,
-"all": ["facebook", "google", "twitter", "weibo", "instapaper"]
-},
-"fontsettings": {
-"theme": "white",
-"family": "sans",
-"size": 2
-},
-"edit": {
-"link": null,
-"text": null
-},
-"download": null,
-"toc": {
-"collapse": "subsection"
-}
-});
-});
-</script>
-
 </body>
-
 </html>
