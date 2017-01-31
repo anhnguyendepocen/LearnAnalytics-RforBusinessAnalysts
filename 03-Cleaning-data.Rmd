@@ -356,7 +356,7 @@ total_amount          = col_number()
 )
 
 st <- Sys.time()
-nyc_taxi <- bind_rows(lapply(1:6, read_each_month, col_names = names(col_types$cols), col_types = col_types, skip = 1))
+nyc_taxi <- bind_rows(lapply(1:6, read_each_month, progress = FALSE, col_names = names(col_types$cols), col_types = col_types, skip = 1))
 Sys.time() - st
 ```
 

@@ -1,7 +1,7 @@
 Creating new features
 ================
 Seth Mottaghinejad
-2017-01-30
+2017-01-31
 
 Feature creation and feature selection are can be some of the most time-consuming part of model-building. It is often the place where the interplay between technical knowledge (for example about the models we intend to build) and business or domain knowledge (data requirements and how the analysis will be put to use) is at the forefront.
 

@@ -1,7 +1,7 @@
 Data summary and analysis
 ================
 Seth Mottaghinejad
-2017-01-30
+2017-01-31
 
 Let's recap where we are in the process:
 
@@ -704,9 +704,9 @@ print(microbenchmark(
 ```
 
     ## Unit: milliseconds
-    ##               expr  min   lq mean median   uq  max neval
-    ##  first(random_vec) 26.6 26.7 32.2   28.8 38.5 48.5    10
-    ##  scond(random_vec) 42.9 43.5 47.0   45.2 47.2 62.0    10
+    ##               expr  min   lq mean median    uq   max neval
+    ##  first(random_vec) 30.0 31.5 40.7   32.8  49.8  69.3    10
+    ##  scond(random_vec) 46.4 48.9 90.1   85.8 130.6 139.4    10
 
 1.  Describe what the results say? Do the runtimes bear out our intuition?
 
