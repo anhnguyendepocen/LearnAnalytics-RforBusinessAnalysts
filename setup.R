@@ -1,5 +1,5 @@
 
-knitr::opts_chunk$set(fig.width = 10, fig.height = 10, fig.path = 'images/',
+knitr::opts_chunk$set(fig.width = 10, fig.height = 10, fig.path = 'rendered/images/',
                       cache = FALSE, warning = FALSE, message = FALSE, 
                       echo = TRUE, tidy = FALSE)
 

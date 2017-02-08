@@ -5,7 +5,7 @@ output: github_document
 date: "`r Sys.Date()`"
 ---
 
-```{r, include=FALSE}
+```{r chap03chunk01, include=FALSE}
 source('setup.R')
 ```
 
@@ -21,7 +21,7 @@ In the last section, we proposed ways that we could clean the data. In this sect
 
 Run `summary` on the data.
 
-```{r}
+```{r chap03chunk02}
 summary(nyc_taxi)
 ```
 
@@ -53,48 +53,48 @@ Some data-cleaning jobs depend on the analysis. For example, turning `payment_ty
 
 Next we format `pickup_datetime` and `dropoff_datetime` as `datetime` columns. There are different functions for dealing with `datetime` column types, including functions in the `base` package, but we will be using the `lubridate` package for its rich set of functions and simplicity.
 
-```{r}
+```{r chap03chunk03}
 library(lubridate)
 Sys.setenv(TZ = "US/Pacific") # not important for this dataset, but this is how we set the time zone
 ```
 
 The function we need is called `ymd_hms`, but before we run it on the data let's test it on a string. Doing so gives us a chance to test the function on a simple input and catch any errors or wrong argument specifications.
 
-```{r}
+```{r chap03chunk04}
 ymd_hms("2015-01-25 00:13:08", tz = "US/Eastern") # we can ignore warning message about timezones
 ```
 
 We seem to have the right function and the right set of arguments, so let's now apply it to the data. If we are still unsure about whether things will work, it might be prudent to not immediately overwrite the existing column. We could either write the transformation to a new column or run the transformation on the first few rows of the data and just display the results in the console.
 
-```{r}
+```{r chap03chunk05}
 ymd_hms(nyc_taxi$pickup_datetime[1:20], tz = "US/Eastern")
 ```
 
 We now apply the transformation to the whole data and overwrite the original column with it.
 
-```{r}
+```{r chap03chunk06}
 nyc_taxi$pickup_datetime <- ymd_hms(nyc_taxi$pickup_datetime, tz = "US/Eastern")
 ```
 
 There's another way to do the above transformation: by using the `transform` function. Just as was the case with `subset`, `transform` allows us to pass the data as the first argument so that we don't have to prefix the column names with `nyc_taxi$`. The result is a cleaner and more readable notation.
 
-```{r}
+```{r chap03chunk07}
 nyc_taxi <- transform(nyc_taxi, dropoff_datetime = ymd_hms(dropoff_datetime, tz = "US/Eastern"))
 ```
 
 Let's now see some of the benefits of formatting the above columns as `datetime`. The first benefit is that we can now perform date calculations on the data. Say for example that we wanted to know how many data points are in each week. We can use `table` to get the counts and the `week` function in `lubridate` to extract the week (from 1 to 52 for a non-leap year) from `pickup_datetime`.
 
-```{r}
+```{r chap03chunk08}
 table(week(nyc_taxi$pickup_datetime)) # `week`
 ```
 
-```{r}
+```{r chap03chunk09}
 table(week(nyc_taxi$pickup_datetime), month(nyc_taxi$pickup_datetime)) # `week` and `month` are datetime functions
 ```
 
 Another benefit of the `datetime` format is that plotting functions can do a better job of displaying the data in the expected format.# (2) many data summaries and data visualizations automatically 'look right' when the data has the proper format. We do not cover data visualization in-depth in this course, but we provide many examples to get you started. Here's a histogram of `pickup_datetime`.
 
-```{r}
+```{r chap03chunk10}
 library(ggplot2)
 ggplot(data = nyc_taxi) +
   geom_histogram(aes(x = pickup_datetime), col = "black", fill = "lightblue",
@@ -107,7 +107,7 @@ Notice how the x-axis is properly formatted as a date without any manual input f
 
 It's time to turn our attention to the categorical columns in the dataset. Ideally, categorical columns should be turned into `factor` (usually from `character` or `integer`). A `factor` is the appropriate data type for a categorical column. When we loaded the data in R using `read.csv`, we set `stringsAsFactors = FALSE` to prevent any `character` columns from being turned into a factor. This is generally a good idea, because some character columns (such as columns with raw text in them or alpha-numeric ID columns) are not appropriate for factors. Accidentally turning such columns into factors can result in overhead, especially when data sizes are large. The overhead is the result of R having to keep a tally of all the factor levels. We do not have any `character` columns in this dataset that need to be converted to factors, but we have `integer` columns that represent categorical data. These are the columns with low cardinality, as can be seen here:
 
-```{r}
+```{r chap03chunk11}
 sapply(nyc_taxi, num.distinct)
 ```
 
@@ -126,19 +126,19 @@ The above information helps us properly label the factor levels.
 
 Notice how `summary` shows us numeric summaries for the categorical columns right now.
 
-```{r}
+```{r chap03chunk12}
 summary(nyc_taxi[ , c('rate_code_id', 'payment_type')]) # shows numeric summaries for both columns
 ```
 
 A quick glance at `payment_type` shows two payments as by far the most common. The data dictionary confirms for us that they correspond to card and cash payments.
 
-```{r}
+```{r chap03chunk13}
 table(nyc_taxi$payment_type)
 ```
 
 We now turn both `rate_code_id` and `payment_type` into `factor` columns. For `rate_code_id` we keep all the labels, but for `payment_type` we only keep the two most common and label them as 'card' and 'cash'. We do so by specifying `levels = 1:2` instead of `levels = 1:6` and provide labels for only the first two categories. This means the other values of `payment_type` get lumped together and replaced with NAs, resulting in information loss (which we are comfortable with, for the sake of this analysis).
 
-```{r}
+```{r chap03chunk14}
 nyc_taxi <- transform(nyc_taxi,
 rate_code_id = factor(rate_code_id,
 levels = 1:6, labels = c('standard', 'JFK', 'Newark', 'Nassau or Westchester', 'negotiated', 'group ride')),
@@ -147,11 +147,11 @@ levels = 1:2, labels = c('card', 'cash')
 ))
 ```
 
-```{r}
+```{r chap03chunk15}
 head(nyc_taxi[ , c('rate_code_id', 'payment_type')]) # now proper labels are showing in the data
 ```
 
-```{r}
+```{r chap03chunk16}
 summary(nyc_taxi[ , c('rate_code_id', 'payment_type')]) # now counts are showing in the summary
 ```
 
@@ -165,19 +165,19 @@ Our data-cleaning is for now done. We are ready to now add new features to the d
 
 Let's create a sample with replacement of size 2000 from the colors red, blue and green. This is like reaching into a jar with three balls of each color, grabbing one and recording the color, placing it back into the jar and repeating this 2000 times.
 
-```{r}
+```{r chap03chunk17}
 rbg_chr <- sample(c("red", "blue", "green"), 2000, replace = TRUE)
 ```
 
 We add one last entry to the sample: the entry is 'pink':
 
-```{r}
+```{r chap03chunk18}
 rbg_chr <- c(rbg_chr, "pink") # add a pink entry to the sample
 ```
 
 We now turn `rbg_chr` (which is a character vector) into a `factor` and call it `rbg_fac`. We then drop the 'pink' entry from both vectors.
 
-```{r}
+```{r chap03chunk19}
 rbg_fac <- factor(rbg_chr) # turn `rbg_chr` into a `factor` `rbg_fac`
 rbg_chr <- rbg_chr[1:(length(rbg_chr)-1)] # dropping the last entry from `rbg_chr`
 rbg_fac <- rbg_fac[1:(length(rbg_fac)-1)] # dropping the last entry from `rbg_fac`
@@ -187,38 +187,38 @@ Note that `rbg_chr` and `rbg_fac` contain the same information, but are of diffe
 
 (1) When we query the first few entries of each:
 
-```{r}
+```{r chap03chunk20}
 head(rbg_chr)
 ```
 
-```{r}
+```{r chap03chunk21}
 head(rbg_fac)
 ```
 
 (2) When we compare the size of each in the memory:
 
-```{r}
+```{r chap03chunk22}
 sprintf("Size as characters: %s. Size as factor: %s",
 object.size(rbg_chr), object.size(rbg_fac))
 ```
 
 (3) When we ask for counts within each category:
 
-```{r}
+```{r chap03chunk23}
 table(rbg_chr)
 table(rbg_fac)
 ```
 
 (4) when we try to replace an entry with something other than 'red', 'blue' and 'green':
 
-```{r}
+```{r chap03chunk24}
 rbg_chr[3] <- "yellow" # replaces the 3rd entry in `rbg_chr` with 'yellow'
 rbg_fac[3] <- "yellow" # throws a warning, replaces the 3rd entry with NA
 ```
 
 (5) Each category in a categorical column (formatted as `factor`) is called a **factor level**. We can look at factor levels using the `levels` function:
 
-```{r}
+```{r chap03chunk25}
 levels(rbg_fac)
 ```
 
@@ -230,13 +230,13 @@ We can relabel the factor levels directly with `levels`. Change the levels of `r
 
 (8) Finally, we need to recreate the `factor` column if we want to drop a particular level or change the order of the levels.
 
-```{r}
+```{r chap03chunk26}
 table(rbg_chr) # what we see in the orignal `character` column
 ```
 
 If we don't provide the `factor` with levels (through the `levels` argument), we create a `factor` by scanning the data to find all the levels and sort the levels alphabetically.
 
-```{r}
+```{r chap03chunk27}
 rbg_fac <- factor(rbg_chr)
 table(rbg_fac) # the levels are just whatever was present in `rbg_chr`
 ```
@@ -249,74 +249,74 @@ We can overwrite that by explicitly passing factor levels to the `factor` functi
 
 (1) We see quotes around `rbg_chr` but no quotes for `rbg_fac` and factor levels at the bottom.
 
-```{r}
+```{r chap03chunk28}
 head(rbg_chr) # we see quotes
 ```
 
-```{r}
+```{r chap03chunk29}
 head(rbg_fac) # we don't see quotes and we see the factor levels at the bottom
 ```
 
 (2) A `factor` column tends to take up less space than `character` column, the more so when the strings in the `character` column are longer. This is because a `factor` column stores the information as integers under the hood, with a mapping from each integer to the string it represents.
 
-```{r}
+```{r chap03chunk30}
 sprintf("Size as characters: %s. Size as factor: %s",
 object.size(rbg_chr), object.size(rbg_fac))
 ```
 
 (3)
 
-```{r}
+```{r chap03chunk31}
 table(rbg_chr)
 ```
 
-```{r}
+```{r chap03chunk32}
 table(rbg_fac) # we can see a count of 0 for 'pink', becuase it's one of the factor levels
 ```
 
 (4) Changing an entry in a `factor` column to a values other than one of its acceptable levels will result in an NA. Notice that this happens without any warnings.
 
-```{r}
+```{r chap03chunk33}
 head(rbg_chr) # the 3rd entry changed to 'yellow'
 ```
 
-```{r}
+```{r chap03chunk34}
 head(rbg_fac) # we could not change the 3rd entry to 'yellow' because it's not one of the factor levels
 ```
 
 (5) We simply re-assign the factor levels, but we must be careful to provide the new levels **in the same order** as the old ones.
 
-```{r}
+```{r chap03chunk35}
 levels(rbg_fac) <- c('Blue', 'Green', 'Pink', 'Red') # we capitalize the first letters
 head(rbg_fac)
 ```
 
 (6) We simply append "Yellow" to the old factor levels and assign this as the new factor levels.
 
-```{r}
+```{r chap03chunk36}
 levels(rbg_fac) <- c(levels(rbg_fac), "Yellow") # we add 'Yellow' as a new factor level
 table(rbg_fac) # even though the data has no 'Yellow' entries, it's an acceptable value
 ```
 
 (7) Since "Yellow" is one of the levels now, we can change any entry to "Yellow" and we won't get an NA anymore.
 
-```{r}
+```{r chap03chunk37}
 rbg_fac[3] <- "Yellow" # does not throw a warning anymore
 head(rbg_fac) # now the data has one 'Yellow' entry
 ```
 
 (8) We use the `levels` argument in the `factor` function. Since "yellow" was one of the entries in `rgb_chr` and we are not specifying "yellow" as one of the factor levels we want, it will be turned into an NA.
 
-```{r}
+```{r chap03chunk38}
 table(rbg_chr)
 ```
 
-```{r}
+```{r chap03chunk39}
 rbg_fac <- factor(rbg_chr, levels = c('red', 'green', 'blue')) # create a `factor`, with only the levels provided, in the order provided
 table(rbg_fac) # notice how 'yellow' has disappeared
 ```
 
-```{r}
+```{r chap03chunk40}
 table(rbg_fac, useNA = "ifany") # 'yellow' was turned into an NA
 ```
 
@@ -334,7 +334,7 @@ Our approach in the last few sections was to load the data, and process it by "c
 
 We are now going to read the CSV file again, but add a few additional steps so we can tell it which type each column needs to have (we can use `col_skip()` when we wish the column dropped) and the name we wish to give to each column. We store the column types and names in an object called `col_types` for ease of access.
 
-```{r}
+```{r chap03chunk41}
 col_types <- cols(
 pickup_datetime       = col_datetime(format = ""),
 dropoff_datetime      = col_datetime(format = ""),
@@ -380,7 +380,7 @@ Here's what remains for us to do:
 1. Replace the unusual geographical coordinates for pick-up and drop-off with NAs
 2. Assign the proper labels to the factor levels and drop any unnecessary factor levels (in the case of `payment_type`)
 
-```{r}
+```{r chap03chunk42}
 library(lubridate)
 library(dplyr)
 nyc_taxi <- mutate(nyc_taxi,
@@ -393,17 +393,17 @@ nyc_taxi <- mutate(nyc_taxi,
 
 As for the factor columns: firstly, `rate_code_id` is a factor now, but we still need to assign the proper labels it.
 
-```{r}
+```{r chap03chunk43}
 levels(nyc_taxi$rate_code_id) <- c('standard', 'JFK', 'Newark', 'Nassau or Westchester', 'negotiated', 'group ride', 'n/a')
 ```
 
 Secondly, `payment_type` is also a factor, but with all six levels, so we need to "refactor" it so we can only keep the top two.
 
-```{r}
+```{r chap03chunk44}
 table(nyc_taxi$payment_type, useNA = "ifany") # we can see all different payment types
 ```
 
-```{r}
+```{r chap03chunk45}
 nyc_taxi <- mutate(nyc_taxi, payment_type = factor(payment_type, levels = 1:2, labels = c('card', 'cash')))
 table(nyc_taxi$payment_type, useNA = "ifany") # other levels turned into NAs
 ```
@@ -416,7 +416,7 @@ A useful question we might want to ask is the following: Are longitude and latit
 
 Once missing values are formatted as NAs, we use the `is.na` function to determine what's an NA.
 
-```{r}
+```{r chap03chunk46}
 is.na(c(2, 4, NA, -1, 5, NA))
 ```
 
@@ -432,25 +432,25 @@ Combine `is.na` and `table` to answer the following question:
 
 (1) We use `is.na` inside `table`.
 
-```{r}
+```{r chap03chunk47}
 table(is.na(nyc_taxi$pickup_longitude))
 ```
 
 (2) We can combine both statements using `&`.
 
-```{r}
+```{r chap03chunk48}
 table(is.na(nyc_taxi$pickup_longitude) & is.na(nyc_taxi$pickup_latitude))
 ```
 
 We can also separate the two statements and pass them as separate arguments to `table`. Doing so gives us a **two-way table** with a little more information.
 
-```{r}
+```{r chap03chunk49}
 table(is.na(nyc_taxi$pickup_longitude), is.na(nyc_taxi$pickup_latitude)) # better solution to (2)
 ```
 
 (3) Providing n arguments to `table` gives us an n-way table, which is an `array` object. When n > 3 it gets confusing to look at it, so here we can use `&` to simplify things.
 
-```{r}
+```{r chap03chunk50}
 with(nyc_taxi,
   table(is.na(pickup_longitude) & is.na(pickup_latitude), is.na(dropoff_longitude) & is.na(dropoff_latitude))
 )

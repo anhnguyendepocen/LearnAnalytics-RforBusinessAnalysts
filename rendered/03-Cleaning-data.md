@@ -1,7 +1,7 @@
 Cleaning the data
 ================
 Seth Mottaghinejad
-2017-01-31
+2017-02-08
 
 In the last section, we proposed ways that we could clean the data. In this section, we actually clean the data. Let's review where we are in the EDA (exploratory data analysis) process:
 
@@ -182,7 +182,7 @@ ggplot(data = nyc_taxi) +
   binwidth = 60*60*24*7) # the bin has a width of one week
 ```
 
-![](images/unnamed-chunk-11-1.png)
+![](rendered/images/chap03chunk10-1.png)
 
 Notice how the x-axis is properly formatted as a date without any manual input from us. Both the summary and the plot above would not have been possible if `pickup_datetime` was still a character column.
 
@@ -318,13 +318,13 @@ Note that `rbg_chr` and `rbg_fac` contain the same information, but are of diffe
 head(rbg_chr)
 ```
 
-    ## [1] "green" "blue"  "green" "red"   "green" "blue"
+    ## [1] "red"   "blue"  "red"   "green" "red"   "green"
 
 ``` r
 head(rbg_fac)
 ```
 
-    ## [1] green blue  green red   green blue 
+    ## [1] red   blue  red   green red   green
     ## Levels: blue green pink red
 
 1.  When we compare the size of each in the memory:
@@ -344,7 +344,7 @@ table(rbg_chr)
 
     ## rbg_chr
     ##  blue green   red 
-    ##   591   683   726
+    ##   687   637   676
 
 ``` r
 table(rbg_fac)
@@ -352,7 +352,7 @@ table(rbg_fac)
 
     ## rbg_fac
     ##  blue green  pink   red 
-    ##   591   683     0   726
+    ##   687   637     0   676
 
 1.  when we try to replace an entry with something other than 'red', 'blue' and 'green':
 
@@ -383,7 +383,7 @@ table(rbg_chr) # what we see in the orignal `character` column
 
     ## rbg_chr
     ##   blue  green    red yellow 
-    ##    591    682    726      1
+    ##    687    637    675      1
 
 If we don't provide the `factor` with levels (through the `levels` argument), we create a `factor` by scanning the data to find all the levels and sort the levels alphabetically.
 
@@ -394,7 +394,7 @@ table(rbg_fac) # the levels are just whatever was present in `rbg_chr`
 
     ## rbg_fac
     ##   blue  green    red yellow 
-    ##    591    682    726      1
+    ##    687    637    675      1
 
 We can overwrite that by explicitly passing factor levels to the `factor` function, in the order that we wish them to be. Recreate `rbg_fac` by passing `rbg_chr` `factor` function, but this time specify only "red", "green" and "blue" as the levels. Run `table` on both `rbg_chr` and `rbg_fac`. What differences do you see?
 
@@ -408,13 +408,13 @@ We can overwrite that by explicitly passing factor levels to the `factor` functi
 head(rbg_chr) # we see quotes
 ```
 
-    ## [1] "green"  "blue"   "yellow" "red"    "green"  "blue"
+    ## [1] "red"    "blue"   "yellow" "green"  "red"    "green"
 
 ``` r
 head(rbg_fac) # we don't see quotes and we see the factor levels at the bottom
 ```
 
-    ## [1] green  blue   yellow red    green  blue  
+    ## [1] red    blue   yellow green  red    green 
     ## Levels: blue green red yellow
 
 1.  A `factor` column tends to take up less space than `character` column, the more so when the strings in the `character` column are longer. This is because a `factor` column stores the information as integers under the hood, with a mapping from each integer to the string it represents.
@@ -434,7 +434,7 @@ table(rbg_chr)
 
     ## rbg_chr
     ##   blue  green    red yellow 
-    ##    591    682    726      1
+    ##    687    637    675      1
 
 ``` r
 table(rbg_fac) # we can see a count of 0 for 'pink', becuase it's one of the factor levels
@@ -442,7 +442,7 @@ table(rbg_fac) # we can see a count of 0 for 'pink', becuase it's one of the fac
 
     ## rbg_fac
     ##   blue  green    red yellow 
-    ##    591    682    726      1
+    ##    687    637    675      1
 
 1.  Changing an entry in a `factor` column to a values other than one of its acceptable levels will result in an NA. Notice that this happens without any warnings.
 
@@ -450,13 +450,13 @@ table(rbg_fac) # we can see a count of 0 for 'pink', becuase it's one of the fac
 head(rbg_chr) # the 3rd entry changed to 'yellow'
 ```
 
-    ## [1] "green"  "blue"   "yellow" "red"    "green"  "blue"
+    ## [1] "red"    "blue"   "yellow" "green"  "red"    "green"
 
 ``` r
 head(rbg_fac) # we could not change the 3rd entry to 'yellow' because it's not one of the factor levels
 ```
 
-    ## [1] green  blue   yellow red    green  blue  
+    ## [1] red    blue   yellow green  red    green 
     ## Levels: blue green red yellow
 
 1.  We simply re-assign the factor levels, but we must be careful to provide the new levels **in the same order** as the old ones.
@@ -466,7 +466,7 @@ levels(rbg_fac) <- c('Blue', 'Green', 'Pink', 'Red') # we capitalize the first l
 head(rbg_fac)
 ```
 
-    ## [1] Green Blue  Red   Pink  Green Blue 
+    ## [1] Pink  Blue  Red   Green Pink  Green
     ## Levels: Blue Green Pink Red
 
 1.  We simply append "Yellow" to the old factor levels and assign this as the new factor levels.
@@ -478,7 +478,7 @@ table(rbg_fac) # even though the data has no 'Yellow' entries, it's an acceptabl
 
     ## rbg_fac
     ##   Blue  Green   Pink    Red Yellow 
-    ##    591    682    726      1      0
+    ##    687    637    675      1      0
 
 1.  Since "Yellow" is one of the levels now, we can change any entry to "Yellow" and we won't get an NA anymore.
 
@@ -487,7 +487,7 @@ rbg_fac[3] <- "Yellow" # does not throw a warning anymore
 head(rbg_fac) # now the data has one 'Yellow' entry
 ```
 
-    ## [1] Green  Blue   Yellow Pink   Green  Blue  
+    ## [1] Pink   Blue   Yellow Green  Pink   Green 
     ## Levels: Blue Green Pink Red Yellow
 
 1.  We use the `levels` argument in the `factor` function. Since "yellow" was one of the entries in `rgb_chr` and we are not specifying "yellow" as one of the factor levels we want, it will be turned into an NA.
@@ -498,7 +498,7 @@ table(rbg_chr)
 
     ## rbg_chr
     ##   blue  green    red yellow 
-    ##    591    682    726      1
+    ##    687    637    675      1
 
 ``` r
 rbg_fac <- factor(rbg_chr, levels = c('red', 'green', 'blue')) # create a `factor`, with only the levels provided, in the order provided
@@ -507,7 +507,7 @@ table(rbg_fac) # notice how 'yellow' has disappeared
 
     ## rbg_fac
     ##   red green  blue 
-    ##   726   682   591
+    ##   675   637   687
 
 ``` r
 table(rbg_fac, useNA = "ifany") # 'yellow' was turned into an NA
@@ -515,7 +515,7 @@ table(rbg_fac, useNA = "ifany") # 'yellow' was turned into an NA
 
     ## rbg_fac
     ##   red green  blue  <NA> 
-    ##   726   682   591     1
+    ##   675   637   687     1
 
 1.  There are three important advantages to providing factor levels:
 
@@ -570,7 +570,7 @@ nyc_taxi <- bind_rows(lapply(1:6, read_each_month, progress = FALSE, col_names =
 Sys.time() - st
 ```
 
-    ## Time difference of 28.4 secs
+    ## Time difference of 27.5 secs
 
 Reading the data the way we did above means we can now skip some steps, such as factor conversions, but we have still have some work left before we get the data to where it was when we left it in the last section.
 

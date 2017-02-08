@@ -5,7 +5,7 @@ output: github_document
 date: "`r Sys.Date()`"
 ---
 
-```{r, include=FALSE}
+```{r chap06chunk01, include=FALSE}
 source('setup.R')
 ```
 

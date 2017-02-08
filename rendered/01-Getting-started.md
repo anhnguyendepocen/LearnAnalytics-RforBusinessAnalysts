@@ -1,7 +1,7 @@
 Getting started
 ================
 Seth Mottaghinejad
-2017-01-31
+2017-02-08
 
 We begin by loading the required packages and loading the data into R.
 
@@ -97,7 +97,7 @@ nyc_taxi <- bind_rows(lapply(1:6, read_each_month, progress = FALSE, col_types =
 Sys.time() - st
 ```
 
-    ## Time difference of 53.1 secs
+    ## Time difference of 41 secs
 
 ``` r
 print(class(nyc_taxi))

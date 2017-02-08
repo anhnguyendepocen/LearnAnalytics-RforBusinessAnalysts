@@ -5,7 +5,7 @@ output: github_document
 date: "`r Sys.Date()`"
 ---
 
-```{r, include=FALSE}
+```{r chap05chunk01, include=FALSE}
 source('setup.R')
 ```
 
@@ -21,11 +21,11 @@ Of course in practice a workflow is not clean-cut the way we have it here, and i
 
 We now have a data set that's more or less ready for analysis. In the next section we go over ways we can summarize the data and produce plots and tables. Let's run `str(nyc_taxi)` and `head(nyc_taxi)` again to review all the work we did so far.
 
-```{r}
+```{r chap05chunk02}
 str(nyc_taxi)
 ```
 
-```{r}
+```{r chap05chunk03}
 head(nyc_taxi, 3)
 ```
 
@@ -41,94 +41,86 @@ To reiterate, statistical summary functions which we cover in section 1 can be u
 
 We already learned of one all-encompassing summary function, namely `summary`:
 
-```{r}
+```{r chap05chunk04}
 summary(nyc_taxi) # summary of the whole data
 ```
 
 We can use `summary` to run a sanity check on the data and find ways that the data might need to be cleaned in preparation for analysis, but we are now interested in individual summaries. For example, here's how we can find the average fare amount for the whole data.
 
-```{r}
+```{r chap05chunk05}
 mean(nyc_taxi$fare_amount) # the average of `fare_amount`
 ```
 
 By specifying `trim = .10` we can get a 10 percent trimmed average, i.e. the average after throwing out the top and bottom 10 percent of the data:
 
-```{r}
+```{r chap05chunk06}
 mean(nyc_taxi$fare_amount, trim = .10) # trimmed mean
 ```
 
 By default, the `mean` function will return NA if there is any NA in the data, but we can overwrite that with `na.rm = TRUE`. This same argument shows up in almost all the statistical functions we encounter in this section.
 
-```{r}
-mean(nyc_taxi$trip_duration) # NAs are not ignored by default
-```
-
-```{r}
+```{r chap05chunk07}
 mean(nyc_taxi$trip_duration, na.rm = TRUE) # removes NAs before computing the average
 ```
 We can use `weighted.mean` to find a weighted average. The weights are specified as the second argument, and if we fail to specify anything for weights, we just get a simple average.
 
-```{r}
-weighted.mean(nyc_taxi$tip_percent, na.rm = TRUE) # simple average
-```
-
-```{r}
+```{r chap05chunk08}
 weighted.mean(nyc_taxi$tip_percent, nyc_taxi$trip_distance, na.rm = TRUE) # weighted average
 ```
 
 The `sd` function returns the standard deviation of the data, which is the same as returning the square root of its variance.
 
-```{r}
+```{r chap05chunk09}
 sd(nyc_taxi$trip_duration, na.rm = TRUE) # standard deviation
 ```
 
-```{r}
+```{r chap05chunk10}
 sqrt(var(nyc_taxi$trip_duration, na.rm = TRUE)) # standard deviation == square root of variance
 ```
 
 We can use `range` to get the minimum and maximum of the data at once, or use `min` and `max` individually.
 
-```{r}
+```{r chap05chunk11}
 range(nyc_taxi$trip_duration, na.rm = TRUE) # minimum and maximum
 ```
 
-```{r}
+```{r chap05chunk12}
 c(min(nyc_taxi$trip_duration, na.rm = TRUE), max(nyc_taxi$trip_duration, na.rm = TRUE))
 ```
 
 We can use `median` to return the median of the data.
 
-```{r}
+```{r chap05chunk13}
 median(nyc_taxi$trip_duration, na.rm = TRUE) # median
 ```
 
 The `quantile` function is used to get any percentile of the data, where the percentile is specified by the `probs` argument. For example, letting `probs = .5` returns the median.
 
-```{r}
+```{r chap05chunk14}
 quantile(nyc_taxi$trip_duration, probs = .5, na.rm = TRUE) # median == 50th percentile
 ```
 
 We can specify a vector for `probs` to get multiple percentiles all at once. For example setting `probs = c(.25, .75)` returns the 25th and 75th percentiles.
 
-```{r}
+```{r chap05chunk15}
 quantile(nyc_taxi$trip_duration, probs = c(.25, .75), na.rm = TRUE) # IQR == difference b/w 75th and 25th percentiles
 ```
 
 The difference between the 25th and 75th percentiles is called the inter-quartile range, which we can also get using the `IQR` function.
 
-```{r}
+```{r chap05chunk16}
 IQR(nyc_taxi$trip_duration, na.rm = TRUE) # interquartile range
 ```
 
 Let's look at a common bivariate summary statistic for numeric data: correlation.
 
-```{r}
+```{r chap05chunk17}
 cor(nyc_taxi$trip_distance, nyc_taxi$trip_duration, use = "complete.obs")
 ```
 
 We can use `mothod` to switch from Pearson's correlation to Spearman rank correlation.
 
-```{r}
+```{r chap05chunk18}
 cor(nyc_taxi$trip_distance, nyc_taxi$trip_duration, use = "complete.obs", method = "spearman")
 ```
 
@@ -136,13 +128,13 @@ Why does the Spearman correlation coefficient takes so much longer to compute?
 
 So far we've examined functions for summarizing numeric data. Let's now shift our attention to categorical data. We already saw that we can use `table` to get counts for each level of a `factor` column.
 
-```{r}
+```{r chap05chunk19}
 table(nyc_taxi$pickup_nhood) # one-way table
 ```
 
 When we pass more than one column to `table`, we get counts for each *combination* of the factor levels. For example, with two columns we get counts for each combination of the levels of the first factor and the second factor. In other words, we get a two-way table.
 
-```{r}
+```{r chap05chunk20}
 two_way <- with(nyc_taxi, table(pickup_nhood, dropoff_nhood)) # two-way table: an R `matrix`
 two_way[1:5, 1:5]
 ```
@@ -151,59 +143,53 @@ What about a three-way table? A three-way table (or n-way table where n is an in
 
 What about a three-way table? A three-way table (or n-way table where n is an integer) is represented in R by an object we call an `array`. A vector is a one- dimensional array, a matrix a two-dimensional array, and a three-way table is a kind of three-dimensional array.
 
-```{r}
+```{r chap05chunk21}
 arr_3d <- with(nyc_taxi, table(pickup_dow, pickup_hour, payment_type)) # a three-way table, an R 3D `array`
 arr_3d
 ```
 
 Let's see how we query a 3-dimensional `array`: Because we have a 3-dimensional array, we need to index it across three different dimensions:
 
-```{r}
+```{r chap05chunk22}
 arr_3d[3, 2, 2] # give me the 3rd row, 2nd column, 2nd 'page'
 ```
 
 Just as with a `data.frame`, leaving out the index for one of the dimensions returns all the values for that dimension.
 
-```{r}
+```{r chap05chunk23}
 arr_3d[ , , 2]
 ```
 
 We can use the names of the dimensions instead of their numeric index:
 
-```{r}
+```{r chap05chunk24}
 arr_3d['Tue', '5AM-9AM', 'cash']
 ```
 
 We can turn the `array` representation into a `data.frame` representation:
 
-```{r}
+```{r chap05chunk25}
 df_arr_3d <- as.data.frame(arr_3d) # same information, formatted as data frame
 head(df_arr_3d)
 ```
 
 We can subset the `data.frame` using the `subset` function:
 
-```{r}
+```{r chap05chunk26}
 subset(df_arr_3d, pickup_dow == 'Tue' & pickup_hour == '5AM-9AM' & payment_type == 'cash')
 ```
 
 Notice how the `array` notation is more terse, but not as readable (because we need to remember the order of the dimensions).
 
-We can use `apply` to get aggregates of a multidimensional array across some dimension(s).
+We can use `apply` to get aggregates of a multidimensional array across some dimension(s). The second argument to `apply` is used to specify which dimension(s) we are aggregating over.
 
-```{r}
-dim(arr_3d)
-```
-
-The second argument to `apply` is used to specify which dimension(s) we are aggregating over.
-
-```{r}
+```{r chap05chunk27}
 apply(arr_3d, 2, sum) # because `pickup_hour` is the second dimension, we sum over `pickup_hour`
 ```
 
 Once again, when the dimensions have names it is better to use the names instead of the numeric index.
 
-```{r}
+```{r chap05chunk28}
 apply(arr_3d, "pickup_hour", sum) # same as above, but more readable notation
 ```
 
@@ -211,43 +197,43 @@ So in the above example, we used apply to collapse a 3D `array` into a 2D `array
 
 We can use `prop.table` to turn the counts returned by `table` into proportions. The `prop.table` function has a second argument. When we leave it out, we get proportions for the grand total of the table.
 
-```{r}
+```{r chap05chunk29}
 prop.table(arr_3d) # as a proportion of the grand total
 ```
 
 For proportions out of marginal totals, we provide the second argument to `prop.table`. For example, specifying 1 as the second argument gives us proportions out of "row" totals. Recall that in a 3d object, a "row" is a 2D object, for example `arr_3d[1, , ]` is the first "row", `arr3d[2, , ]` is the second "row" and so on.
 
-```{r}
+```{r chap05chunk30}
 prop.table(arr_3d, 1) # as a proportion of 'row' totals, or marginal totals for the first dimension
 ```
 
 We can confirm this by using `apply` to run the `sum` function across the first dimension to make sure that they all add up to 1.
 
-```{r}
+```{r chap05chunk31}
 apply(prop.table(arr_3d, 1), 1, sum) # check that across rows, proportions add to 1
 ```
 
 Similarly, if the second argument to `prop.table` is 2, we get proportions that add up to 1 across the values of the 2nd dimension. Since the second dimension corresponds to pick-up hour, for each pickup-hour, we get the proportion of observations that fall into each pick-up day of week and payment type combination.
 
-```{r}
+```{r chap05chunk32}
 prop.table(arr_3d, 2) # as a proportion of column totals
 ```
 
 Which once again we can double-check with `apply`:
 
-```{r}
+```{r chap05chunk33}
 apply(prop.table(arr_3d, 2), 2, sum) # check that across columns, proportions add to 1
 ```
 
 Finally, if the second argument to `prop.table` is 3, we get proportions that add up to 1 across the values of the 3rd dimension. So for each payment type, the proportions now add up to 1.
 
-```{r}
+```{r chap05chunk34}
 prop.table(arr_3d, 3) # as a proportion of totals across third dimension
 ```
 
 Both `prop.table` and `apply` also accepts combinations of dimensions as the second argument. This makes them powerful tools for aggregation, as long as we're careful. For example, letting the second argument be `c(1, 2)` gives us proportions that add up to 1 for each combination of "row" and "column". So in other words, we get the percentage of card vs cash payments for each pick-up day of week and hour combination.
 
-```{r}
+```{r chap05chunk35}
 prop.table(arr_3d, c(1, 2)) # as a proportion of totals for each combination of 1st and 2nd dimensions
 ```
 
@@ -255,7 +241,7 @@ prop.table(arr_3d, c(1, 2)) # as a proportion of totals for each combination of 
 
 (1) The `trim` argument for the `mean` function is two-sided. Let's build a one- sided trimmed mean function, and one that uses counts instead of percentiles. Call it `mean_except_top_10`. For example `mean_except_top_10(x, 5)` will throw out the highest 5 values of `x` before computing the average. HINT: you can sort `x` using the `sort` function.
 
-```{r, eval=FALSE}
+```{r chap05chunk36, eval=FALSE}
 mean_except_top_10(c(1, 5, 3, 99), 1) # should return 3
 ```
 
@@ -263,7 +249,7 @@ mean_except_top_10(c(1, 5, 3, 99), 1) # should return 3
 
 We just leared that the `probs` argument of `quantile` can be a vector. So instead of getting multiple quantiles separately, such as
 
-```{r}
+```{r chap05chunk37}
 c(quantile(nyc_taxi$trip_distance, probs = .9),
   quantile(nyc_taxi$trip_distance, probs = .6),
   quantile(nyc_taxi$trip_distance, probs = .3))
@@ -271,7 +257,7 @@ c(quantile(nyc_taxi$trip_distance, probs = .9),
 
 we can get them all at once by passing the percentiles we want as a single vector to `probs`:
 
-```{r}
+```{r chap05chunk38}
 quantile(nyc_taxi$trip_distance, probs = c(.3, .6, .9))
 ```
 
@@ -284,13 +270,11 @@ There are two important tools we can use when considering efficiency:
 
 Both of these tools can be slow when working with large datasets (especially the benchmarking tool), so instead we create a vector of random numbers and use that for testing (alternatively, we could use a sample of the data). We want the vector to be big enough that test result are stable (not due to chance), but small enough that they will run within a reasonable time frame.
 
-```{r}
-random_vec <- rnorm(10^6) # a million random numbers generated from a standard normal distribution
-```
-
 Let's begin by profiling, for which we rely on the `profr` library:
 
-```{r}
+```{r chap05chunk39}
+random_vec <- rnorm(10^6) # a million random numbers generated from a standard normal distribution
+
 library(profr)
 my_test_function <- function(){
   quantile(random_vec, p = seq(0, 1, by = .01))
@@ -305,7 +289,7 @@ plot(p)
 
 Now onto benchmarking, we compare two functions: `first` and `scond`. `first` finds the 30th, 60th, and 90th percentiles of the data in one function call, but `scond` uses three separate function calls, one for each percentile. From the profiling tool, we now know that every time we compute percentiles, we need to sort the data, and that sorting the data is the most time-consuming part of the calculation. The benchmarking tool should show that `first` is three times more efficient than `scond`, because `first` sorts the data once and finds all three percentiles, whereas `scond` sorts the data three different times and finds one of the percentiles every time.
 
-```{r}
+```{r chap05chunk40}
 first <- function(x) quantile(x, probs = c(.3, .6, .9)) # get all percentiles at the same time
 scond <- function(x) {
   c(
@@ -327,7 +311,7 @@ print(microbenchmark(
 
 (1) We can sort the vector in reverse order, throw out the top n entries and then compute the average.
 
-```{r}
+```{r chap05chunk41}
 mean_except_top_10 <- function(x, n) {
   mean(-sort(-x)[-(1:n)], na.rm = TRUE)
 }
@@ -348,84 +332,84 @@ One of the most important sets of functions in `base` R are the `apply` family o
 
 Say we were interested in obtained summary statistics for all the columns listed in the vector `trip_metrics`:
 
-```{r}
+```{r chap05chunk42}
 trip_metrics <- c('passenger_count', 'trip_distance', 'fare_amount', 'tip_amount', 'trip_duration', 'tip_percent')
 ```
 
 We can use either `sapply` or `lapply` for this task. In fact, `sapply` and `lapply` have an identical syntax, but the difference is in the type output return. Let's first look at `sapply`: `sapply` generally organizes the results in a tidy format (unsually a vector or a matrix):
 
-```{r}
+```{r chap05chunk43}
 s_res <- sapply(nyc_taxi[ , trip_metrics], mean)
 s_res
 ```
 
 One of the great advantages of the `apply`-family of functions is that in addition to the statistical summary, we can pass any secondary argument the function takes to the function. Notice how we pass `na.rm = TRUE` to `sapply` hear so that we can remove missing values from the data before we compute the means.
 
-```{r}
+```{r chap05chunk44}
 s_res <- sapply(nyc_taxi[ , trip_metrics], mean, na.rm = TRUE)
 s_res
 ```
 
 The object `sapply` returns in this case is a vector: `mean` is a summary function that returns a single number, and `sapply` applies `mean` to multiple columns, returning a **named vector** with the means as its elements and the original column names preserved. Because `s_res` is a named vector, we can query it by name:
 
-```{r}
+```{r chap05chunk45}
 s_res["passenger_count"] # we can query the result object by name
 ```
 
 Now let's see what `lapply` does: unlike `sapply`, `lapply` makes no attempt to organize the results. Instead, it always returns a `list` as its output. A `list` is a very "flexible" data type, in that anything can be "dumped" into it.
 
-```{r}
+```{r chap05chunk46}
 l_res <- lapply(nyc_taxi[ , trip_metrics], mean)
 l_res
 ```
 
 In this case, we can 'flatten' the `list` with the `unlist` function to get the same result as `sapply`.
 
-```{r}
+```{r chap05chunk47}
 unlist(l_res) # this 'flattens' the `list` and returns what `sapply` returns
 ```
 
 Querying a `list` is a bit more complicated. We use one bracket to query a `list`, but the return object is still a `list`, in other words, with a single bracket, we get a sublist.
 
-```{r}
+```{r chap05chunk48}
 l_res["passenger_count"] # this is still a `list`
 ```
 
 If we want to return the object itself, we use two brackets.
 
-```{r}
+```{r chap05chunk49}
 l_res[["passenger_count"]] # this is the average count itself
 ```
 
 The above distinction is not very important when all we want to do is look at the result. But when we need to perform more computations on the results we obtained, the distinction is crucial. For example, recall that both `s_res` and `l_res` store column averages for the data. Say now that we wanted to take the average for passenger count and add 1 to it, so that the count includes the driver too. With `s_res` we do the following:
 
-```{r}
+```{r chap05chunk50}
 s_res["passenger_count"] <- s_res["passenger_count"] + 1
 s_res
 ```
 
 With `l_res` using a single bracket fails, because `l_res["passenger_count"]` is still a `list` and we can't add 1 to a `list`.
 
-```{r, error=TRUE}
+```{r chap05chunk51, error=TRUE}
 l_res["passenger_count"] <- l_res["passenger_count"] + 1
 ```
 
 So we need to use two brackets to perform the same operation on `l_res`.
 
-```{r}
+```{r chap05chunk52}
 l_res[["passenger_count"]] <- l_res[["passenger_count"]] + 1
 l_res
 ```
 
 Let's look at our last function in the `apply` family now, namely `tapply`: We use `tapply` to apply a function to the a column, **but group the results by the values other columns.**
 
-```{r}
+```{r chap05chunk53}
 tapply(nyc_taxi$tip_amount, nyc_taxi$pickup_nhood, mean, trim = 0.1, na.rm = TRUE) # trimmed average tip, by pickup neighborhood
 ```
 
 We can group the results by pickup and dropoff neighborhood pairs, by combining those two columns into one. For example, the `paste` function concatenates the pick-up and drop-off neighborhoods into a single string. The result is a flat vector with one element for each pick-up and drop-off neighborhood combination.
 
-```{r}
+```{r chap05chunk54}
 flat_array <- tapply(nyc_taxi$tip_amount,
 paste(nyc_taxi$pickup_nhood, nyc_taxi$dropoff_nhood, sep = " to "),
 mean, trim = 0.1, na.rm = TRUE)
@@ -435,7 +419,7 @@ head(flat_array)
 
 By putting both grouping columns in a `list` we can get an `array` (a 2D `array` or `matrix` in this case) instead of the flat vector we got earlier.
 
-```{r}
+```{r chap05chunk55}
 square_array <- tapply(nyc_taxi$tip_amount,
 list(nyc_taxi$pickup_nhood, nyc_taxi$dropoff_nhood),
 mean, trim = 0.1, na.rm = TRUE)
@@ -447,7 +431,7 @@ square_array[1:5, 1:5]
 
 Let's look at two other cases of using `sapply` vs `lapply`, one involving `quantile` and one involving `unique`.
 
-```{r}
+```{r chap05chunk56}
 qsap1 <- sapply(nyc_taxi[ , trip_metrics], quantile, probs = c(.01, .05, .95, .99), na.rm = TRUE)
 qlap1 <- lapply(nyc_taxi[ , trip_metrics], quantile, probs = c(.01, .05, .95, .99), na.rm = TRUE)
 ```
@@ -456,7 +440,7 @@ qlap1 <- lapply(nyc_taxi[ , trip_metrics], quantile, probs = c(.01, .05, .95, .9
 
 Let's now try the same, but this time pass the `unique` function to both, which returns the unique values in the data for each of the columns.
 
-```{r}
+```{r chap05chunk57}
 qsap2 <- sapply(nyc_taxi[ , trip_metrics], unique)
 qlap2 <- lapply(nyc_taxi[ , trip_metrics], unique)
 ```
@@ -469,35 +453,35 @@ qlap2 <- lapply(nyc_taxi[ , trip_metrics], unique)
 
 (1) Because `qsap1` is a matrix, we can query it the same way we query any n-dimensional `array`:
 
-```{r}
+```{r chap05chunk58}
 qsap1[c('5%', '95%'), c('trip_distance', 'trip_duration')]
 ```
 
 Since `qlap1` is a list with one element per each column of the data, we use two brackets to extract the percentiles for column separately. Moreover, because the percentiles themselves are stored in a named vector, we can pass the names of the percentiles we want in a single bracket to get the desired result.
 
-```{r}
+```{r chap05chunk59}
 qlap1[['trip_distance']][c('5%', '95%')]
 ```
 
-```{r}
+```{r chap05chunk60}
 qlap1[['trip_duration']][c('5%', '95%')]
 ```
 
 (2) In this case, `sapply` and `lapply` both return a `list`, simply because there is no other way for `sapply` to organize the results. We can just return the results for `passenger_count` and `tip_percent` as a sublist.
 
-```{r}
+```{r chap05chunk61}
 qsap2[c('passenger_count', 'tip_percent')]
 ```
 
 (3) Since we have the unique values for each column stored in `qlap2`, we can just run the `length` function to count how many unique values each column has. For example, for `passenger_count` we have
 
-```{r}
+```{r chap05chunk62}
 length(qlap2[['passenger_count']]) # don't forget the double bracket here!
 ```
 
 But we want to do this automatically for all the columns at once. The solution is to use `sapply`. So far we've been using `sapply` and `lapply` with the dataset as input. But we can just as well feed them any random list like `qsap` and apply a function to each element of that list (as long as doing so doesn't result in an error for any of the list's elements).
 
-```{r}
+```{r chap05chunk63}
 sapply(qlap2, length)
 ```
 
@@ -507,23 +491,23 @@ The above exercise offers a glimpse of how powerful R can be and quickly and suc
 
 As we use R more and more, we will see that a lot of R functions return a `list` as output (or something that is fundamentally a `list` but looks cosmetically different). In fact, as it happens a `data.frame` is also just a kind a `list`, with each element of the list corresponding to a column of the `data.frame`, and **all elements having the same length**. Why would a `data.frame` be a `list` and not a `matrix`? Because like a `vector`, a `matirx` or any `array` is **atomic**, meaning that its elements must be of the same type (usually `numeric`). Notice what happens if we try to force a vector to have one `character` element and one `numeric` one:
 
-```{r}
+```{r chap05chunk64}
 c("one", 1)
 ```
 
 The second element was **coerced** into the string "1". A `list` will not complain about this:
 
-```{r}
+```{r chap05chunk65}
 list("one", 1)
 ```
 
 Since columns of a `data.frame` can be of different types, it makes sense that under the hood a `data.frame` is really just a `list.` We can check that a `data.frame` is a kind of list **under the hood** by using the `typeof` function instead of `class`:
 
-```{r}
+```{r chap05chunk66}
 class(nyc_taxi)
 ```
 
-```{r}
+```{r chap05chunk67}
 typeof(nyc_taxi)
 ```
 
@@ -531,7 +515,7 @@ This **flexibility** is the reason functions that return lots of loosely-related
 
 We can also write our own summary functions and demonstrate this. In section 6.1, we focused on single summaries (such as `mean`), or multiple related ones (such as `quantile`), but now we want to write a function that combines different summaries and returns all of them at once. The trick is basically to wrap everything into a `list` and return the `list`. The function `my.summary` shown here is an example of such a function. It consists of mostly of separate but related summaries that are calculated piece-wise and then put together into a list and returned by the function.
 
-```{r}
+```{r chap05chunk68}
 my.summary <- function(grp_1, grp_2, resp) {
 # `grp_1` and `grp_2` are `character` or `factor` columns
 # `resp` is a numeric column
@@ -559,13 +543,13 @@ Looking at the above result, we can see that something went wrong with the trimm
 
 One thing that makes it hard to debug the function is that we do not have direct access to its **environment**. We need a way to "step inside" the function and run it line by line so we can see where the problem is. This is what `debug` is for.
 
-```{r, eval=FALSE}
+```{r chap05chunk69, eval=FALSE}
 debug(my.summary) # puts the function in debug mode
 ```
 
 Now, anytime we run the function we leave our current "global" environment and step into the function's environment, where we have access to all the local variables in the function as we run the code line-by-line.
 
-```{r, eval=FALSE}
+```{r chap05chunk70, eval=FALSE}
 my.summary(nyc_taxi$pickup_dow, nyc_taxi$pickup_hour, nyc_taxi$tip_amount)
 ```
 
@@ -573,33 +557,29 @@ We start at the beginning, where the only things evaluated are the function's ar
 
 Once we resolve the issue, we run `undebug` so the function can now run normally.
 
-```{r, eval=FALSE}
+```{r chap05chunk71, eval=FALSE}
 undebug(my.summary)
 ```
 
 To run `my.summary` on multiple numeric columns at once, we can use `lapply`:
 
-```{r}
+```{r chap05chunk72}
 res <- lapply(nyc_taxi[ , trip_metrics], my.summary, grp_1 = nyc_taxi$pickup_dow, grp_2 = nyc_taxi$pickup_hour)
 ```
 
 `res` is just a nested `list` and we can 'drill into' any individual piece we want with the right query. At the first level are the column names.
 
-```{r}
-res$tip_amount
-```
-
-```{r}
+```{r chap05chunk73}
 res$tip_amount$col_proportions # the next level has the statistics that the function outputs.
 ```
 
-```{r}
+```{r chap05chunk74}
 res$tip_amount$col_proportions["Mon", "9AM-12PM"]
 ```
 
 Since `res` contains a lot of summaries, it might be a good idea to save it using `save`. Any R object can be saved with `save`. This way if our R session crashes we can reload the object with the `load` function.
 
-```{r}
+```{r chap05chunk75}
 save(res, file = "res.RData") # save this result
 rm(res) # it is now safe to delete `res` from the current session
 load(file = "res.RData") # we can use `load` to reopen it anytime we need it again
@@ -612,7 +592,7 @@ Debug the summary function `my.summary` in the last section so that the trimmed 
 
 HINT: Notice what `sort` does to missing values.
 
-```{r}
+```{r chap05chunk76}
 sort(c(5, 1, NA, NA, 2))
 ```
 
@@ -626,20 +606,20 @@ When it comes to summarizing data, we have a lot of options. We covered just a f
 
 First let's review important functions in `dplyr`: `filter`, `mutate`, `transmute`, `group_by`, `select`, `slice`, `summarize`, `distinct`, `arrange`, `rename`, `inner_join`, `outer_join`, `left_join`. With each of the above function, we can either pass the data directly to the function or infer it from the the pipeline. Here's an example of `filter` being used in both ways. In the first case we pass the data as the first argument to `filter`.
 
-```{r}
+```{r chap05chunk77}
 library(dplyr)
 head(filter(nyc_taxi, fare_amount > 500)) # pass data directly to the function
 ```
 
 In the second case, we start a pipeline with the data, followed by the piping function `%>%`, followed by `filter` which now inherits the data from the previous step and only needs the filtering condition.
 
-```{r}
+```{r chap05chunk78}
 nyc_taxi %>% filter(fare_amount > 500) %>% head # infer the data from the pipeline
 ```
 
 Piping is especially useful for longer pipelines. Here's an example of a query without piping.
 
-```{r}
+```{r chap05chunk79}
 summarize( # (3)
   group_by( # (2)
     filter(nyc_taxi, fare_amount > 500), # (1)
@@ -654,7 +634,7 @@ To understand the query, we need to work from the inside out:
 
 The same query, using piping, looks like this:
 
-```{r}
+```{r chap05chunk80}
 nyc_taxi %>%
   filter(fare_amount > 500) %>% # (1)
   group_by(payment_type) %>% # (2)
@@ -671,7 +651,7 @@ The best way to learn `dplyr` is by example. So instead of covering functions on
 
 Implement this forth step to both the code with and without the pipeline, both of which are shown here:
 
-```{r, eval=FALSE}
+```{r chap05chunk81, eval=FALSE}
 summarize( # (3)
   group_by( # (2)
     filter(nyc_taxi, fare_amount > 500), # (1)
@@ -679,7 +659,7 @@ summarize( # (3)
 ave_duration = mean(trip_duration), ave_distance = mean(trip_distance))
 ```
 
-```{r, eval=FALSE}
+```{r chap05chunk82, eval=FALSE}
 nyc_taxi %>%
   filter(fare_amount > 500) %>% # (1)
   group_by(payment_type) %>% # (2)
@@ -702,7 +682,7 @@ The remaining exercises are questions about the data that need to be translated 
 
 (1) Without the pipeline function, we would have `arrange` as the outermost function:
 
-```{r}
+```{r chap05chunk83}
 arrange( # (4)
   summarize( # (3)
     group_by( # (2)
@@ -714,7 +694,7 @@ desc(ave_duration))
 
 With the pipeline function, we simply add the pipe to the end of `summarize` and add `arrange` as a new line to the end of the code:
 
-```{r}
+```{r chap05chunk84}
 q1 <- nyc_taxi %>%
   filter(fare_amount > 500) %>% # (1)
   group_by(payment_type) %>% # (2)
@@ -726,7 +706,7 @@ head(q1)
 
 (2) What are the times of the day and the days of the week with the highest fare per mile of ride?
 
-```{r}
+```{r chap05chunk85}
 q2 <- nyc_taxi %>%
   filter(trip_distance > 0) %>%
   group_by(pickup_dow, pickup_hour) %>%
@@ -739,7 +719,7 @@ head(q2)
 
 (3) For each pick-up neighborhood, find the number and percentage of trips that "fan out" into other neighborhoods. Sort results by pickup neighborhood and descending percentage. Limit results to top 50 percent coverage. In other words, show only the top 50 percent of destinations for each pick-up neighborhood.
 
-```{r}
+```{r chap05chunk86}
 q3 <- nyc_taxi %>%
   filter(!is.na(pickup_nhood) & !is.na(dropoff_nhood)) %>%
   group_by(pickup_nhood, dropoff_nhood) %>%
@@ -760,7 +740,7 @@ head(q3)
 
 There are many ways to answer this query and we cover three because each way highlights an important point. The first way consists sorting the data by date and using the `lag` function to find the difference between each date and the date proceeding it. If this difference is greater than 1, then we skipped one or more days.
 
-```{r}
+```{r chap05chunk87}
 nyc_taxi %>%
   select(pickup_datetime) %>%
   distinct(date = as.Date(pickup_datetime)) %>%
@@ -771,7 +751,7 @@ nyc_taxi %>%
 
 The second solution is more involved. First we create a `data.frame` of all dates available in `nyc_taxi`.
 
-```{r}
+```{r chap05chunk88}
 nyc_taxi %>%
   select(pickup_datetime) %>%
   distinct(date = as.Date(pickup_datetime)) %>%
@@ -780,7 +760,7 @@ nyc_taxi %>%
 
 Then we create a new `data.frame` of all dates that span the time range in the data. We can use `seq` to do that.
 
-```{r}
+```{r chap05chunk89}
 start_date <- min(data_dates$date)
 end_date <- max(data_dates$date)
 all_dates <- data.frame(date = seq(start_date, end_date, by = '1 day'))
@@ -788,13 +768,13 @@ all_dates <- data.frame(date = seq(start_date, end_date, by = '1 day'))
 
 Finally, we ask for the "anti-join" of the two datasets. An anti-join is the opposite of an left join: any keys present in left dataset but not the right are returned.
 
-```{r}
+```{r chap05chunk90}
 anti_join(all_dates, data_dates, by = 'date') # an anti-join is the reverse of an left join
 ```
 
 The third solution consists of comparing the number of days between the earliest and latest dates in the data to the number of days we expect to see if no days were missing.
 
-```{r}
+```{r chap05chunk91}
 nyc_taxi %>%
   distinct(date = as.Date(pickup_datetime)) %>%
   filter(is.na(date) == FALSE) %>%
@@ -808,7 +788,7 @@ This is a hard exercise. In query 3, we need to compute rolling statistics (roll
 
 For example, given `x <- 1:6` and `n <- 2` as inputs, the function returns `c(NA, NA, 6, 9, 12, 15)`
 
-```{r}
+```{r chap05chunk92}
 rolling_sum <- function(x, nlag) {
   stopifnot(nlag > 0, nlag < length(x))
   c(rep(NA, nlag), sapply((nlag + 1):length(x), function(ii) sum(x[(ii - nlag):ii])))
@@ -819,7 +799,7 @@ rolling_sum(rep(1, 100), 10) # Should return 10 NAs followed by 90 entries that 
 
 We can even go one step further. Let's rename the function to `rolling` and add a third argument to it called `FUN`, allowing us to specify any rolling function, not just `sum`.
 
-```{r}
+```{r chap05chunk93}
 rolling <- function(x, nlag, FUN) {
   stopifnot(nlag > 0, nlag < length(x))
   c(rep(NA, nlag), sapply((nlag + 1):length(x), function(ii) FUN(x[(ii - nlag):ii])))
@@ -828,7 +808,7 @@ rolling <- function(x, nlag, FUN) {
 
 We can now use `rolling` to find the 3 consecutive days with the most total number of trips.
 
-```{r}
+```{r chap05chunk94}
 nlag <- 2
 
 q5 <- nyc_taxi %>%
@@ -847,14 +827,14 @@ head(q5)
 
 As it turns out, there's already a similar function we could have used, called `rollapply` in the `zoo` package. Sometimes it pays off to take the time and search for the right function, especially if what we're trying to do is common enough that we should not have to "reinvent the wheel".
 
-```{r}
+```{r chap05chunk95}
 library(zoo)
 rollapply(1:10, 3, sum, fill = NA, align = 'right')
 ```
 
 Here's an alternative solution: We could have run the above query without `rolling` by just using the `lag` function, but the code is more complicated and harder to automate it for different values of `nlag` or for different functions other than `sum`. Here's how we can rewrite the above query with `lag`:
 
-```{r}
+```{r chap05chunk96}
 q5 <- nyc_taxi %>%
   filter(!is.na(pickup_datetime)) %>%
   transmute(end_date = as.Date(pickup_datetime)) %>%
@@ -875,13 +855,13 @@ head(q5)
 
 Here's how we compute the mean absolute deviation:
 
-```{r}
+```{r chap05chunk97}
 mad <- function(x) mean(abs(x - median(x))) # one-liner functions don't need curly braces
 ```
 
 This query can easily be written with the tools we learned so far.
 
-```{r}
+```{r chap05chunk98}
 q6 <- nyc_taxi %>%
   filter(!is.na(pickup_nhood) & !is.na(dropoff_nhood)) %>%
   group_by(pickup_nhood, dropoff_nhood) %>%
@@ -901,7 +881,7 @@ You may have noticed that the query we wrote in the last exercise was a little t
 - We can select `trip_distance` and `trip_duration` automatically using `starts_with('trip_')`, since they are the only columns that begin with that prefix, this can be a time-saver if we are selecting lots of columns at once (and we named them in a smart way). There are other helper functions called `ends_with` and `contains`.
 - Instead of defining the `mad` function separately, we can define it in-line. In fact, there's a shortcut whereby we just name the function and provide the body of the function, replacing `x` with a period.
 
-```{r}
+```{r chap05chunk99}
 q6 <- nyc_taxi %>%
   filter(!is.na(pickup_nhood) & !is.na(dropoff_nhood)) %>%
   group_by(pickup_nhood, dropoff_nhood) %>%

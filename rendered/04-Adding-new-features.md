@@ -1,7 +1,7 @@
 Creating new features
 ================
 Seth Mottaghinejad
-2017-01-31
+2017-02-08
 
 Feature creation and feature selection are can be some of the most time-consuming part of model-building. It is often the place where the interplay between technical knowledge (for example about the models we intend to build) and business or domain knowledge (data requirements and how the analysis will be put to use) is at the forefront.
 
@@ -22,40 +22,6 @@ Let's take a look at the data as it now stands.
 ``` r
 head(nyc_taxi)
 ```
-
-    ## # A tibble: 6 × 17
-    ##       pickup_datetime    dropoff_datetime passenger_count trip_distance
-    ##                <dttm>              <dttm>           <int>         <dbl>
-    ## 1 2016-06-21 21:33:52 2016-06-21 21:34:40               5          0.40
-    ## 2 2016-06-08 09:52:19 2016-06-08 10:19:55               1          5.20
-    ## 3 2016-06-14 23:27:22 2016-06-14 23:35:05               1          2.10
-    ## 4 2016-06-12 20:13:12 2016-06-12 20:18:53               5          2.23
-    ## 5 2016-06-10 23:40:21 2016-06-11 00:05:14               3          2.72
-    ## 6 2016-06-28 16:46:23 2016-06-28 16:54:57               1          1.30
-    ##   pickup_longitude pickup_latitude rate_code_id dropoff_longitude
-    ##              <dbl>           <dbl>       <fctr>             <dbl>
-    ## 1              -74            40.7     standard               -74
-    ## 2              -74            40.8     standard               -74
-    ## 3              -74            40.7     standard               -74
-    ## 4              -74            40.8     standard               -74
-    ## 5              -74            40.7     standard               -74
-    ## 6              -74            40.7     standard               -74
-    ##   dropoff_latitude payment_type fare_amount extra mta_tax tip_amount
-    ##              <dbl>       <fctr>       <dbl> <dbl>   <dbl>      <dbl>
-    ## 1             40.7         card         3.0   0.5     0.5       0.86
-    ## 2             40.8         cash        21.5   0.0     0.5       0.00
-    ## 3             40.7         card         9.0   0.5     0.5       1.50
-    ## 4             40.8         card         8.0   0.5     0.5       2.79
-    ## 5             40.7         card        17.0   0.5     0.5       3.66
-    ## 6             40.7         cash         7.5   1.0     0.5       0.00
-    ##   tolls_amount improvement_surcharge total_amount
-    ##          <dbl>                 <dbl>        <dbl>
-    ## 1            0                   0.3         5.16
-    ## 2            0                   0.3        22.30
-    ## 3            0                   0.3        11.80
-    ## 4            0                   0.3        12.09
-    ## 5            0                   0.3        21.96
-    ## 6            0                   0.3         9.30
 
 Discuss possible 'features' (columns) that we can extract from already existing columns. Recall that our goal is to tell interesting (unexpected, or not immediately obvious) stories based on the data, so think of features that would make this dataset more interesting to analyze and the story more compelling.
 
@@ -82,48 +48,6 @@ levels(nyc_taxi$dropoff_hour) <- hour_labels
 head(nyc_taxi)
 ```
 
-    ## # A tibble: 6 × 22
-    ##       pickup_datetime    dropoff_datetime passenger_count trip_distance
-    ##                <dttm>              <dttm>           <int>         <dbl>
-    ## 1 2016-06-21 21:33:52 2016-06-21 21:34:40               5          0.40
-    ## 2 2016-06-08 09:52:19 2016-06-08 10:19:55               1          5.20
-    ## 3 2016-06-14 23:27:22 2016-06-14 23:35:05               1          2.10
-    ## 4 2016-06-12 20:13:12 2016-06-12 20:18:53               5          2.23
-    ## 5 2016-06-10 23:40:21 2016-06-11 00:05:14               3          2.72
-    ## 6 2016-06-28 16:46:23 2016-06-28 16:54:57               1          1.30
-    ##   pickup_longitude pickup_latitude rate_code_id dropoff_longitude
-    ##              <dbl>           <dbl>       <fctr>             <dbl>
-    ## 1              -74            40.7     standard               -74
-    ## 2              -74            40.8     standard               -74
-    ## 3              -74            40.7     standard               -74
-    ## 4              -74            40.8     standard               -74
-    ## 5              -74            40.7     standard               -74
-    ## 6              -74            40.7     standard               -74
-    ##   dropoff_latitude payment_type fare_amount extra mta_tax tip_amount
-    ##              <dbl>       <fctr>       <dbl> <dbl>   <dbl>      <dbl>
-    ## 1             40.7         card         3.0   0.5     0.5       0.86
-    ## 2             40.8         cash        21.5   0.0     0.5       0.00
-    ## 3             40.7         card         9.0   0.5     0.5       1.50
-    ## 4             40.8         card         8.0   0.5     0.5       2.79
-    ## 5             40.7         card        17.0   0.5     0.5       3.66
-    ## 6             40.7         cash         7.5   1.0     0.5       0.00
-    ##   tolls_amount improvement_surcharge total_amount pickup_hour pickup_dow
-    ##          <dbl>                 <dbl>        <dbl>      <fctr>     <fctr>
-    ## 1            0                   0.3         5.16    6PM-10PM        Tue
-    ## 2            0                   0.3        22.30     5AM-9AM        Wed
-    ## 3            0                   0.3        11.80    10PM-1AM        Tue
-    ## 4            0                   0.3        12.09    6PM-10PM        Sun
-    ## 5            0                   0.3        21.96    10PM-1AM        Fri
-    ## 6            0                   0.3         9.30    12PM-4PM        Tue
-    ##   dropoff_hour dropoff_dow trip_duration
-    ##         <fctr>      <fctr>         <int>
-    ## 1     6PM-10PM         Tue            48
-    ## 2     9AM-12PM         Wed          1656
-    ## 3     10PM-1AM         Tue           463
-    ## 4     6PM-10PM         Sun           341
-    ## 5     10PM-1AM         Sat          1493
-    ## 6     12PM-4PM         Tue           514
-
 ``` r
 dp <- data.frame(x = seq(.01, .99, by = .01))
 dp$y <- quantile(nyc_taxi$trip_duration, p = dp$x, na.rm = TRUE)
@@ -131,7 +55,7 @@ ggplot(aes(y = y/60, x = x*100), data = dp) +
   geom_line()
 ```
 
-![](images/unnamed-chunk-4-1.png)
+![](rendered/images/chap04chunk04-1.png)
 
 Geographical features
 ---------------------
@@ -202,7 +126,7 @@ theme(legend.position = "none") +
 geom_text_repel(aes(label = id), data = nyc_centroids, size = 3)
 ```
 
-![](images/unnamed-chunk-10-1.png)
+![](rendered/images/chap04chunk10-1.png)
 
 We now go back to the data to find the neighborhood information based on the pick-up and drop-off coordinates. We store pick-up longitude and latitude in a separate `data.frame`, replacing NAs with zeroes (the function we're about to use doesn't work with NAs). We then use the `coordinates` function to point to the columns that correspond to the geographical coordinates. Finally, we use the `over` function to find the region (in this case the neighborhood) that the coordinates in the data fall into, and we append the neighborhood name as a new column to the `nyc_taxi` dataset.
 
@@ -506,10 +430,11 @@ if(length(dir(data_dir)) < 1) {
 }
 ```
 
-    ## [1] "yellow_tripdata_2016_clean.xdf" "yellow_tripsample_2016-01.csv" 
-    ## [3] "yellow_tripsample_2016-02.csv"  "yellow_tripsample_2016-03.csv" 
-    ## [5] "yellow_tripsample_2016-04.csv"  "yellow_tripsample_2016-05.csv" 
-    ## [7] "yellow_tripsample_2016-06.csv"  "yellow_tripsample_2016.xdf"
+    ##  [1] "output"                         "yellow_tripdata_2016_clean.xdf"
+    ##  [3] "yellow_tripsample_2016-01.csv"  "yellow_tripsample_2016-02.csv" 
+    ##  [5] "yellow_tripsample_2016-03.csv"  "yellow_tripsample_2016-04.csv" 
+    ##  [7] "yellow_tripsample_2016-05.csv"  "yellow_tripsample_2016-06.csv" 
+    ##  [9] "yellow_tripsample_2016.xdf"     "ZillowNeighborhoods-NY"
 
 Tipping behavior
 ----------------
@@ -529,7 +454,7 @@ ggplot(aes(y = y, x = x*100), data = dp) +
   geom_line()
 ```
 
-![](images/unnamed-chunk-35-1.png)
+![](rendered/images/chap04chunk35-1.png)
 
 ``` r
 library(ggplot2)
@@ -539,7 +464,7 @@ ggplot(data = nyc_taxi) +
   xlim(c(-1, 31)) # only show tipping percentages between 0 and 30
 ```
 
-![](images/unnamed-chunk-36-1.png)
+![](rendered/images/chap04chunk36-1.png)
 
 The histogram confirms what we suspected: tipping is affected by the method of payment. However, it is unlikely to believe that people who pay cash simply don't tip. A more believable scenario is that cash customers tip too, but their tip does not get recorded into the system as tip. In the next exercise, we try our hand at simulating tipping behavior for cash customers.
 
@@ -578,7 +503,7 @@ ggplot(data = nyc_taxi) +
   xlim(c(-1, 31)) # only show tipping percentages between 0 and 30
 ```
 
-![](images/unnamed-chunk-38-1.png)
+![](rendered/images/chap04chunk38-1.png)
 
 ### Exercises
 
@@ -693,6 +618,6 @@ facet_grid(payment_type ~ ., scales = "free") + # break up by payment type and a
 xlim(c(-1, 31)) # only show tipping percentages between 0 and 30
 ```
 
-![](images/unnamed-chunk-47-1.png)
+![](rendered/images/chap04chunk47-1.png)
 
 It shouldn't be surprising that the rounding behavior results in a histogram with certain gaps between the bars, especially between the numbers 10 and 20.

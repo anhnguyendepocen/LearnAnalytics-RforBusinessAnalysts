@@ -5,7 +5,7 @@ output: github_document
 date: "`r Sys.Date()`"
 ---
 
-```{r, include=FALSE}
+```{r chap04chunk01, include=FALSE}
 source('setup.R')
 ```
 
@@ -25,7 +25,7 @@ Features extraction is the process of creating new (and interesting) columns in 
 
 Let's take a look at the data as it now stands.
 
-```{r}
+```{r chap04chunk02}
 head(nyc_taxi)
 ```
 
@@ -35,7 +35,7 @@ Discuss possible 'features' (columns) that we can extract from already existing 
 
 The first set of features we extract are date and time related features. Specifically, we would like to know the day of the week and the time of the day (based on our own cutoffs).
 
-```{r}
+```{r chap04chunk03}
 library(dplyr)
 library(lubridate)
 weekday_labels <- c('Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat')
@@ -53,7 +53,7 @@ levels(nyc_taxi$dropoff_hour) <- hour_labels
 head(nyc_taxi)
 ```
 
-```{r}
+```{r chap04chunk04}
 dp <- data.frame(x = seq(.01, .99, by = .01))
 dp$y <- quantile(nyc_taxi$trip_duration, p = dp$x, na.rm = TRUE)
 ggplot(aes(y = y/60, x = x*100), data = dp) +
@@ -64,7 +64,7 @@ ggplot(aes(y = y/60, x = x*100), data = dp) +
 
 The next set of features we extract from the data are geographical features, for which we load the following geospatial packages:
 
-```{r}
+```{r chap04chunk05}
 library(rgeos)
 library(sp)
 library(maptools)
@@ -72,19 +72,19 @@ library(maptools)
 
 It is common to store GIS data in R into **shapefiles**. A shapefile is essentially a data object that stores geospatial informaiton such as region names and boundaries where a region can be anything from a continent to city neighborhoods. The shapefile we use here was provided by Zillow.com and can be found [here](http://www.zillow.com/howto/api/neighborhood-boundaries.htm). It is a shapefile for the state of New York, and it contains neighborhood-level information for New York City.
 
-```{r}
+```{r chap04chunk06}
 nyc_shapefile <- readShapePoly('ZillowNeighborhoods-NY/ZillowNeighborhoods-NY.shp')
 ```
 
 We can see what sort of information is available by peeking at `nyc_shapefile@data`:
 
-```{r}
+```{r chap04chunk07}
 head(nyc_shapefile@data, 10)
 ```
 
 The data stores information about neighborhoods under the column `NAME`. Since we have longitude and latitude for pick-up and drop-off location, we can use the above data set to find the pick-up and drop-off neighborhoods for each cab ride. To keep the analysis simple, we limit the data to Manhattan only, where the great majority of cab rides take place.
 
-```{r}
+```{r chap04chunk08}
 nyc_shapefile <- subset(nyc_shapefile, COUNTY == 'New York') # limit the data to Manhattan only
 ```
 
@@ -92,7 +92,7 @@ Notice that even though `nyc_shapefile` is not a `data.frame`, `subset` still wo
 
 With a bit of work, we can plot a map of the whole area, showing the boundaries separating each neighborhood. We won't go into great detail on how the plots are generated, as it would derail us from the main topic.
 
-```{r}
+```{r chap04chunk09}
 library(ggplot2)
 nyc_shapefile@data$id <- as.character(nyc_shapefile@data$NAME)
 nyc_points <- fortify(gBuffer(nyc_shapefile, byid = TRUE, width = 0), region = "NAME") # fortify neighborhood boundaries
@@ -100,7 +100,7 @@ nyc_points <- fortify(gBuffer(nyc_shapefile, byid = TRUE, width = 0), region = "
 
 As part of the code to create the plot, we use `dplyr` to summarize the data and get median coordinates for each neighborhood, but since we revisit `dplyr` in greater depth in the next section, we skip the explanation for now.
 
-```{r}
+```{r chap04chunk10}
 library(dplyr)
 nyc_df <- inner_join(nyc_points, nyc_shapefile@data, by = "id")
 nyc_centroids <- summarize(group_by(nyc_df, id), long = median(long), lat = median(lat))
@@ -118,7 +118,7 @@ geom_text_repel(aes(label = id), data = nyc_centroids, size = 3)
 
 We now go back to the data to find the neighborhood information based on the pick-up and drop-off coordinates. We store pick-up longitude and latitude in a separate `data.frame`, replacing NAs with zeroes (the function we're about to use doesn't work with NAs). We then use the `coordinates` function to point to the columns that correspond to the geographical coordinates. Finally, we use the `over` function to find the region (in this case the neighborhood) that the coordinates in the data fall into, and we append the neighborhood name as a new column to the `nyc_taxi` dataset.
 
-```{r}
+```{r chap04chunk11}
 data_coords <- data.frame(
   long = ifelse(is.na(nyc_taxi$pickup_longitude), 0, nyc_taxi$pickup_longitude),
   lat = ifelse(is.na(nyc_taxi$pickup_latitude), 0, nyc_taxi$pickup_latitude)
@@ -131,13 +131,13 @@ nyc_taxi$pickup_nhood <- nhoods$NAME # we attach the neighborhoods to the origin
 
 We can use `table` to get a count of pick-up neighborhoods:
 
-```{r}
+```{r chap04chunk12}
 head(table(nyc_taxi$pickup_nhood, useNA = "ifany"))
 ```
 
 We now repeat the above process, this using drop-off coordinates this time to get the drop-off neighborhood.
 
-```{r}
+```{r chap04chunk13}
 data_coords <- data.frame(
   long = ifelse(is.na(nyc_taxi$dropoff_longitude), 0, nyc_taxi$dropoff_longitude),
   lat = ifelse(is.na(nyc_taxi$dropoff_latitude), 0, nyc_taxi$dropoff_latitude)
@@ -149,7 +149,7 @@ nyc_taxi$dropoff_nhood <- nhoods$NAME
 
 And since `data_coords` and `nhoods` are potentially large objects, we remove them from our session when they're no longer needed.
 
-```{r}
+```{r chap04chunk14}
 rm(data_coords, nhoods) # delete these objects, as they are no longer needed
 ```
 
@@ -169,7 +169,7 @@ There is however something we can do to avoid both of the above headaches: wrap 
 
 (2) Here's a basic user-defined R function:
 
-```{r}
+```{r chap04chunk15}
 p <- 5
 do.something <- function(n, d) {
   m <- n + p
@@ -186,7 +186,7 @@ do.something <- function(n, d) {
 
 Try to predict what the function returns in the two cases here:
 
-```{r}
+```{r chap04chunk16}
 do.something(10, 3)
 p <- 8
 do.something(10, 3)
@@ -198,7 +198,7 @@ do.something(10, 3)
 
 Here's the solution to part (3). As we mentioned, there's more than one way of doing this. One way is to turn `p` into an argument for the function `do.something`, with the default value set to 5.
 
-```{r}
+```{r chap04chunk17}
 do.something <- function(n, d, p = 5) {
   m <- n + p
   return(m/d)
@@ -207,7 +207,7 @@ do.something <- function(n, d, p = 5) {
 
 Another approach is to make `p` a local variable, instead of a global variable. When the function runs, regardless of what `p` is assigned to globally, `p` will always be assigned the value 5 in the function's environment.
 
-```{r}
+```{r chap04chunk18}
 do.something <- function(n, d) {
   p <- 5
   m <- n + p
@@ -226,7 +226,7 @@ Of course writing good functions can be more involved than what we described her
 
 With the last exercise as a backdrop, let's now delete `pickup_nhood` and `dropoff_nhood` from the data and recreate those columns, this time by writing a function.
 
-```{r}
+```{r chap04chunk19}
 nyc_taxi$pickup_nhood <- NULL # we drop this column so we can re-create it here
 nyc_taxi$dropoff_nhood <- NULL # we drop this column so we can re-create it here
 ```
@@ -235,7 +235,7 @@ nyc_taxi$dropoff_nhood <- NULL # we drop this column so we can re-create it here
 
 Here is our earlier code for appending neighborhood information (drop-off in this case) to the data using the shapefile. Wrap this code around a new function. Let's call the function `add.neighborhoods`. Assign the function the correct inputs (think about what those need to be) and modify the code itself so the function takes those inputs and produces the correct output (think about what that needs to be). Once you have your function, run it twice, once to get pick-up neighborhood and once to get drop-off neighborhood.
 
-```{r, eval=FALSE}
+```{r chap04chunk20, eval=FALSE}
 data_coords <- data.frame(
   long = ifelse(is.na(nyc_taxi$dropoff_longitude), 0, nyc_taxi$dropoff_longitude),
   lat = ifelse(is.na(nyc_taxi$dropoff_latitude), 0, nyc_taxi$dropoff_latitude)
@@ -249,7 +249,7 @@ nyc_taxi$dropoff_nhood <- nhoods$NAME
 
 We call the function `add.neighborhoods`. Its inputs are the dataset, the names of the longitude and latitude coordinates (as strings), and the shapefile. The output we return is a single column containing the neighborhoods names.
 
-```{r}
+```{r chap04chunk21}
 add.neighborhoods <- function(long_var, lat_var, shapefile) {
   require(rgeos)
   require(maptools)
@@ -264,14 +264,14 @@ add.neighborhoods <- function(long_var, lat_var, shapefile) {
 
 We can now use our function twice. Once to find the pick-up neighborhood:
 
-```{r}
+```{r chap04chunk22}
 nyc_taxi$pickup_nhood <- add.neighborhoods(nyc_taxi$pickup_longitude, nyc_taxi$pickup_latitude, nyc_shapefile)
 table(nyc_taxi$pickup_nhood, useNA = "ifany")
 ```
 
 And a second time to find the drop-off neighborhood:
 
-```{r}
+```{r chap04chunk23}
 
 nyc_taxi$dropoff_nhood <- add.neighborhoods(nyc_taxi$dropoff_longitude, nyc_taxi$dropoff_latitude, nyc_shapefile)
 table(nyc_taxi$dropoff_nhood, useNA = "ifany")
@@ -281,7 +281,7 @@ table(nyc_taxi$dropoff_nhood, useNA = "ifany")
 
 Let's revisit the function we defined in the last exercise:
 
-```{r}
+```{r chap04chunk24}
 p <- 5
 do.something <- function(n, d) {
   m <- n + p
@@ -297,45 +297,45 @@ do.something <- function(n, d) {
 
 For part (1) instead of feeding single numbers as inputs to the function, we try an `integer` vector instead. Since the function has two inputs, we can try an `integer` vector as the first input (and singleton as the second), vice versa, or `integer` vectors for both inputs.
 
-```{r}
+```{r chap04chunk25}
 do.something(10, 3) # singleton inputs
 ```
 
-```{r}
+```{r chap04chunk26}
 do.something(1:10, 3) # first input is a vector, output is also a vector
 ```
 
-```{r}
+```{r chap04chunk27}
 do.something(1:10, seq(1, 20, by = 2)) # both inputs are vectors, as is the output
 ```
 
 For part (2), here's how we can show that `ifelse` is vectorized:
 
-```{r}
+```{r chap04chunk28}
 ifelse(2 > 1, 55, 0) # singleton condition and output
 ```
 
-```{r}
+```{r chap04chunk29}
 ifelse(0:5 > 1, 55, 0) # condition is vector, so is the output
 ```
 
-```{r}
+```{r chap04chunk30}
 ifelse(0:5 > 1, letters[1:6], LETTERS[1:6]) # all inputs are vectors, so is the output
 ```
 
 However, `if` and `else` are not vectorized functions, as can be seen by the following example:
 
-```{r}
+```{r chap04chunk31}
 if(2 > 1) 55 else 0 # singleton condition works fine
 ```
 
-```{r}
+```{r chap04chunk32}
 if(0:5 > 1) 55 else 0 # vector of conditions does not work (only the first element) is considered
 ```
 
 This means that we generally use `ifelse` when we need to transform the data (e.g. create a new column) based on conditional statements, whereas we use `if` and `else` when we need to check a single condition, such as this:
 
-```{r}
+```{r chap04chunk33}
 if(length(dir(data_dir)) < 1) {
   warning(sprintf("%s folder seems empty!", data_dir))
 } else {
@@ -347,13 +347,13 @@ if(length(dir(data_dir)) < 1) {
 
 We now calculate the tipping percentage for every trip.
 
-```{r}
+```{r chap04chunk34}
 nyc_taxi <- mutate(nyc_taxi, tip_percent = as.integer(tip_amount / (tip_amount + fare_amount) * 100))
 ```
 
 The percentage for people who tipped nothing is a bit suspicious. The above table is useful, but it might be easier for us to see the distribution if we plot the histogram. And since there's a good chance that method of payment affects tipping, we break up the histogram by `payment_type`.
 
-```{r}
+```{r chap04chunk35}
 dp <- data.frame(x = seq(.01, .99, by = .01))
 dp$y <- quantile(nyc_taxi$tip_percent, p = dp$x, na.rm = TRUE)
 ggplot(aes(y = y, x = x*100), data = dp) +
@@ -361,7 +361,7 @@ ggplot(aes(y = y, x = x*100), data = dp) +
 ```
 
 
-```{r}
+```{r chap04chunk36}
 library(ggplot2)
 ggplot(data = nyc_taxi) +
   geom_histogram(aes(x = tip_percent), binwidth = 1) + # show a separate bar for each percentage
@@ -380,7 +380,7 @@ Since even among card-paying customers, a small proportion don't tip, we can tos
 
 Here's how we can apply the above logic to the dataste:
 
-```{r}
+```{r chap04chunk37}
 nyc_taxi <- mutate(nyc_taxi,
   toss_coin = rbinom(nrow(nyc_taxi), 1, p = .95), # toss a coin
   tip_if_heads = rnorm(nrow(nyc_taxi), mean = fare_amount * 0.20, sd = .25),
@@ -398,7 +398,7 @@ nyc_taxi <- mutate(nyc_taxi,
 
 Let's visualize the percentage tipped to for card and cash customers now.
 
-```{r}
+```{r chap04chunk38}
 library(ggplot2)
 ggplot(data = nyc_taxi) +
   geom_histogram(aes(x = tip_percent), binwidth = 1) + # show a separate bar for each percentage
@@ -417,7 +417,7 @@ For example, a card customer could tip 10 percent regardless of the fare amount,
 
 In other words, we want to write a function that calculates tip by *rounding up* the fare amount. Writing such a function from scratch is a little tedious. Fortunately, there is already a function in `base` R to help us:
 
-```{r}
+```{r chap04chunk39}
 findInterval(3.66, c(1, 3, 4.5, 6, 10))
 ```
 
@@ -426,13 +426,13 @@ Take a moment to inspect and familiarize yourself with the above function:
 - What does the above function return?
 - What are some ways the function could "misbehave"? In other words, check what the function returns when odd inputs are provided, including NAs.
 
-```{r}
+```{r chap04chunk40}
 findInterval(NA, c(1, 3, 4.5, 6, 10))
 ```
 
 Let's break up the above code into two parts:
 
-```{r}
+```{r chap04chunk41}
 upper_limits <- c(1, 3, 4.5, 6, 10)
 findInterval(3.66, upper_limits)
 ```
@@ -443,7 +443,7 @@ findInterval(3.66, upper_limits)
 
 (3) Wrap the above solution into a function called `round_up_fare` and test it with the following input:
 
-```{r, eval=FALSE}
+```{r chap04chunk42, eval=FALSE}
 sample_of_fares <- c(.55, 2.33, 4, 6.99, 15.20, 18, 23, 44)
 round_up_fare(sample_of_fares, upper_limits)
 ```
@@ -452,7 +452,7 @@ Here's the result we expect to get:
 
 (4) Replace the statistical approach to simulating `tip_amount` for the cash customers with the rule-based approach implemented in the above function. In the data transformation above (under `nyc_taxi <- mutate(...)`), replace the line `tip_if_heads = rnorm(...)` with the transformation corresponding to the rule-based approach, as implemented by `round_up_fare`. Use the following fare round-up upper limits:
 
-```{r, eval=FALSE}
+```{r chap04chunk43, eval=FALSE}
 fare_intervals <- c(0:10, seq(12, 20, by = 2), seq(25, 50, by = 5), seq(55, 100, by = 10))
 round_up_fare(23, fare_intervals)
 ```
@@ -463,19 +463,19 @@ Run the new transformation and recreate the plot, comment on the new distributio
 
 (1) We want to return one of the elements of `upper_limits`. Which element we return is dynamically determined by `findIntarval`, except we need to add 1 to return the upper limit (otherwise the lower limit is returned).
 
-```{r}
+```{r chap04chunk44}
 upper_limits[findInterval(0, upper_limits) + 1]
 ```
 
 (2) The problem reduces to finding out if `findInterval` is vectorized. We simply feed a vector, `1:5` in this example, to `findInterval` and make sure that it returns a vector.
 
-```{r}
+```{r chap04chunk45}
 upper_limits[findInterval(1:5, upper_limits) + 1]
 ```
 
 (3) Once we have the logic figured out, wrapping it into a neat function is usually the easy part. Here the function will default to using `upper_limit` unless otherwise specified.
 
-```{r}
+```{r chap04chunk46}
 round_up_fare <- function(x, ul = upper_limits) {
   upper_limits[findInterval(x, upper_limits) + 1]
 }
@@ -486,7 +486,7 @@ round_up_fare(sample_of_fares)
 
 (4) Just replace `tip_if_heads = rnorm(nrow(nyc_taxi), mean = fare_amount * 0.20, sd = .25)` with `tip_if_heads = round_up_fare(fare_amount, fare_intervals) - fare_amount` and rerun the whole code chunk and the one after it for recreating the plot.
 
-```{r}
+```{r chap04chunk47}
 nyc_taxi <- mutate(nyc_taxi,
   toss_coin = rbinom(nrow(nyc_taxi), 1, p = .95), # toss a coin
   tip_if_heads = round_up_fare(fare_amount, fare_intervals) - fare_amount,

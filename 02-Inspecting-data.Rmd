@@ -5,7 +5,7 @@ output: github_document
 date: "`r Sys.Date()`"
 ---
 
-```{r, include=FALSE}
+```{r chap02chunk01, include=FALSE}
 source('setup.R')
 ```
 
@@ -25,19 +25,19 @@ Most of the time, the above steps are not clearly delineated from each other. Fo
 
 Let's begin the data exploration. Each of the functions below return some useful information about the data.
 
-```{r}
+```{r chap02chunk02}
 head(nyc_taxi) # show me the first few rows
 ```
 
-```{r}
+```{r chap02chunk03}
 head(nyc_taxi, n = 3) # show me the first n rows
 ```
 
-```{r}
+```{r chap02chunk04}
 tail(nyc_taxi) # show me the last few rows
 ```
 
-```{r}
+```{r chap02chunk05}
 basic_info <- list(
   class = class(nyc_taxi), # shows the type of the data: `data.frame`
   type = typeof(nyc_taxi), # shows that a `data.frame` is fundamentally a `list` object
@@ -50,7 +50,7 @@ basic_info
 
 We use `str` to look at column types in the data: the most common column types are `integer`, `numeric` (for floats), `character` (for strings), `factor` (for categorical data). Less common column types exist, such as date, time, and datetime formats.
 
-```{r}
+```{r chap02chunk06}
 str(nyc_taxi)
 ```
 
@@ -69,21 +69,21 @@ As we will see, we can be very flexible in what we choose for `rows_to_slice` an
 
 We will encounter examples for each case.
 
-```{r}
+```{r chap02chunk07}
 nyc_taxi[1:5, 1:4] # rows 1 through 5, columns 1 through 4
 ```
 
-```{r}
+```{r chap02chunk08}
 nyc_taxi[1:5, -(1:4)] # rows 1 through 5, except columns 1 through 4
 ```
 
-```{r}
+```{r chap02chunk09}
 nyc.first.ten <- nyc_taxi[1:10, ] # store the first 10 rows and all columns in a new `data.frame` called `nyc.first.ten`
 ```
 
 So far our data slices have been limited to adjacent rows and adjacent columns. Here's an example of how to slice the data for non-adjacent rows. It is also far more common to select columns by their names instead of their position (also called numeric index), since this makes the code more readable and won't break the code if column positions change.
 
-```{r}
+```{r chap02chunk10}
 nyc_taxi[c(2, 3, 8, 66), c("fare_amount", "mta_tax", "tip_amount", "tolls_amount")]
 ```
 
@@ -94,11 +94,11 @@ To query a single column of the data, we have two options:
 - we can still use the bracket notation, namely `data[ , col_name]`
 - we can use a list notation, namely `data$col_name`
 
-```{r}
+```{r chap02chunk11}
 nyc_taxi[1:10, "fare_amount"]
 ```
 
-```{r}
+```{r chap02chunk12}
 nyc_taxi$fare_amount[1:10]
 ```
 
@@ -106,26 +106,26 @@ Depending on the situation, one notation may be preferable to the other, as we w
 
 So far we sliced the data at particular rows using the index of the row. A more common situation is one where we query the data for rows that meet a given condition. Multiple conditions can be combined using the `&` (and) and `|` (or) operators.
 
-```{r}
+```{r chap02chunk13}
 head(nyc_taxi[nyc_taxi$fare_amount > 350, ]) # return the rows of the data where `fare_amount` exceeds 350
 ```
 
 We can use a function like `grep` to grab only columns that match a certain pattern, such as columns that have the word 'amount' in them.
 
-```{r}
+```{r chap02chunk14}
 amount_vars <- grep('amount', names(nyc_taxi), value = TRUE)
 nyc_taxi[nyc_taxi$fare_amount > 350 & nyc_taxi$tip_amount < 10, amount_vars]
 ```
 
 As these conditional statements become longer, it becomes increasingly tedious to write `nyc_taxi$` proir to the column name every time we refer to a column in the data. Note how leaving out `nyc_taxi$` by accident can result in an error:
 
-```{r, error=TRUE}
+```{r chap02chunk15, error=TRUE}
 nyc_taxi[nyc_taxi$fare_amount > 350 & tip_amount < 10, amount_vars]
 ```
 
 As the error suggests, R expected to find a stand-alone object called `tip_amount`, which doesn't exist. Instead, we meant to point to the column called `tip_amount` in the nyc_taxi dataset, in other words `nyc_taxi$tip_amount`. This error also suggests one dangerous pitfall: if we did have an object called `tip_amount` in our R session, we may have failed to notice the bug in the code.
 
-```{r}
+```{r chap02chunk16}
 tip_amount <- 20 # this is the value that will be used to check the condition below
 amount_vars <- grep('amount', names(nyc_taxi), value = TRUE)
 nyc_taxi[nyc_taxi$fare_amount > 350 & tip_amount < 10, amount_vars] # since `20 < 10` is FALSE, we return an empty data
@@ -133,7 +133,7 @@ nyc_taxi[nyc_taxi$fare_amount > 350 & tip_amount < 10, amount_vars] # since `20 
 
 There are three ways to avoid such errors: (1) avoid having objects with the same name as column names in the data, (2) use the `with` function. With `with` we are explicitly telling R that the columns we reference are in `nyc_taxi`, this way we don't need to prefix the columns by `nyc_taxi$` anymore. Here's the above query rewritten using `with`.
 
-```{r}
+```{r chap02chunk17}
 with(nyc_taxi, nyc_taxi[fare_amount > 350 & tip_amount < 10, amount_vars])
 ```
 
@@ -144,13 +144,13 @@ We can use `with` any time we need to reference multiple columns in the data, no
 
 Here's what the above query would look like using `subset`:
 
-```{r}
+```{r chap02chunk18}
 subset(nyc_taxi, fare_amount > 350 & tip_amount < 10, select = amount_vars)
 ```
 
 The `select` argument for `subset` allows us to select columns in a way that is not possible with the bracket notation:
 
-```{r}
+```{r chap02chunk19}
 nyc_small <- subset(nyc_taxi, fare_amount > 350 & tip_amount < 10,
   select = fare_amount:tip_amount) # return all columns between `fare_amount` and `tip_amount`
 dim(nyc_small)
@@ -160,7 +160,7 @@ dim(nyc_small)
 
 Here is an example of a useful new function: `seq`
 
-```{r}
+```{r chap02chunk20}
 seq(1, 10, by = 2)
 ```
 
@@ -169,19 +169,19 @@ consisting of every 2500th rows. Such a sample is called a **systematic sample**
 
 Here is another example of a useful function: `rep`
 
-```{r}
+```{r chap02chunk21}
 rep(1, 4)
 ```
 
 What happens if the first argument to `rep` is a vector?
 
-```{r}
+```{r chap02chunk22}
 rep(1:2, 4)
 ```
 
 What happens if the second argument to `rep` is also a vector (of the same length)?
 
-```{r}
+```{r chap02chunk23}
 rep(c(3, 6), c(2, 5))
 ```
 
@@ -193,7 +193,7 @@ of the data.
 
 (4) We learned to how to slice data using conditional statements. Note that in R, not all conditional statements have to involve columns in the data. Here's an example:
 
-```{r}
+```{r chap02chunk24}
 subset(nyc_small, fare_amount > 100 & 1:2 > 1)
 ```
 
@@ -201,7 +201,7 @@ See if you can describe what the above statement returns. Of course, just becaus
 
 Here's another useful R function: `sample`. Run the below example multiple times to see the different samples being generated.
 
-```{r}
+```{r chap02chunk25}
 sample(1:10, 5)
 ```
 
@@ -209,7 +209,7 @@ sample(1:10, 5)
 
 There is another way to do what we just did (that does not involve the `sample` function). We start by creating a column `u` containing random uniform numbers between 0 and 1, which we can generate with the `runif` function.
 
-```{r}
+```{r chap02chunk26}
 nyc_taxi$u <- runif(nrow(nyc_taxi))
 ```
 
@@ -221,26 +221,26 @@ nyc_taxi$u <- runif(nrow(nyc_taxi))
 
 (1) We simply use the output of `seq` as indexes for selecting rows:
 
-```{r}
+```{r chap02chunk27}
 head(nyc_taxi[seq(1, nrow(nyc_taxi), 2500), ])
 ```
 
 Another approach we can take is to use the **modulo operator** (`%%`) in R, but a this approach is less efficient.
 
-```{r}
+```{r chap02chunk28}
 head(nyc_taxi[1:nrow(nyc_taxi) %% 2500 == 1, ])
 ```
 
 (2) In this case, we are still using the same bracket notation, but this time return the first rows 5 times.
 
-```{r}
+```{r chap02chunk29}
 nyc_taxi[rep(1, 5), ]
 ```
 
 (3) This is akin to the last exercise, but this time we repeat `1:10` instead of just `1`. We use `head` here to only show the top 6 rows.
 
 
-```{r}
+```{r chap02chunk30}
 head(nyc_taxi[rep(1:10, 5), ])
 ```
 
@@ -248,27 +248,27 @@ Notice the way that the row indexes appear in the results in each case. This can
 
 (4) As it turns out, the second condition makes it so that we skip every other row of the data, but we need to be familiar with vector operation in R to guess that and even then it is not immediately clear that is what's happening. So here's a better way of doing the same thing.
 
-```{r}
+```{r chap02chunk31}
 nyc_small <- nyc_small[seq(2, nrow(nyc_small), by = 2), ] # take even-numbered rows
 subset(nyc_small, fare_amount > 100)
 ```
 
 (5) Here's one way we can sample from the data.
 
-```{r}
+```{r chap02chunk32}
 nyc_sample <- nyc_taxi[sample(1:nrow(nyc_taxi), nrow(nyc_taxi)/10) , ]
 ```
 
 (6) Here's a second way of doing it.
 
-```{r}
+```{r chap02chunk33}
 nyc_sample <- subset(nyc_taxi, u < .1)
 nyc_taxi$u <- NULL # we can drop `u` now, since it is no longer needed
 ```
 
 (7) We can sample with replacement using the `replace = TRUE` argument in the `sample` function.
 
-```{r}
+```{r chap02chunk34}
 nyc_sample <- nyc_taxi[sample(1:nrow(nyc_taxi), 1000, replace = TRUE) , ]
 ```
 
@@ -285,7 +285,7 @@ Once we clean the data (next chapter), we will rerun summary and notice how we s
 
 What if there are summaries we don't see? We can just write our own summary function, and here's an example. The `num.distinct` function will return the number of unique elements in a vector. Most of the work is done for us: the `unique` function returns the unique elements of a vector, and the `length` function counts how many there are. Notice how the function is commented with information about input types and output.
 
-```{r}
+```{r chap02chunk35}
 num.distinct <- function(x) {
 # returns the number of distinct values of a vector `x`
 # `x` can be numeric (floats are not recommended) , character, logical, factor
@@ -297,42 +297,42 @@ num.distinct <- function(x) {
 
 It's usually a good idea to test the function with some random inputs before we test it on the larger data. We should also test the function on 'unusual' inputs to see if it does what we expect from it.
 
-```{r}
+```{r chap02chunk36}
 num.distinct(c(5, 6, 6, 9))
 ```
 
-```{r}
+```{r chap02chunk37}
 num.distinct(1) # test the function on a singleton (a vector of length 1)
 ```
 
-```{r}
+```{r chap02chunk38}
 num.distinct(c()) # test the function on an empty vector
 ```
 
-```{r}
+```{r chap02chunk39}
 num.distinct(c(23, 45, 45, NA, 11, 11)) # test the function on a vector with NAs
 ```
 
 Now we can test the function on the data, for example on `pickup_longitude`:
 
-```{r}
+```{r chap02chunk40}
 num.distinct(nyc_taxi$pickup_longitude) # check it on a single variable in our data
 ```
 
 
 But what if we wanted to run the function on all the columns in the data at once? We could write a loop, but instead we show you the `sapply` function, which accomplishes the same thing in a more succint and R-like manner. With `sapply`, we pass the data as the first argument, and some function (usually a summary function) as the second argument: `sapply` will run the function on each column of the data (or those columns of the data for which the summary function is relevant).
 
-```{r}
+```{r chap02chunk41}
 sapply(nyc_taxi, num.distinct) # apply it to each variable in the data
 ```
 
 Any secondary argument to the summary function can be passed along to `sapply`. This feature makes `sapply` (and other similar functions) very powerful. For example, the `mean` function has an argument called `na.rm` for removing missing values. By default, `na.rm` is set to `FALSE` and unless `na.rm = TRUE` the function will return `NA` if there is any missing value in the data.
 
-```{r}
+```{r chap02chunk42}
 sapply(nyc_taxi, mean) # returns the average of all columns in the data
 ```
 
-```{r}
+```{r chap02chunk43}
 sapply(nyc_taxi, mean, na.rm = TRUE) # returns the average of all columns in the data after removing NAs
 ```
 
@@ -340,25 +340,25 @@ sapply(nyc_taxi, mean, na.rm = TRUE) # returns the average of all columns in the
 
 Let's return to the `num.distinct` function we created earlier. The comment inside the function indicated that we should be careful about using it with a non-integer `numeric` input (a float). The problem lies with how `unique` handles such inputs. Here's an example:
 
-```{r}
+```{r chap02chunk44}
 unique(c(.3, .4 - .1, .5 - .2, .6 - .3, .7 - .4)) # what happened?
 ```
 
 Generally, to check for equality between two numeric value (or two numeric columns), we need to be more careful.
 
-```{r}
+```{r chap02chunk45}
 .3 == .4 - .1 # returns unexpected result
 ```
 
 The right way to check if two real numbers are equal is to see if their difference is below a certain threshold.
 
-```{r}
+```{r chap02chunk46}
 abs(.3 - (.4 - .1)) < .0000001 # the right way of doing it
 ```
 
 Another more convenient way to check equality between two real numbers is by using the `all.equal` function.
 
-```{r}
+```{r chap02chunk47}
 all.equal(.3, .4 - .1) # another way of doing it
 ```
 
@@ -370,7 +370,7 @@ all.equal(.3, .4 - .1) # another way of doing it
 
 (1) We can pass the two columns (vectors) directly to `all.equal` to check if they are the same, but the second column needs to be computed on the fly.
 
-```{r}
+```{r chap02chunk48}
 with(nyc_taxi,
   all.equal(total_amount,
     fare_amount + extra + mta_tax + tip_amount + tolls_amount + improvement_surcharge)
@@ -379,7 +379,7 @@ with(nyc_taxi,
 
 (2) Another way to check for equality is by looking at correlation. Two identical columns of `numeric` type will have a correlation of 1.
 
-```{r}
+```{r chap02chunk49}
 with(nyc_taxi,
   cor(total_amount, # we could use correlation instead of `all.equal`
     fare_amount + extra + mta_tax + tip_amount + tolls_amount + improvement_surcharge)

@@ -5,9 +5,8 @@ output: github_document
 date: "`r Sys.Date()`"
 ---
 
-```{r, include=FALSE}
+```{r chap01chunk01, include=FALSE}
 source('setup.R')
-# if (file.exists("nyc_taxi.RData")) file.remove("nyc_taxi.RData")
 ```
 
 We begin by loading the required packages and loading the data into R.
@@ -16,7 +15,7 @@ We begin by loading the required packages and loading the data into R.
 
 We begin by loading the required libraries we will use throughout the course. We reload these libraries later when we run the functions inside them, but putting them at the top of the project gives us a chance to see all of them in one place, and install any libraries we don't already have using `install.packages`.
 
-```{r}
+```{r chap01chunk02}
 # let's set some options for how things look on the console
 options(max.print = 1000, # limit how much data is shown on the console
 	scipen = 999, # don't use scientific notation for numbers
@@ -56,7 +55,7 @@ The process of loading data into R can change based on the kind of data or where
 
 As a starting point, we can use the `readLines` function in R to print the first few lines of the data. The data is stored in the folder to which `data_dir` points.
 
-```{r}
+```{r chap01chunk03}
 cat(readLines(file.path(data_dir, 'yellow_tripsample_2016-01.csv'), n = 3)) # print the first 3 lines of the file
 ```
 
@@ -68,7 +67,7 @@ If we examine the documentation for `read_csv` we would see that there are many 
 
 Time to run `read_csv`. Since the dataset we read is relatively large, we time how long it takes to load it into R. Once all the data is read, we have an object called `nyc_taxi` loaded into the R session. This object is an R `data.frame`. We can run a simple query on `nyc_taxi` by passing it to the `head` function.
 
-```{r}
+```{r chap01chunk04}
 library(lubridate)
 most_recent_date <- ymd("2016-07-01") # the day of the months is irrelevant
 
@@ -90,18 +89,18 @@ nyc_taxi <- bind_rows(lapply(1:6, read_each_month, progress = FALSE, col_types =
 Sys.time() - st
 ```
 
-```{r}
+```{r chap01chunk05}
 print(class(nyc_taxi))
 ```
 
 It is important to know that `nyc_taxi` is no longer linked to the original CSV file: The CSV file resides somewhere on disk, but `nyc_taxi` is a **copy** of the CSV file sitting in memory. Any modifications we make to this file will not overwrite the CSV file, or any file on disk, unless we explicitly do so (for example by using `write.table`). Let's begin by comparing the size of the original CSV file with the size of its copy in the R session.
 
-```{r}
+```{r chap01chunk06}
 obj_size_mb <- as.integer(object.size(nyc_taxi)) / 2^20 # size of object in memory (we divide by 2^20 to convert from bytes to megabytes)
 obj_size_mb # size of memory object in R representing data
 ```
 
-```{r}
+```{r chap01chunk07}
 file_size_mb <- file.size(file.path(data_dir, 'yellow_tripsample_2016-01.csv')) / 2^20 # size of the original file
 file_size_mb * 6 # approximate size of the 6 CSVs on disk
 ```
@@ -112,8 +111,7 @@ Nowadays there are R libraries that provide us with ways to handle large dataset
 
 With the data loaded into R, we can now set out to examine its content, which is the subject of the next chapter.
 
-```{r, include=FALSE}
-# save(nyc_taxi, file = "nyc_taxi.RData")
+```{r chap01chunk08, include=FALSE}
 # rmarkdown::render("01-Getting-started.Rmd")
 # rmarkdown::render("02-Inspecting-data.Rmd")
 # rmarkdown::render("03-Cleaning-data.Rmd")
